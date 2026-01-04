@@ -1,0 +1,15 @@
+<svg width="300" height="80" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Dark Background -->
+  <rect width="300" height="80" fill="#1e293b" rx="12"/>
+  
+  <!-- Code Icon -->
+  <path d="M25 15L12 40L25 65" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M40 15L53 40L40 65" stroke="#cbd5e1" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M45 12L20 68" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+  
+  <!-- Text: Web -->
+  <text x="70" y="52" font-family="Poppins, sans-serif" font-size="36" font-weight="400" fill="#e2e8f0" letter-spacing="2">Web</text>
+  
+  <!-- Text: code -->
+  <text x="150" y="52" font-family="Poppins, sans-serif" font-size="36" font-weight="500" fill="#cbd5e1" letter-spacing="2">code</text>
+</svg>
