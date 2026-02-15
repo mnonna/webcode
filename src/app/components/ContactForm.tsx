@@ -11,6 +11,7 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const { currentTarget } = e;
   
     const formDataToSend = new FormData();
     formDataToSend.append('name', formData.name);
@@ -129,7 +130,10 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white py-4 rounded-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group"
+        className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white py-4 rounded-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:!bg-none 
+          disabled:bg-stone-200 
+          disabled:!text-stone-600 
+          disabled:cursor-not-allowed"
         style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
       >
         <span>Wyślij wiadomość</span>
