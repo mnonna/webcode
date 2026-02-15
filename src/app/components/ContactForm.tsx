@@ -9,15 +9,34 @@ export default function ContactForm() {
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+  
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('message', formData.message);
     if (selectedFile) {
-      console.log('Attached file:', selectedFile.name);
+      formDataToSend.append('file', selectedFile);
     }
-    alert('Dziękujemy za wiadomość! Skontaktuję się wkrótce.');
-    setFormData({ name: '', email: '', message: '' });
-    setSelectedFile(null);
+  
+    try {
+      const response = await fetch('https://webcodemailer.netlify.app/mail', {
+        method: 'POST',
+        body: formDataToSend,
+      });
+  
+      if (response.ok) {
+        alert('Dziękujemy za wiadomość! Skontaktuję się wkrótce.');
+        setFormData({ name: '', email: '', message: '' });
+        setSelectedFile(null);
+      } else {
+        alert('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -46,19 +46,7 @@ export default function ContactPage() {
                   Email
                 </h3>
                 <a href="mailto:kontakt@webcode.pl" className="text-slate-600 hover:text-indigo-600 transition-colors">
-                  kontakt@webcode.pl
-                </a>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-200/50">
-                <div className="w-12 h-12 bg-gradient-to-br from-indigo-100 to-violet-100 rounded-xl flex items-center justify-center mb-4">
-                  <Phone className="text-indigo-600" size={24} />
-                </div>
-                <h3 className="text-xl mb-2" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, color: '#1e293b' }}>
-                  Telefon
-                </h3>
-                <a href="tel:+48123456789" className="text-slate-600 hover:text-indigo-600 transition-colors">
-                  +48 123 456 789
+                webcode.kontakt@gmail.com
                 </a>
               </div>
 
@@ -83,8 +71,7 @@ export default function ContactPage() {
                   Lokalizacja
                 </h3>
                 <p className="text-slate-600">
-                  Warszawa, Polska<br />
-                  Praca zdalna
+                  62-052 Komorniki, Polska
                 </p>
               </div>
 
@@ -93,7 +80,7 @@ export default function ContactPage() {
                   Szybka odpowiedź
                 </h3>
                 <p className="text-slate-600 text-sm">
-                  Odpowiadam na wiadomości zwykle w ciągu 24 godzin roboczych. W pilnych sprawach proszę o kontakt telefoniczny.
+                  Odpowiadam na wiadomości zwykle w ciągu 48 godzin roboczych.
                 </p>
               </div>
             </div>
@@ -123,7 +110,7 @@ export default function ContactPage() {
                     <div className="w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, fontSize: '12px' }}>
                       1
                     </div>
-                    <p>Otrzymasz ode mnie odpowiedź w ciągu 24 godzin</p>
+                    <p>Otrzymasz ode mnie odpowiedź w ciągu 48 godzin</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-6 h-6 bg-indigo-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, fontSize: '12px' }}>

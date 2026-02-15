@@ -158,7 +158,7 @@ export default function HomePage() {
       </section>
 
       {/* Services Preview */}
-      <section id="services" className="py-20 px-6 bg-white">
+      <section id="services" className="pt-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl mb-4" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, color: '#1e293b' }}>
