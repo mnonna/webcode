@@ -58,7 +58,7 @@ export default function HomePage() {
           <div className="grid md:grid-cols-2 gap-12 items-center min-h-[80vh]">
             <div className="z-10">
               <div className="inline-block bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full mb-6">
-                <span className="text-sm">Tworzymy rozwiązania cyfrowe</span>
+                <span className="text-sm">Tworzę rozwiązania cyfrowe</span>
               </div>
               <h1 className="text-5xl md:text-6xl mb-6" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, color: '#1e293b' }}>
                 Przekształcam pomysły w{' '}
@@ -209,69 +209,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Projects Showcase */}
-      <section className="py-20 px-6 bg-gradient-to-br from-slate-50 to-stone-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-12">
-            <div>
-              <h2 className="text-4xl mb-4" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, color: '#1e293b' }}>
-                Wybrane realizacje
-              </h2>
-              <p className="text-xl text-slate-600">
-                Projekty, którymi jestem dumny
-              </p>
-            </div>
-            <Link 
-              to="/realizacje"
-              className="hidden md:flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors"
-            >
-              <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>Zobacz wszystkie</span>
-              <ExternalLink size={20} />
-            </Link>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {projects.map((project) => (
-              <div key={project.id} className="group cursor-pointer">
-                <div className="relative overflow-hidden rounded-2xl mb-4 aspect-[4/3]">
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="text-xs bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <span className="text-sm text-indigo-600 mb-2 block">{project.category}</span>
-                  <h3 className="text-xl mb-2 group-hover:text-indigo-600 transition-colors" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
-                    {project.title}
-                  </h3>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 text-center md:hidden">
-            <Link 
-              to="/realizacje"
-              className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 transition-colors"
-            >
-              <span style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>Zobacz wszystkie realizacje</span>
-              <ExternalLink size={20} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* Bio Section */}
       <section id="bio" className="py-20 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -354,23 +291,7 @@ export default function HomePage() {
                       Email
                     </h4>
                     <a href="mailto:kontakt@webcode.pl" className="text-indigo-600 hover:underline">
-                      kontakt@webcode.pl
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white p-6 rounded-xl shadow-lg border border-slate-200/50">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-violet-600 rounded-lg flex items-center justify-center">
-                    <Phone className="text-white" size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg mb-1" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, color: '#1e293b' }}>
-                      Telefon
-                    </h4>
-                    <a href="tel:+48123456789" className="text-indigo-600 hover:underline">
-                      +48 123 456 789
+                      webcode.kontakt@gmail.com
                     </a>
                   </div>
                 </div>
@@ -385,7 +306,7 @@ export default function HomePage() {
                     <h4 className="text-lg mb-1" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, color: '#1e293b' }}>
                       Lokalizacja
                     </h4>
-                    <p className="text-slate-600">Warszawa, Polska</p>
+                    <p className="text-slate-600">62-052 Komorniki, Polska</p>
                   </div>
                 </div>
               </div>
