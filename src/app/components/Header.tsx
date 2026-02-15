@@ -44,9 +44,6 @@ export default function Header() {
             <button onClick={() => scrollToSection('services')} className="text-slate-600 hover:text-indigo-600 transition-colors">
               Usługi
             </button>
-            <Link to="/realizacje" className="text-slate-600 hover:text-indigo-600 transition-colors">
-              Realizacje
-            </Link>
             <button onClick={() => scrollToSection('bio')} className="text-slate-600 hover:text-indigo-600 transition-colors">
               O mnie
             </button>

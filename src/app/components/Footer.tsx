@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -39,9 +38,14 @@ export default function Footer() {
               Firma
             </h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="#bio" className="text-slate-400 hover:text-indigo-400 transition-colors">O mnie</a></li>
-              <li><Link to="/realizacje" className="text-slate-400 hover:text-indigo-400 transition-colors">Realizacje</Link></li>
-              <li><a href="#contact" className="text-slate-400 hover:text-indigo-400 transition-colors">Kontakt</a></li>
+              <li>
+                <Link 
+                  to="/kontakt" 
+                  className="text-slate-400 hover:text-indigo-400 transition-colors"
+                >
+                  Kontakt
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
