@@ -26,14 +26,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <svg width="32" height="32" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M14 12L6 24L14 36" stroke="#64748b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M34 12L42 24L34 36" stroke="#64748b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M28 8L20 40" stroke="#94a3b8" strokeWidth="2.5" strokeLinecap="round"/>
-            </svg>
-            <span className="text-2xl" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 400, color: '#475569' }}>
-              Web<span style={{ fontWeight: 500, color: '#64748b' }}>code</span>
-            </span>
+            <img src="../../../../static/logo.png" alt="Webcode Logo" className="max-w-[230px]" />
           </Link>
 
           {/* Desktop Navigation */}
