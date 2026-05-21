@@ -26,7 +26,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <img src="../../../../static/logo.png" alt="Webcode Logo" className="max-w-[230px]" />
+            <img src="../../../../logo.png" alt="Webcode Logo" className="max-w-[230px]" />
           </Link>
 
           {/* Desktop Navigation */}
