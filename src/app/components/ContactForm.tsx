@@ -22,7 +22,7 @@ export default function ContactForm() {
     }
   
     try {
-      const response = await fetch('https://webcodemailer.netlify.app/mail', {
+      const response = await fetch('https://mailer.webcode.com.pl/mail', {
         method: 'POST',
         body: formDataToSend,
       });
