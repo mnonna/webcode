@@ -1,143 +1,157 @@
-import React, { useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Send } from 'lucide-react';
 
-export default function ContactForm() {
+type ContactFormProps = {
+  onFocusFieldChange?: (field: string | null) => void;
+};
+
+export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const { currentTarget } = e;
-  
-    const formDataToSend = new FormData();
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('email', formData.email);
-    formDataToSend.append('message', formData.message);
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setIsSubmitting(true);
+
+    const payload = new FormData();
+    payload.append('name', formData.name);
+    payload.append('email', formData.email);
+    payload.append('message', formData.message);
+
     if (selectedFile) {
-      formDataToSend.append('file', selectedFile);
+      payload.append('file', selectedFile);
     }
-  
+
     try {
       const response = await fetch('https://mailer.webcode.com.pl/mail', {
         method: 'POST',
-        body: formDataToSend,
+        body: payload,
       });
-  
+
       if (response.ok) {
-        alert('Dziękujemy za wiadomość! Skontaktuję się wkrótce.');
+        alert('Dziękuję za wiadomość. Odezwę się najszybciej, jak to możliwe.');
         setFormData({ name: '', email: '', message: '' });
         setSelectedFile(null);
+
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
       } else {
         alert('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/jpg', 'image/png'];
-      const maxSize = 10 * 1024 * 1024; // 10MB
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
 
-      if (!allowedTypes.includes(file.type)) {
-        alert('Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG');
-        return;
-      }
-
-      if (file.size > maxSize) {
-        alert('Plik jest za duży. Maksymalny rozmiar to 10MB.');
-        return;
-      }
-
-      setSelectedFile(file);
+    if (!file) {
+      return;
     }
+
+    const allowedTypes = [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'image/jpeg',
+      'image/jpg',
+      'image/png',
+    ];
+    const maxSize = 10 * 1024 * 1024;
+
+    if (!allowedTypes.includes(file.type)) {
+      alert('Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG.');
+      event.target.value = '';
+      return;
+    }
+
+    if (file.size > maxSize) {
+      alert('Plik jest za duży. Maksymalny rozmiar to 10 MB.');
+      event.target.value = '';
+      return;
+    }
+
+    setSelectedFile(file);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label htmlFor="name" className="block text-sm mb-2 text-slate-700" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
-          Imię i nazwisko
-        </label>
-        <input
-          type="text"
-          id="name"
-          required
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-all"
-          placeholder="Jan Kowalski"
-        />
+    <form onSubmit={handleSubmit} className="space-y-5">
+      <div className="grid gap-5 md:grid-cols-2">
+        <div>
+          <label htmlFor="name" className="wc-label mb-2 block">Imię i nazwisko</label>
+          <input
+            type="text"
+            id="name"
+            required
+            value={formData.name}
+            onFocus={() => onFocusFieldChange?.('name')}
+            onBlur={() => onFocusFieldChange?.(null)}
+            onChange={(event) => setFormData({ ...formData, name: event.target.value })}
+            className="wc-form-input"
+            placeholder="Jan Kowalski"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="wc-label mb-2 block">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            required
+            value={formData.email}
+            onFocus={() => onFocusFieldChange?.('email')}
+            onBlur={() => onFocusFieldChange?.(null)}
+            onChange={(event) => setFormData({ ...formData, email: event.target.value })}
+            className="wc-form-input"
+            placeholder="jan@example.com"
+          />
+        </div>
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm mb-2 text-slate-700" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
-          Email
-        </label>
+        <label htmlFor="file" className="wc-label mb-2 block">Załącz plik (opcjonalnie)</label>
         <input
-          type="email"
-          id="email"
-          required
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-all"
-          placeholder="jan@example.com"
+          ref={fileInputRef}
+          type="file"
+          id="file"
+          onFocus={() => onFocusFieldChange?.('file')}
+          onBlur={() => onFocusFieldChange?.(null)}
+          onChange={handleFileChange}
+          accept=".pdf,.docx,.doc,.jpg,.jpeg,.png"
+          className="wc-form-input file:mr-4 file:rounded-[12px] file:border-0 file:bg-[var(--wc-blue-soft)] file:px-4 file:py-2 file:text-[0.875rem] file:font-[600] file:text-[var(--wc-blue)] hover:file:bg-[rgba(21,87,255,0.16)]"
         />
+        <p className="wc-body-sm mt-2">Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG. Maksymalny rozmiar pliku: 10 MB.</p>
+        {selectedFile && <div className="wc-body-sm wc-text-blue mt-2 font-[600]">Wybrany plik: {selectedFile.name}</div>}
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm mb-2 text-slate-700" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
-          Wiadomość
-        </label>
+        <label htmlFor="message" className="wc-label mb-2 block">Opisz projekt</label>
         <textarea
           id="message"
           required
-          rows={6}
+          rows={7}
           value={formData.message}
-          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-all resize-none"
-          placeholder="Opowiedz o swoim projekcie..."
+          onFocus={() => onFocusFieldChange?.('message')}
+          onBlur={() => onFocusFieldChange?.(null)}
+          onChange={(event) => setFormData({ ...formData, message: event.target.value })}
+          className="wc-form-input min-h-[180px] resize-none"
+          placeholder="Napisz, czego potrzebujesz, jaki jest cel strony i na kiedy planujesz wdrożenie."
         />
       </div>
 
-      <div>
-        <label htmlFor="file" className="block text-sm mb-2 text-slate-700" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}>
-          Załącz plik (opcjonalnie)
-        </label>
-        <input
-          type="file"
-          id="file"
-          onChange={handleFileChange}
-          accept=".pdf,.docx,.doc,.jpg,.jpeg,.png"
-          className="w-full px-4 py-3 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:border-transparent transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-        />
-        <p className="text-xs text-slate-500 mt-2">
-          Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG (max 10MB)
-        </p>
-        {selectedFile && (
-          <div className="mt-2 text-sm text-indigo-600">
-            Wybrany plik: {selectedFile.name}
-          </div>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 text-white py-4 rounded-lg hover:shadow-xl transition-all flex items-center justify-center gap-2 group cursor-pointer disabled:!bg-none 
-          disabled:bg-stone-200 
-          disabled:!text-stone-600 
-          disabled:cursor-not-allowed"
-        style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500 }}
-      >
-        <span>Wyślij wiadomość</span>
-        <Send size={20} className="group-hover:translate-x-1 transition-transform" />
+      <button type="submit" disabled={isSubmitting} className="wc-btn-primary group w-full justify-center disabled:pointer-events-none disabled:opacity-60">
+        <span>{isSubmitting ? 'Wysyłanie...' : 'Wyślij wiadomość'}</span>
+        <Send size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
       </button>
     </form>
   );

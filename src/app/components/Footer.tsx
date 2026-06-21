@@ -1,52 +1,39 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { HOME_NAV_ITEMS } from '../navigation';
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-12 px-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+    <footer className="border-t border-[rgba(230,236,245,0.9)] bg-white/86 py-10 backdrop-blur-xl">
+      <div className="section-shell">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <img src="../../../../logo-icon.png" alt="Webcode Logo" className="max-w-[64px]" />
-            </div>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Tworzę cyfrowe rozwiązania, które napędzają biznes.
+            <img src="/logo.png" alt="Webcode Logo" className="h-auto max-w-[178px]" />
+            <p className="mt-4 max-w-[34ch] text-[0.96rem] leading-[1.7] text-[var(--wc-text)]">
+              Projektuję i wdrażam strony, które mają wyglądać nowocześnie, działać szybko i prowadzić do kontaktu.
             </p>
           </div>
 
-          <div>
-            <h4 className="mb-4" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, color: '#e2e8f0' }}>
-              Usługi
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li><a href="#services" className="text-slate-400 hover:text-indigo-400 transition-colors">Strony internetowe</a></li>
-              <li><a href="#services" className="text-slate-400 hover:text-indigo-400 transition-colors">Aplikacje webowe</a></li>
-              <li><a href="#services" className="text-slate-400 hover:text-indigo-400 transition-colors">Konsulting IT</a></li>
-              <li><a href="#services" className="text-slate-400 hover:text-indigo-400 transition-colors">UX/UI Design</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4" style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, color: '#e2e8f0' }}>
-              Firma
-            </h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link 
-                  to="/kontakt" 
-                  className="text-slate-400 hover:text-indigo-400 transition-colors"
-                >
-                  Kontakt
-                </Link>
-              </li>
-            </ul>
+          <div className="flex flex-wrap gap-x-6 gap-y-3">
+            {HOME_NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                to={item.href}
+                className="text-[0.95rem] font-[600] text-[var(--wc-text)] transition-colors hover:text-[var(--wc-blue)]"
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 text-center text-sm text-slate-400">
+        <div className="mt-8 flex flex-col gap-3 border-t border-[rgba(230,236,245,0.9)] pt-6 text-[0.92rem] text-[var(--wc-text)] md:flex-row md:items-center md:justify-between">
           <p>&copy; 2026 Webcode. Wszystkie prawa zastrzeżone.</p>
+          <a href="mailto:webcode.kontakt@gmail.com" className="font-[600] text-[var(--wc-blue)]">
+            webcode.kontakt@gmail.com
+          </a>
         </div>
       </div>
     </footer>
   );
 }
+
