@@ -22,15 +22,23 @@ export default function HomeB2B() {
     }
 
     const ctx = gsap.context(() => {
-      gsap.from('[data-b2b-reveal]', {
-        y: 32,
-        scale: 0.98,
-        opacity: 0,
-        duration: 0.85,
-        ease: 'power3.out',
-        stagger: 0.1,
-        scrollTrigger: { trigger: section, start: 'top 74%', once: true },
-      });
+      gsap.fromTo(
+        '[data-b2b-reveal]',
+        {
+          y: 24,
+          scale: 0.992,
+          opacity: 0.01,
+        },
+        {
+          y: 0,
+          scale: 1,
+          opacity: 1,
+          duration: 0.9,
+          ease: 'power2.out',
+          stagger: 0.08,
+          scrollTrigger: { trigger: section, start: 'top 74%', once: true },
+        }
+      );
     }, section);
 
     return () => ctx.revert();
@@ -38,8 +46,8 @@ export default function HomeB2B() {
 
   return (
     <section id="b2b" ref={sectionRef} className="landing-section">
-      <div className="section-shell wc-surface-panel overflow-hidden px-6 py-8 md:px-10 lg:px-12">
-        <div className="grid items-center gap-6 lg:gap-10 lg:grid-cols-[0.95fr_0.8fr_0.72fr]">
+      <div className="section-shell wc-surface-panel wc-panel-fluid-b2b overflow-hidden">
+        <div className="wc-fluid-gap-feature grid items-center lg:grid-cols-[0.95fr_0.8fr_0.72fr]">
           <div data-b2b-reveal="" className="relative mx-auto max-w-[560px]">
             <div className="absolute inset-x-[12%] top-[18%] h-[46%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.16)_0%,_rgba(21,87,255,0)_72%)] blur-3xl"></div>
             <img src="/landing/b2b-illustration.png" alt="Ilustracja współpracy B2B" className="relative z-10 w-full rounded-[28px] object-contain" />

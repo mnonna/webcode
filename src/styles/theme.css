@@ -5,6 +5,92 @@
   --font-heading: 'Manrope', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --fluid-min-vw: 390px;
+  --fluid-max-vw: 1920px;
+  --fluid-screen: clamp(var(--fluid-min-vw), 100vw, var(--fluid-max-vw));
+  --fluid-progress: calc((var(--fluid-screen) - var(--fluid-min-vw)) / (var(--fluid-max-vw) - var(--fluid-min-vw)));
+  --shell-max-width: 1700px;
+  --shell-inline-gutter-min: 20px;
+  --shell-inline-gutter-max: 110px;
+  --shell-inline-gutter: calc(var(--shell-inline-gutter-min) + (var(--shell-inline-gutter-max) - var(--shell-inline-gutter-min)) * var(--fluid-progress));
+  --fs-hero-min: 2.5rem;
+  --fs-hero-max: 3.6rem;
+  --fs-hero: calc(var(--fs-hero-min) + (var(--fs-hero-max) - var(--fs-hero-min)) * var(--fluid-progress));
+  --fs-section-min: 1.75rem;
+  --fs-section-max: 2.5rem;
+  --fs-section: calc(var(--fs-section-min) + (var(--fs-section-max) - var(--fs-section-min)) * var(--fluid-progress));
+  --fs-card-min: 1.25rem;
+  --fs-card-max: 1.75rem;
+  --fs-card: calc(var(--fs-card-min) + (var(--fs-card-max) - var(--fs-card-min)) * var(--fluid-progress));
+  --fs-process-step-display-min: 5rem;
+  --fs-process-step-display-max: 7rem;
+  --fs-process-step-display: calc(var(--fs-process-step-display-min) + (var(--fs-process-step-display-max) - var(--fs-process-step-display-min)) * var(--fluid-progress));
+  --fs-process-step-display-compact-min: 3.65rem;
+  --fs-process-step-display-compact-max: 4.25rem;
+  --fs-process-step-display-compact: calc(var(--fs-process-step-display-compact-min) + (var(--fs-process-step-display-compact-max) - var(--fs-process-step-display-compact-min)) * var(--fluid-progress));
+  --fs-process-step-total-min: 1.75rem;
+  --fs-process-step-total-max: 2.1rem;
+  --fs-process-step-total: calc(var(--fs-process-step-total-min) + (var(--fs-process-step-total-max) - var(--fs-process-step-total-min)) * var(--fluid-progress));
+  --fs-process-title-min: 2.2rem;
+  --fs-process-title-max: 3rem;
+  --fs-process-title: calc(var(--fs-process-title-min) + (var(--fs-process-title-max) - var(--fs-process-title-min)) * var(--fluid-progress));
+  --fs-process-title-compact-min: 1.4rem;
+  --fs-process-title-compact-max: 2.7rem;
+  --fs-process-title-compact: calc(var(--fs-process-title-compact-min) + (var(--fs-process-title-compact-max) - var(--fs-process-title-compact-min)) * var(--fluid-progress));
+  --space-section-y-min: 44px;
+  --space-section-y-max: 56px;
+  --space-section-y: calc(var(--space-section-y-min) + (var(--space-section-y-max) - var(--space-section-y-min)) * var(--fluid-progress));
+  --space-section-bottom-story-min: 44px;
+  --space-section-bottom-story-max: 96px;
+  --space-section-bottom-story: calc(var(--space-section-bottom-story-min) + (var(--space-section-bottom-story-max) - var(--space-section-bottom-story-min)) * var(--fluid-progress));
+  --space-section-bottom-contact-min: 64px;
+  --space-section-bottom-contact-max: 96px;
+  --space-section-bottom-contact: calc(var(--space-section-bottom-contact-min) + (var(--space-section-bottom-contact-max) - var(--space-section-bottom-contact-min)) * var(--fluid-progress));
+  --space-hero-pt-min: 112px;
+  --space-hero-pt-max: 128px;
+  --space-hero-pt: calc(var(--space-hero-pt-min) + (var(--space-hero-pt-max) - var(--space-hero-pt-min)) * var(--fluid-progress));
+  --space-grid-main-min: 40px;
+  --space-grid-main-max: 64px;
+  --space-grid-main: calc(var(--space-grid-main-min) + (var(--space-grid-main-max) - var(--space-grid-main-min)) * var(--fluid-progress));
+  --space-grid-hero-min: 48px;
+  --space-grid-hero-max: 56px;
+  --space-grid-hero: calc(var(--space-grid-hero-min) + (var(--space-grid-hero-max) - var(--space-grid-hero-min)) * var(--fluid-progress));
+  --space-grid-feature-min: 24px;
+  --space-grid-feature-max: 40px;
+  --space-grid-feature: calc(var(--space-grid-feature-min) + (var(--space-grid-feature-max) - var(--space-grid-feature-min)) * var(--fluid-progress));
+  --space-process-intro-gap-min: 40px;
+  --space-process-intro-gap-max: 64px;
+  --space-process-intro-gap: calc(var(--space-process-intro-gap-min) + (var(--space-process-intro-gap-max) - var(--space-process-intro-gap-min)) * var(--fluid-progress));
+  --space-panel-b2b-x-min: 24px;
+  --space-panel-b2b-x-max: 48px;
+  --space-panel-b2b-x: calc(var(--space-panel-b2b-x-min) + (var(--space-panel-b2b-x-max) - var(--space-panel-b2b-x-min)) * var(--fluid-progress));
+  --space-panel-b2b-y-min: 32px;
+  --space-panel-b2b-y-max: 40px;
+  --space-panel-b2b-y: calc(var(--space-panel-b2b-y-min) + (var(--space-panel-b2b-y-max) - var(--space-panel-b2b-y-min)) * var(--fluid-progress));
+  --space-panel-contact-min: 20px;
+  --space-panel-contact-max: 28px;
+  --space-panel-contact: calc(var(--space-panel-contact-min) + (var(--space-panel-contact-max) - var(--space-panel-contact-min)) * var(--fluid-progress));
+  --space-panel-preview-min: 16px;
+  --space-panel-preview-max: 24px;
+  --space-panel-preview: calc(var(--space-panel-preview-min) + (var(--space-panel-preview-max) - var(--space-panel-preview-min)) * var(--fluid-progress));
+  --space-process-card-x-min: 24px;
+  --space-process-card-x-max: 32px;
+  --space-process-card-x: calc(var(--space-process-card-x-min) + (var(--space-process-card-x-max) - var(--space-process-card-x-min)) * var(--fluid-progress));
+  --space-process-card-pt-min: 24px;
+  --space-process-card-pt-max: 28px;
+  --space-process-card-pt: calc(var(--space-process-card-pt-min) + (var(--space-process-card-pt-max) - var(--space-process-card-pt-min)) * var(--fluid-progress));
+  --space-process-card-pb-min: 28px;
+  --space-process-card-pb-max: 32px;
+  --space-process-card-pb: calc(var(--space-process-card-pb-min) + (var(--space-process-card-pb-max) - var(--space-process-card-pb-min)) * var(--fluid-progress));
+  --space-process-stage-x-min: 64px;
+  --space-process-stage-x-max: 80px;
+  --space-process-stage-x: calc(var(--space-process-stage-x-min) + (var(--space-process-stage-x-max) - var(--space-process-stage-x-min)) * var(--fluid-progress));
+  --space-process-stage-top-min: 48px;
+  --space-process-stage-top-max: 56px;
+  --space-process-stage-top: calc(var(--space-process-stage-top-min) + (var(--space-process-stage-top-max) - var(--space-process-stage-top-min)) * var(--fluid-progress));
+  --space-process-stage-bottom-min: 40px;
+  --space-process-stage-bottom-max: 48px;
+  --space-process-stage-bottom: calc(var(--space-process-stage-bottom-min) + (var(--space-process-stage-bottom-max) - var(--space-process-stage-bottom-min)) * var(--fluid-progress));
   --wc-blue: #1557ff;
   --wc-dark: #0f172a;
   --wc-text: #475569;
@@ -136,23 +222,26 @@
 
   h1 {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 5.2vw, 4rem);
+    font-size: var(--fs-hero);
     font-weight: 800;
     line-height: 1.12;
+    letter-spacing: -0.04em;
   }
 
   h2 {
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 3.4vw, 2.5rem);
+    font-size: var(--fs-section);
     font-weight: 700;
     line-height: 1.2;
+    letter-spacing: -0.03em;
   }
 
   h3 {
     font-family: var(--font-heading);
-    font-size: clamp(1.5rem, 2.4vw, 1.75rem);
+    font-size: var(--fs-card);
     font-weight: 700;
     line-height: 1.28;
+    letter-spacing: -0.02em;
   }
 
   h4 {
@@ -196,12 +285,68 @@
 
 @layer components {
   .section-shell {
-    width: min(1700px, calc(100% - 32px));
+    width: min(var(--shell-max-width), calc(100% - (2 * var(--shell-inline-gutter))));
     margin-inline: auto;
   }
 
   .landing-section {
-    padding-block: 56px;
+    padding-block: var(--space-section-y);
+  }
+
+  .landing-section--hero {
+    padding-top: var(--space-hero-pt);
+  }
+
+  .landing-section--story {
+    padding-bottom: var(--space-section-bottom-story);
+  }
+
+  .landing-section--contact {
+    padding-bottom: var(--space-section-bottom-contact);
+  }
+
+  .wc-fluid-gap-main {
+    gap: var(--space-grid-main);
+  }
+
+  .wc-fluid-gap-hero {
+    gap: var(--space-grid-hero);
+  }
+
+  .wc-fluid-gap-feature {
+    gap: var(--space-grid-feature);
+  }
+
+  .wc-process-intro {
+    margin-bottom: var(--space-process-intro-gap);
+  }
+
+  .wc-panel-fluid-b2b {
+    padding: var(--space-panel-b2b-y) var(--space-panel-b2b-x);
+  }
+
+  .wc-panel-fluid-contact {
+    padding: var(--space-panel-contact);
+  }
+
+  .wc-panel-fluid-preview {
+    padding: var(--space-panel-preview);
+  }
+
+  .wc-process-card-body {
+    padding-inline: var(--space-process-card-x);
+    padding-top: var(--space-process-card-pt);
+    padding-bottom: var(--space-process-card-pb);
+  }
+
+  .wc-process-stage-shell {
+    padding-inline: var(--space-process-stage-x);
+    padding-top: var(--space-process-stage-top);
+    padding-bottom: var(--space-process-stage-bottom);
+  }
+
+  .wc-process-nav-shell {
+    padding-inline: var(--space-process-stage-x);
   }
 
   .wc-surface-card {
@@ -226,12 +371,6 @@
 
   .wc-card-row-compact {
     @apply flex items-center gap-4 p-4;
-  }
-}
-
-@media (max-width: 767px) {
-  .landing-section {
-    padding-block: 44px;
   }
 }
 

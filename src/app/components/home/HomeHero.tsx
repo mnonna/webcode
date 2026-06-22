@@ -1,18 +1,67 @@
 import { useLayoutEffect, useRef } from 'react';
 import { ArrowRight, BarChart3, Code2, Search, ShieldCheck, ShoppingCart, Sparkles, Wrench } from 'lucide-react';
-import { gsap } from '../../lib/gsap';
+import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 const heroCards = [
-  { title: 'WordPress', subtitle: 'Szybki CMS dla firm', position: 'lg:left-[2%] lg:top-[11%] xl:left-[-4%] xl:top-[10%]', depth: 14, tone: 'icon' },
-  { title: 'WooCommerce', subtitle: 'Sklepy, które sprzedają', position: 'lg:left-[2%] lg:top-[56%] xl:left-[-6%] xl:top-[56%]', depth: 24, tone: 'accent' },
-  { title: 'SEO', subtitle: 'Widoczność, która pracuje', position: 'lg:right-[2%] lg:top-[12%] xl:right-[-4%] xl:top-[12%]', depth: 16, tone: 'icon' },
-  { title: 'UX / UI', subtitle: 'Czytelny interfejs', position: 'lg:right-[3%] lg:top-[50%] xl:right-[-6%] xl:top-[48%]', depth: 26, tone: 'accent' },
-  { title: 'Więcej zapytań', subtitle: '+28% miesiąc do miesiąca', position: 'lg:left-[8%] lg:bottom-[2%] xl:left-[2%] xl:bottom-[2%]', depth: 12, tone: 'stat' },
-  { title: '.growth {', subtitle: 'color: #2563eb;', position: 'lg:right-[8%] lg:bottom-[5%] xl:right-[-2%] xl:bottom-[6%]', depth: 18, tone: 'code' },
+  {
+    title: 'WordPress',
+    subtitle: 'Szybki CMS dla firm',
+    positionCompact: 'lg:left-[-10%] lg:top-[0%] xl:left-[-8%] xl:top-[-10%] 2xl:top-[2%]',
+    positionWide: 'min-[1400px]:left-[-4%] min-[1400px]:top-[10%] xl:left-[-2%]',
+    depth: 14,
+    tone: 'icon',
+  },
+  {
+    title: 'WooCommerce',
+    subtitle: 'Sklepy, które sprzedają',
+    positionCompact: 'lg:left-[-16%] lg:top-[35%] xl:left-[-13%] xl:top-[35%] 2xl:top-[45%] 2xl:left-[-7%]',
+    positionWide: '',
+    depth: 24,
+    tone: 'accent',
+  },
+  {
+    title: 'SEO',
+    subtitle: 'Widoczność, która pracuje',
+    positionCompact: 'lg:right-[-6%] lg:top-[12%] xl:right-[-5%] xl:top-[12%] 2xl:top-[6%] 2xl:right-[-5%]',
+    positionWide: '',
+    depth: 16,
+    tone: 'icon',
+  },
+  {
+    title: 'UX / UI',
+    subtitle: 'Czytelny interfejs',
+    positionCompact: 'lg:right-[-8%] lg:top-[47%] xl:right-[-7%] xl:top-[48%] 2xl:top-[40%]',
+    positionWide: 'min-[1400px]:right-[-6%] min-[1400px]:top-[48%] 2xl:right-[-7%]',
+    depth: 26,
+    tone: 'accent',
+  },
+  {
+    title: 'Więcej zapytań',
+    subtitle: '+28% miesiąc do miesiąca',
+    positionCompact: 'lg:left-[-7%] lg:bottom-[0%] xl:left-[-5%] xl:bottom-[1%] 2xl:left-[1%] 2xl:bottom-[10%]',
+    positionWide: '',
+    depth: 12,
+    tone: 'icon',
+  },
+  {
+    title: '.growth {',
+    subtitle: 'color: #2563eb;',
+    positionCompact: 'lg:right-[-3%] lg:bottom-[4%] xl:right-[-2%] xl:bottom-[5%]',
+    positionWide: 'min-[1400px]:right-[-2%] min-[1400px]:bottom-[6%] 2xl:right-[-3%]',
+    depth: 18,
+    tone: 'code',
+  },
 ] as const;
 
-const heroChips = ['WordPress', 'WooCommerce', 'UX/UI', 'SEO', 'Opieka techniczna', 'Aplikacje webowe'];
+const heroChips = [
+  { label: 'WordPress', logoSrc: '/landing/brands/wordpress-logo.png', logoAlt: 'WordPress', logoClassName: 'h-5 w-5' },
+  { label: 'WooCommerce', logoSrc: '/landing/brands/woo-logo.svg', logoAlt: 'WooCommerce', logoClassName: 'h-4 w-auto' },
+  { label: 'UX/UI', icon: Sparkles },
+  { label: 'SEO', icon: Search },
+  { label: 'Opieka techniczna', icon: Wrench },
+  { label: 'Aplikacje webowe', icon: Code2 },
+] as const;
 
 const heroHighlights = [
   { icon: ShieldCheck, title: 'Bezpieczne wdrożenie', copy: 'Przemyślana architektura, czysty kod i dobry proces.' },
@@ -20,34 +69,24 @@ const heroHighlights = [
   { icon: Wrench, title: 'Wsparcie po starcie', copy: 'Nie znikam po publikacji. Mogę rozwijać projekt dalej.' },
 ] as const;
 
-function HeroCard({ title, subtitle, position, tone, depth }: (typeof heroCards)[number]) {
+function HeroCard({ title, subtitle, positionCompact, positionWide, tone, depth }: (typeof heroCards)[number]) {
   const Icon = tone === 'accent' ? ShoppingCart : tone === 'stat' ? BarChart3 : tone === 'code' ? Code2 : Search;
 
   return (
     <div
       data-hero-card=""
       data-depth={depth}
-      className={`wc-surface-card wc-card-compact absolute z-20 hidden w-44 lg:block xl:w-52 ${position}`}
+      className={`wc-surface-card wc-card-compact absolute z-20 hidden p-3 lg:block xl:p-[0.875rem] min-[1400px]:p-4 ${positionCompact} ${positionWide}`}
     >
-      <div className="mb-3 flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between gap-3">
         <div>
-          <div className="wc-heading-xs wc-text-dark">{title}</div>
-          <div className={`mt-1 text-[0.82rem] leading-[1.45] ${tone === 'code' ? 'wc-font-mono wc-text-blue' : 'wc-text-muted'}`}>{subtitle}</div>
+          <div className="wc-heading-xs wc-text-dark text-[0.95rem] min-[1400px]:text-base">{title}</div>
+          <div className={`mt-1 text-[0.76rem] leading-[1.42] min-[1400px]:text-[0.82rem] min-[1400px]:leading-[1.45] ${tone === 'code' ? 'wc-font-mono wc-text-blue' : 'wc-text-muted'}`}>{subtitle}</div>
         </div>
-        <div className="wc-icon-badge h-10 w-10 rounded-[16px] shrink-0">
-          <Icon size={18} />
+        <div className="wc-icon-badge h-9 w-9 shrink-0 rounded-[14px] min-[1400px]:h-10 min-[1400px]:w-10 min-[1400px]:rounded-[16px]">
+          <Icon size={16} className="min-[1400px]:scale-[1.125]" />
         </div>
       </div>
-      {tone === 'stat' && (
-        <div className="mt-3 h-16 rounded-[18px] bg-gradient-to-br from-[rgba(21,87,255,0.08)] via-white to-[rgba(21,87,255,0.02)] p-3">
-          <div className="flex h-full items-end gap-2">
-            <div className="h-5 w-8 rounded-full bg-[rgba(21,87,255,0.25)]"></div>
-            <div className="h-7 w-8 rounded-full bg-[rgba(21,87,255,0.35)]"></div>
-            <div className="h-10 w-8 rounded-full bg-[rgba(21,87,255,0.5)]"></div>
-            <div className="h-12 w-8 rounded-full bg-[var(--wc-blue)]"></div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
@@ -64,13 +103,14 @@ export default function HomeHero() {
     }
 
     const ctx = gsap.context(() => {
+      const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-hero-card]'));
       const introTimeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
       introTimeline
         .from('[data-hero-eyebrow]', { y: 18, opacity: 0, duration: 0.55 })
         .from('[data-hero-heading]', { y: 28, opacity: 0, duration: 0.75 }, '-=0.25')
         .from('[data-hero-copy]', { y: 24, opacity: 0, duration: 0.6 }, '-=0.45')
-        .from('[data-hero-cta]', { y: 18, opacity: 0, stagger: 0.1, duration: 0.45 }, '-=0.4')
+        .from('[data-hero-cta]', { y: 18, opacity: 0, duration: 0.45 }, '-=0.4')
         .from('[data-hero-chip]', { y: 16, opacity: 0, stagger: 0.05, duration: 0.35 }, '-=0.2')
         .from('[data-hero-asset]', { scale: 0.96, y: 18, opacity: 0, duration: 0.8 }, '-=0.5')
         .from('[data-hero-card]', { y: 30, opacity: 0, scale: 0.96, stagger: 0.08, duration: 0.55 }, '-=0.55')
@@ -79,49 +119,82 @@ export default function HomeHero() {
           gsap.set('[data-hero-eyebrow], [data-hero-heading], [data-hero-copy], [data-hero-cta], [data-hero-chip], [data-hero-highlight]', {
             clearProps: 'opacity,transform',
           });
+          gsap.set(cards, { clearProps: 'opacity,transform' });
         });
 
-      if (!window.matchMedia('(pointer: fine)').matches || window.innerWidth < 1024) {
+      const viewportWidth = window.innerWidth;
+
+      if (viewportWidth < 1024) {
         return;
       }
 
-      const cards = Array.from(section.querySelectorAll<HTMLElement>('[data-hero-card]'));
-      const xSetters = cards.map((card) => gsap.quickTo(card, 'x', { duration: 0.48, ease: 'power3.out' }));
-      const ySetters = cards.map((card) => gsap.quickTo(card, 'y', { duration: 0.48, ease: 'power3.out' }));
+      if (viewportWidth < 1280) {
+        return;
+      }
 
-      const handlePointerMove = (event: PointerEvent) => {
-        const bounds = section.getBoundingClientRect();
-        const normalizedX = (event.clientX - bounds.left) / bounds.width - 0.5;
-        const normalizedY = (event.clientY - bounds.top) / bounds.height - 0.5;
+      const orbitScale = viewportWidth < 1536 ? 0.72 : 1;
+      const orbitTimelines: gsap.core.Timeline[] = [];
+      let heroTrigger: ScrollTrigger | null = null;
 
-        cards.forEach((card, index) => {
-          const currentDepth = Number(card.dataset.depth || 12);
-          xSetters[index](normalizedX * currentDepth * 2.2);
-          ySetters[index](normalizedY * currentDepth * 2.2);
-        });
-      };
+      gsap.set(cards, { force3D: true, willChange: 'transform' });
 
-      const handlePointerLeave = () => {
-        xSetters.forEach((setter) => setter(0));
-        ySetters.forEach((setter) => setter(0));
-      };
+      cards.forEach((card, index) => {
+        const depth = Number(card.dataset.depth || 12);
+        const orbitX = depth * (0.78 + Math.random() * 0.42) * orbitScale;
+        const orbitY = depth * (0.52 + Math.random() * 0.34) * orbitScale;
+        const durationA = 3.8 + Math.random() * 1.2;
+        const durationB = 4.4 + Math.random() * 1.6;
+        const direction = Math.random() > 0.5 ? 1 : -1;
+        const varianceX = 0.7 + Math.random() * 0.22;
+        const varianceY = 0.72 + Math.random() * 0.2;
 
-      section.addEventListener('pointermove', handlePointerMove);
-      section.addEventListener('pointerleave', handlePointerLeave);
+        const orbitTimeline = gsap
+          .timeline({
+            paused: true,
+            repeat: -1,
+            yoyo: true,
+            defaults: { ease: 'sine.inOut', force3D: true },
+            delay: index * 0.18 + Math.random() * 0.45,
+          })
+          .to(card, { x: orbitX, y: orbitY * direction, duration: durationA })
+          .to(card, { x: -orbitX * varianceX, y: orbitY * 0.74, duration: durationB })
+          .to(card, { x: -orbitX, y: -orbitY * direction, duration: durationA })
+          .to(card, { x: orbitX * varianceY, y: -orbitY * 0.82, duration: durationB });
 
-      return () => {
-        section.removeEventListener('pointermove', handlePointerMove);
-        section.removeEventListener('pointerleave', handlePointerLeave);
-      };
+        orbitTimelines.push(orbitTimeline);
+      });
+
+      heroTrigger = ScrollTrigger.create({
+        trigger: section,
+        start: 'top bottom',
+        end: 'bottom top',
+        onToggle: (self) => {
+          orbitTimelines.forEach((timeline) => {
+            if (self.isActive) {
+              timeline.play();
+            } else {
+              timeline.pause();
+            }
+          });
+        },
+      });
+
+      introTimeline.add(() => {
+        if (!heroTrigger || !heroTrigger.isActive) {
+          return;
+        }
+
+        orbitTimelines.forEach((timeline) => timeline.play());
+      });
     }, section);
 
     return () => ctx.revert();
   }, [reducedMotion]);
 
   return (
-    <section id="hero" ref={sectionRef} className="landing-section overflow-hidden pt-28 md:pt-32">
+    <section id="hero" ref={sectionRef} className="landing-section landing-section--hero overflow-hidden">
       <div className="section-shell">
-        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:gap-14 xl:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
+        <div className="wc-fluid-gap-hero grid items-center lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
           <div className="relative z-10">
             <div data-hero-eyebrow="" className="wc-eyebrow">
               Tworzę strony, które działają
@@ -132,27 +205,32 @@ export default function HomeHero() {
             <p data-hero-copy="" className="wc-body-lg mt-6 max-w-[60ch]">
               Projektuję i wdrażam nowoczesne strony WordPress, sklepy WooCommerce oraz aplikacje webowe. Pomagam uporządkować ofertę, poprawić UX i stworzyć stronę gotową do pozyskiwania klientów.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a data-hero-cta="" href="#contact" className="wc-btn-primary">
+            <div data-hero-cta="" className="mt-8 flex flex-wrap gap-4">
+              <a href="#contact" className="wc-btn-primary">
                 Bezpłatna wycena
                 <ArrowRight size={18} />
               </a>
-              <a data-hero-cta="" href="#process" className="wc-btn-secondary">
+              <a href="#process" className="wc-btn-secondary">
                 Zobacz, jak pracuję
               </a>
             </div>
             <div className="mt-7 flex flex-wrap gap-3">
               {heroChips.map((chip) => (
-                <span key={chip} data-hero-chip="" className="wc-chip">
-                  {chip}
+                <span key={chip.label} data-hero-chip="" className="wc-chip gap-2.5">
+                  {'logoSrc' in chip ? (
+                    <img src={chip.logoSrc} alt={chip.logoAlt} className={`${chip.logoClassName} shrink-0 object-contain`} />
+                  ) : (
+                    <chip.icon size={15} className="shrink-0 text-[var(--wc-blue)]" aria-hidden="true" />
+                  )}
+                  {chip.label}
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[860px] lg:max-w-none">
-            <div className="absolute inset-x-[10%] top-[8%] h-[58%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.18)_0%,_rgba(21,87,255,0)_72%)] blur-3xl"></div>
-            <div data-hero-asset="" className="relative z-10">
+          <div className="relative z-1 mx-auto w-full max-w-[860px] lg:max-w-none">
+            <div className="absolute inset-x-[14%] top-[10%] h-[52%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.16)_0%,_rgba(21,87,255,0)_72%)] opacity-80 blur-2xl min-[1400px]:inset-x-[10%] min-[1400px]:top-[8%] min-[1400px]:h-[58%] min-[1400px]:opacity-100 min-[1400px]:blur-3xl"></div>
+            <div data-hero-asset="" className="wc-contain-paint relative z-10">
               <img src="/landing/hero-main.png" alt="Mockup panelu projektu Webcode" className="w-full rounded-[32px] object-contain drop-shadow-[0_34px_90px_rgba(15,23,42,0.18)]" />
             </div>
             {heroCards.map((card) => (

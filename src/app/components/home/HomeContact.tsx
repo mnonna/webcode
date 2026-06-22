@@ -53,8 +53,8 @@ export default function HomeContact() {
   }, [focusedField, reducedMotion]);
 
   return (
-    <section id="contact" ref={sectionRef} className="landing-section pb-16 md:pb-24">
-      <div className="section-shell grid gap-10 lg:grid-cols-[0.92fr_minmax(0,1.08fr)]">
+    <section id="contact" ref={sectionRef} className="landing-section landing-section--contact">
+      <div className="section-shell wc-fluid-gap-main grid lg:grid-cols-[0.92fr_minmax(0,1.08fr)]">
         <div>
           <div data-contact-reveal="" className="wc-eyebrow">Masz projekt? Napisz do mnie.</div>
           <h2 data-contact-reveal="" className="wc-heading-section wc-text-dark max-w-[15ch]">
@@ -83,7 +83,7 @@ export default function HomeContact() {
           </div>
         </div>
 
-        <div data-contact-reveal="" className="wc-surface-panel p-5 md:p-7">
+        <div data-contact-reveal="" className="wc-surface-panel wc-panel-fluid-contact">
           <div className="mb-6">
             <h3 className="wc-heading-card wc-text-dark">Napisz wiadomość</h3>
             <p className="wc-body-md mt-3">Odpowiadam zwykle w ciągu 48 godzin roboczych. Im konkretniejszy brief, tym szybciej wrócę z propozycją.</p>

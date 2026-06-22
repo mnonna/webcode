@@ -27,6 +27,18 @@ const storySteps = [
   },
 ] as const;
 
+function setHeaderHidden(hidden: boolean) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  window.dispatchEvent(
+    new CustomEvent('webcode:header-visibility', {
+      detail: { hidden },
+    })
+  );
+}
+
 export default function HomeStory() {
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -49,7 +61,7 @@ export default function HomeStory() {
       const desktop = desktopQuery.matches;
       setIsDesktop(desktop);
       setActiveStep(desktop ? 0 : storySteps.length - 1);
-      section.style.setProperty('--story-progress', desktop && !reducedMotion ? '0%' : '100%');
+      section.style.setProperty('--story-progress-scale', desktop && !reducedMotion ? '0' : '1');
     };
 
     syncViewport();
@@ -86,7 +98,7 @@ export default function HomeStory() {
         const desktopDuration = window.innerHeight * (storySteps.length - 1);
 
         setActiveStep(0);
-        section.style.setProperty('--story-progress', '0%');
+        section.style.setProperty('--story-progress-scale', '0');
 
         return ScrollTrigger.create({
           trigger: stage,
@@ -95,8 +107,11 @@ export default function HomeStory() {
           pin: stage,
           pinSpacing: true,
           scrub: true,
+          onToggle: (self) => {
+            setHeaderHidden(self.isActive);
+          },
           onUpdate: (self) => {
-            section.style.setProperty('--story-progress', `${self.progress * 100}%`);
+            section.style.setProperty('--story-progress-scale', `${self.progress}`);
 
             const nextStep = Math.min(
               storySteps.length - 1,
@@ -110,6 +125,7 @@ export default function HomeStory() {
 
     return () => {
       desktopQuery.removeEventListener('change', syncViewport);
+      setHeaderHidden(false);
       media.revert();
       ctx.revert();
     };
@@ -119,8 +135,8 @@ export default function HomeStory() {
     <section
       id="story"
       ref={sectionRef}
-      className="landing-section lg:pb-24"
-      style={{ ['--story-progress' as string]: reducedMotion || !isDesktop ? '100%' : '0%' }}
+      className="landing-section landing-section--story"
+      style={{ ['--story-progress-scale' as string]: reducedMotion || !isDesktop ? '1' : '0' }}
     >
       <div className="section-shell mb-10 flex flex-col items-center text-center">
         <div data-story-heading="" className="wc-eyebrow">
@@ -136,18 +152,18 @@ export default function HomeStory() {
 
       <div
         ref={stageRef}
-        className="section-shell grid gap-10 lg:min-h-[100svh] lg:grid-cols-[0.42fr_minmax(0,0.58fr)] lg:items-center lg:gap-16"
+        className="section-shell wc-contain-layout-paint wc-fluid-gap-main grid lg:min-h-[100svh] lg:grid-cols-[0.42fr_minmax(0,0.58fr)] lg:items-center"
       >
         <div>
           <div className="relative mt-10 pl-[52px] md:pl-[56px]">
             <div className="absolute bottom-[88px] left-[17px] top-3 w-px overflow-hidden md:bottom-[96px] md:left-[19px]">
               <div className="absolute inset-0 bg-[rgba(230,236,245,1)]"></div>
               <div
-                className="absolute inset-x-0 top-0 bg-[var(--wc-blue)] transition-[height] duration-300"
-                style={{ height: reducedMotion ? '100%' : 'var(--story-progress)' }}
+                className="absolute inset-0 origin-top bg-[var(--wc-blue)] transition-transform duration-300"
+                style={{ transform: `scaleY(${reducedMotion ? '1' : 'var(--story-progress-scale)'})` }}
               ></div>
             </div>
-            <div className="space-y-8 lg:space-y-10">
+            <div className="space-y-4 lg:space-y-6">
               {storySteps.map((step, index) => {
                 const Icon = step.icon;
                 const isActive = index === activeStep;
@@ -185,8 +201,8 @@ export default function HomeStory() {
         </div>
 
         <div className="relative">
-          <div ref={previewRef} data-story-preview="" className="wc-surface-panel w-full overflow-hidden p-4 md:p-6">
-            <div className="absolute inset-x-[10%] top-[4%] h-[52%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.14)_0%,_rgba(21,87,255,0)_72%)] blur-3xl"></div>
+          <div ref={previewRef} data-story-preview="" className="wc-surface-panel wc-contain-paint wc-panel-fluid-preview w-full overflow-hidden">
+            <div className="absolute inset-x-[10%] top-[4%] h-[52%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.14)_0%,_rgba(21,87,255,0)_72%)] blur-2xl"></div>
             <img
               src="/landing/story-preview.png"
               alt="Makieta sekcji pokazującej, jak strona prowadzi klienta do działania"

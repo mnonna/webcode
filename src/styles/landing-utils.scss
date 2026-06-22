@@ -28,7 +28,7 @@
 
 .wc-heading-hero {
   font-family: var(--font-heading);
-  font-size: clamp(3rem, 5.2vw, 3.6rem);
+  font-size: var(--fs-hero);
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -0.04em;
@@ -36,7 +36,7 @@
 
 .wc-heading-section {
   font-family: var(--font-heading);
-  font-size: clamp(2rem, 3.4vw, 2.5rem);
+  font-size: var(--fs-section);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.03em;
@@ -44,7 +44,7 @@
 
 .wc-heading-card {
   font-family: var(--font-heading);
-  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  font-size: var(--fs-card);
   font-weight: 700;
   line-height: 1.28;
   letter-spacing: -0.02em;
@@ -247,17 +247,42 @@
   font-weight: 700;
 }
 
+.wc-process-step-display {
+  font-family: var(--font-heading);
+  font-size: var(--fs-process-step-display);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.wc-process-step-display-compact {
+  font-family: var(--font-heading);
+  font-size: var(--fs-process-step-display-compact);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.06em;
+}
+
+.wc-process-step-total {
+  font-size: var(--fs-process-step-total);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.wc-process-step-title {
+  font-size: var(--fs-process-title);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.wc-process-step-title-compact {
+  font-size: var(--fs-process-title-compact);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
 @media (max-width: 767px) {
-  .wc-heading-hero {
-    font-size: clamp(2.5rem, 10vw, 3.2rem);
-    line-height: 1.04;
-  }
-
-  .wc-heading-section {
-    font-size: clamp(1.75rem, 8vw, 2.2rem);
-    line-height: 1.16;
-  }
-
   .wc-heading-sm {
     font-size: 16px;
   }
