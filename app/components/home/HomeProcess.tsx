@@ -12,7 +12,7 @@ const processSlides = [
     title: 'Rozmowa i potrzeby',
     copy: 'Ustalamy cele, grupę docelową i funkcje, które ma spełniać Twoja strona.',
     ctaLabel: 'Omówmy potrzeby',
-    imageSrc: '/landing/process/process-step-01.png',
+    imageSrc: '/landing/process/process-step-01.avif',
     imageAlt: 'Spotkanie projektowe poświęcone zebraniu potrzeb i celów strony internetowej',
   },
   {
@@ -21,7 +21,7 @@ const processSlides = [
     title: 'Struktura i zakres',
     copy: 'Plan strony, układ sekcji, treści i funkcjonalności dopasowane do biznesu.',
     ctaLabel: 'Plan strony i funkcje',
-    imageSrc: '/landing/process/process-step-02.png',
+    imageSrc: '/landing/process/process-step-02.avif',
     imageAlt: 'Projektowanie mapy strony i struktury treści przy wspólnej analizie zakresu projektu',
   },
   {
@@ -30,7 +30,7 @@ const processSlides = [
     title: 'Projekt i wdrożenie',
     copy: 'Tworzę UI/UX i techniczne wdrożenie w WordPressie lub jako aplikację webową.',
     ctaLabel: 'Zobacz etapy wdrożenia',
-    imageSrc: '/landing/process/process-step-03.png',
+    imageSrc: '/landing/process/process-step-03.avif',
     imageAlt: 'Praca nad projektem interfejsu i technicznym wdrożeniem strony lub aplikacji',
   },
   {
@@ -39,7 +39,7 @@ const processSlides = [
     title: 'Testy i publikacja',
     copy: 'Sprawdzamy działanie, responsywność, formularze, szybkość i podstawy SEO.',
     ctaLabel: 'Przygotujmy publikację',
-    imageSrc: '/landing/process/process-step-04.png',
+    imageSrc: '/landing/process/process-step-04.avif',
     imageAlt: 'Weryfikacja jakości projektu, testy wydajności i przygotowanie do publikacji',
   },
   {
@@ -48,7 +48,7 @@ const processSlides = [
     title: 'Wsparcie po starcie',
     copy: 'Możesz liczyć na opiekę techniczną, aktualizacje i dalszy rozwój projektu.',
     ctaLabel: 'Zaplanujmy opiekę',
-    imageSrc: '/landing/process/process-step-05.png',
+    imageSrc: '/landing/process/process-step-05.avif',
     imageAlt: 'Opieka techniczna nad stroną po wdrożeniu, aktualizacje i bieżące wsparcie',
   },
 ] as const;

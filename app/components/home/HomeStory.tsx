@@ -204,7 +204,7 @@ export default function HomeStory() {
           <div ref={previewRef} data-story-preview="" className="wc-surface-panel wc-contain-paint wc-panel-fluid-preview w-full overflow-hidden">
             <div className="absolute inset-x-[10%] top-[4%] h-[52%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.14)_0%,_rgba(21,87,255,0)_72%)] blur-2xl"></div>
             <img
-              src="/landing/story-preview.png"
+              src="/landing/story-preview.avif"
               alt="Makieta sekcji pokazującej, jak strona prowadzi klienta do działania"
               className="relative z-10 w-full rounded-[28px] object-contain"
             />
