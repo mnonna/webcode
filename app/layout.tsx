@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { localBusinessLd, organizationLd } from "./data/jsonLd";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -36,6 +37,20 @@ export default function RootLayout({
       lang="pl"
       className={`h-full antialiased`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationLd).replace(/</g, '\\u003c'),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(localBusinessLd).replace(/</g, '\\u003c'),
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
