@@ -21,7 +21,7 @@
   --fs-hero: clamp(2.5rem, calc(2.219608rem + 0.071895vw), 3.6rem);
   --fs-section-min: 1.75rem;
   --fs-section-max: 2.5rem;
-  --fs-section: clamp(1.75rem, calc(1.558824rem + 0.04902vw), 2.5rem);
+  --fs-section: clamp(1.75rem, calc(1.958824rem + 0.04902vw), 3.2rem);
   --fs-card-min: 1.25rem;
   --fs-card-max: 1.75rem;
   --fs-card: clamp(1.25rem, calc(1.122549rem + 0.03268vw), 1.75rem);

@@ -13,9 +13,9 @@ export default function HomeServices() {
   return (
     <section id="services" className="landing-section">
       <div className="section-shell">
-        <div className="mx-auto max-w-[760px] text-center">
+        <div className="mx-auto max-w-[40ch] text-center">
           <div className="wc-eyebrow justify-center">Co mogę dla Ciebie zrobić?</div>
-          <h2 className="wc-heading-section wc-text-dark">Zakres usług dopasowany do wzrostu Twojej firmy</h2>
+          <h2 className="wc-heading-section wc-text-dark">Zakres usług dopasowany <span className="wc-text-highlight">do wzrostu Twojej firmy</span></h2>
           <p className="wc-body-lg mt-5">Łączę projekt, wdrożenie i wsparcie techniczne, żebyś nie składał strony z przypadkowych elementów.</p>
         </div>
 

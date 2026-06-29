@@ -377,7 +377,7 @@ export default function HomeProcess() {
           <h2
             className={clsx('wc-heading-section wc-text-dark lg:max-w-[20ch] leading-[1.02]')}
           >
-            Przejrzysty proces od briefu do publikacji
+            Przejrzysty proces <span className="wc-text-highlight">od briefu do publikacji</span>
           </h2>
           <p
             className={clsx(

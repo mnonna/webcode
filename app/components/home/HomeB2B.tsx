@@ -57,7 +57,7 @@ export default function HomeB2B() {
 
           <div data-b2b-reveal="">
             <div className="wc-eyebrow">Współpraca B2B</div>
-            <h2 className="wc-heading-section wc-text-dark max-w-[12ch]">Pracuję przy projektach komercyjnych w modelu B2B</h2>
+            <h2 className="wc-heading-section wc-text-dark max-w-[12ch]">Pracuję przy projektach komercyjnych <span className="wc-text-highlight">w modelu B2B</span></h2>
             <p className="wc-body-lg mt-5">
               Część projektów realizuję dla agencji i firm technologicznych jako partner lub podwykonawca. W takich współpracach liczy się poufność, terminowość i odpowiedzialność za jakość wdrożenia.
             </p>
