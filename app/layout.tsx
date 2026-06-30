@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { localBusinessLd, organizationLd } from "./data/jsonLd";
-import "./globals.css";
+import "./globals.scss";
+import "./scss/landing-utils.scss";
 
 export const metadata: Metadata = {
   title: "Webcode - Tworzę strony, które działają",

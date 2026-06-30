@@ -7,6 +7,7 @@ import HomeStory from './home/HomeStory';
 import HomeServices from './home/HomeServices';
 import HomeB2B from './home/HomeB2B';
 import HomeProcess from './home/HomeProcess';
+import Faq from './home/Faq';
 import HomeContact from './home/HomeContact';
 
 export default function HomePageClient() {
@@ -19,6 +20,7 @@ export default function HomePageClient() {
         <HomeServices />
         <HomeB2B />
         <HomeProcess />
+        <Faq />
         <HomeContact />
       </main>
       <Footer />

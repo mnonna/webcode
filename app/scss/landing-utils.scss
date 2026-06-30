@@ -282,6 +282,16 @@
   letter-spacing: -0.04em;
 }
 
+.faq-card {
+  &__answer {
+    transition: opacity 0.3s var(--tween-out-back), max-height 0.3s var(--tween-out-back), margin-top 0.3s var(--tween-out-back);
+  }
+
+  &__answer-text {
+    transition: translate 0.3s var(--tween-out-sine);
+  }
+}
+
 @media (max-width: 767px) {
   .wc-heading-sm {
     font-size: 16px;
