@@ -5,23 +5,45 @@ import { useRef } from "react";
 export default function Faq() {
     const sectionEl = useRef<HTMLElement>(null);
 
+    const faqSchema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faq.map((item) => ({
+            "@type": "Question",
+            "name": item.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": item.answer,
+            },
+        })),
+    };
+
     return (
-        <section className="landing-section landing-section--faq" ref={sectionEl}>
-            <div className="section-shell">
-                <div className="flex flex-col items-center justify-center text-center mb-12 lg:mb-16">
-                    <div className="wc-eyebrow">FAQ</div>
-                    <h2 className="">
-                        Masz pytania?<br/><span className="wc-text-highlight">Sprawdź odpowiedzi</span>
-                    </h2>
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(faqSchema),
+                }}
+            />
+
+            <section className="landing-section landing-section--faq" ref={sectionEl}>
+                <div className="section-shell">
+                    <div className="flex flex-col items-center justify-center text-center mb-12 lg:mb-16">
+                        <div className="wc-eyebrow">FAQ</div>
+                        <h2 className="">
+                            Masz pytania?<br/><span className="wc-text-highlight">Sprawdź odpowiedzi</span>
+                        </h2>
+                    </div>
+                    <div className="faq-list lg:max-w-[800px] mx-auto">
+                        {faq.map((item, index) => (
+                            <div key={index} className="faq-item mb-4 last:mb-0">
+                                <FaqCard question={item.question} answer={item.answer}/>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-                <div className="faq-list lg:max-w-[800px] mx-auto">
-                    {faq.map((item, index) => (
-                        <div key={index} className="faq-item mb-4 last:mb-0">
-                            <FaqCard question={item.question} answer={item.answer}/>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
+            </section>
+        </>
     );
 }
