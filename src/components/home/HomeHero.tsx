@@ -194,7 +194,7 @@ export default function HomeHero() {
   }, [reducedMotion]);
 
   return (
-    <section id="hero" ref={sectionRef} className="landing-section landing-section--hero overflow-hidden">
+    <section id="hero" ref={sectionRef} className="section section--hero overflow-hidden">
       <div className="section-shell">
         <div className="wc-fluid-gap-hero grid items-center lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
           <div className="relative z-10">

@@ -135,7 +135,7 @@ export default function HomeStory() {
     <section
       id="story"
       ref={sectionRef}
-      className="landing-section landing-section--story"
+      className="section section--story"
       style={{ ['--story-progress-scale' as string]: reducedMotion || !isDesktop ? '1' : '0' }}
     >
       <div className="section-shell mb-10 flex flex-col items-center text-center">

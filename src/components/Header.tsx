@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
-import { HOME_NAV_ITEMS } from '../navigation';
+import { HOME_NAV_ITEMS } from '../data/navigation';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,7 +24,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-b border-[rgba(230,236,245,0.72)] bg-white/82 backdrop-blur-xl transition-transform duration-300 ${
+      className={`sticky inset-x-0 top-0 z-50 border-b border-[rgba(230,236,245,0.72)] bg-white/82 backdrop-blur-xl transition-transform duration-300 ${
         isHiddenBySection ? '-translate-y-full' : 'translate-y-0'
       }`}
     >

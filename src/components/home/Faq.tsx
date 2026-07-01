@@ -27,7 +27,7 @@ export default function Faq() {
                 }}
             />
 
-            <section className="landing-section landing-section--faq" ref={sectionEl}>
+            <section className="section section--faq" ref={sectionEl}>
                 <div className="section-shell">
                     <div className="flex flex-col items-center justify-center text-center mb-12 lg:mb-16">
                         <div className="wc-eyebrow">FAQ</div>

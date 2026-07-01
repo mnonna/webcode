@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { HOME_NAV_ITEMS } from '../navigation';
+import { HOME_NAV_ITEMS } from '../data/navigation';
 
 export default function Footer() {
   return (

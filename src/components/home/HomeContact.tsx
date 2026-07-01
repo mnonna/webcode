@@ -60,7 +60,7 @@ export default function HomeContact() {
   }, [focusedField, reducedMotion]);
 
   return (
-    <section id="contact" ref={sectionRef} className="landing-section landing-section--contact">
+    <section id="contact" ref={sectionRef} className="section section--contact">
       <div className="section-shell wc-fluid-gap-main grid lg:grid-cols-[0.92fr_minmax(0,1.08fr)]">
         <div>
           <div data-contact-reveal="" className="wc-eyebrow">Masz projekt? Napisz do mnie.</div>

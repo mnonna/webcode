@@ -1,9 +1,6 @@
-export interface Faq {
-    question: string;
-    answer: string;
-}
+import I_Faq from '../interface/Faq';
 
-export const faq: Faq [] = [
+export const faq: I_Faq [] = [
     {
       "question": "Ile kosztuje profesjonalna strona internetowa dla firmy?",
       "answer": "Koszt strony internetowej zależy od zakresu projektu, liczby podstron, funkcji, treści oraz poziomu indywidualnego dopasowania. Inaczej wyceniana jest prosta strona firmowa WordPress, a inaczej rozbudowana strona z ofertą, blogiem, formularzami, integracjami lub dodatkowymi modułami. Każdą wycenę przygotowuję indywidualnie po poznaniu celu strony i potrzeb Twojej firmy."

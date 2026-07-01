@@ -47,7 +47,7 @@ export default function HomeB2B() {
   }, [reducedMotion]);
 
   return (
-    <section id="b2b" ref={sectionRef} className="landing-section">
+    <section id="b2b" ref={sectionRef} className="section">
       <div className="section-shell wc-surface-panel wc-panel-fluid-b2b overflow-hidden">
         <div className="wc-fluid-gap-feature grid items-center lg:grid-cols-[0.95fr_0.8fr_0.72fr]">
           <div data-b2b-reveal="" className="relative mx-auto max-w-[560px]">

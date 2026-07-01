@@ -366,7 +366,7 @@ export default function HomeProcess() {
     <section
       id="process"
       ref={sectionRef}
-      className="landing-section overflow-hidden"
+      className="section overflow-hidden"
       style={{ ['--process-progress-scale' as string]: `${manualProgressScale}` }}
     >
       <div className="section-shell">
