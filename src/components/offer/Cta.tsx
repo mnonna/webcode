@@ -2,7 +2,7 @@ import React from "react";
 import I_Cta from "@/src/interface/Cta";
 import Link from 'next/link';
 import { MessagesSquare, SquarePen, ShieldCheck } from "lucide-react";
-import ContactCharacter from "../common/animate/ContactCharacter";
+import Image from "next/image";
 
 export default function Cta({ eyebrow, title, description, button }: I_Cta) {
     const icons = [
@@ -48,7 +48,7 @@ export default function Cta({ eyebrow, title, description, button }: I_Cta) {
                             </div>
                         </div>
                         <div className="flex w-full lg:w-1/2 max-w-[640px] shrink-0 justify-center">
-                            <ContactCharacter />
+                            <Image src="/offer/common/cta-offer.png" alt="Contact Character" width={640} height={640} className="w-full h-auto" />
                         </div>
                     </div>
                 </div>
