@@ -20,7 +20,7 @@ export default function HomePageClient() {
         <HomeServices />
         <HomeB2B />
         <HomeProcess />
-        <Faq />
+        <Faq data={null}/>
         <HomeContact />
       </main>
       <Footer />

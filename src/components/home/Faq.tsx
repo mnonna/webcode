@@ -1,9 +1,13 @@
+'use client';
+
 import { faq } from "../../data/faq";
 import FaqCard from "../common/FaqCard";
 import { useRef } from "react";
+import { I_Data_Faq } from "@/src/interface/Faq";
 
-export default function Faq() {
+export default function Faq({ data } : I_Data_Faq) {
     const sectionEl = useRef<HTMLElement>(null);
+    const faqData = (!data) ? faq : data;
 
     const faqSchema = {
         "@context": "https://schema.org",
@@ -36,7 +40,7 @@ export default function Faq() {
                         </h2>
                     </div>
                     <div className="faq-list lg:max-w-[800px] mx-auto">
-                        {faq.map((item, index) => (
+                        {faqData.map((item, index) => (
                             <div key={index} className="faq-item mb-4 last:mb-0">
                                 <FaqCard question={item.question} answer={item.answer}/>
                             </div>

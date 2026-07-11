@@ -1,5 +1,10 @@
 import I_HeroOffer from "@/src/interface/HeroOffer";
 import poznanHeroImage from "@/public/offer/poznan/hero.avif";
+import wagrowiecHeroImage from "@/public/offer/wagrowiec/wagrowiec-rynek.webp";
+import chodziezHeroImage from "@/public/offer/chodziez/chodziez-rynek.avif";
+import pilaHeroImage from "@/public/offer/pila/pila-rynek.avif";
+import { parseOfferPageSlug } from "@/src/helpers";
+import { getOfferDefinition } from "@/src/data/offer/catalog";
 
 type HeroOfferData = Record<string, Record<string, I_HeroOffer>>;
 
@@ -12,17 +17,20 @@ const emptyHeroOffer: I_HeroOffer = {
     imageAlt: '',
 };
 
-export function parseOfferPageSlug(slug: string) {
-    const normalizedSlug = slug.toLowerCase().trim().replace(/\s+/g, '-');
-    const slugParts = normalizedSlug.split('-').filter(Boolean);
-
-    return {
-        locationSlug: slugParts.at(-1) ?? '',
-        offerSlug: slugParts.slice(0, -1).join('-'),
-    };
-}
-
 export default function getHeroOfferData(slug: string): I_HeroOffer {
+    const offer = getOfferDefinition(slug);
+    if (offer) {
+        const { service, location } = offer;
+        return {
+            eyebrow: `${service.eyebrow} ${location.name}`,
+            titleHighlight: `${service.name} ${location.inCity}`,
+            title: service.title,
+            description: service.description(location),
+            image: location.image,
+            imageAlt: `${service.name} ${location.inCity} — ${location.imageDescription}.`,
+        };
+    }
+
     const { offerSlug, locationSlug } = parseOfferPageSlug(slug);
 
     const heroOfferData: HeroOfferData = {
@@ -34,6 +42,38 @@ export default function getHeroOfferData(slug: string): I_HeroOffer {
                 description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Poznania i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
                 image: poznanHeroImage,
                 imageAlt: 'Strony internetowe Poznań - zdjęcie rynku w Poznaniu z widokiem na Stary Rynek i Ratusz, symbolizujące lokalizację usług.',
+            },
+            'komorniki': {
+                eyebrow: 'Strony internetowe Komorniki',
+                titleHighlight: 'Strony internetowe w Komornikach',
+                title: 'dla firm, które chcą pozyskiwać klientów online',
+                description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Komornik i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
+                image: poznanHeroImage,
+                imageAlt: 'Strony internetowe Komorniki - zdjęcie rynku w Poznaniu z widokiem na Stary Rynek i Ratusz, symbolizujące lokalizację usług.',
+            },
+            'wagrowiec': {
+                eyebrow: 'Strony internetowe Wągrowiec',
+                titleHighlight: 'Strony internetowe w Wągrowcu',
+                title: 'dla firm, które chcą pozyskiwać klientów online',
+                description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Wągrowca i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
+                image: wagrowiecHeroImage,
+                imageAlt: 'Strony internetowe w Wągrowcu - zdjęcie rynku w Wągrowcu z widokiem na Stary Rynek, symbolizujące lokalizację usług.',
+            },
+            'chodziez': {
+                eyebrow: 'Strony internetowe Chodzież',
+                titleHighlight: 'Strony internetowe w Chodzieży',
+                title: 'dla firm, które chcą pozyskiwać klientów online',
+                description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Chodzieży i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
+                image: chodziezHeroImage,
+                imageAlt: 'Strony internetowe w Chodzieży - zdjęcie rynku w Chodzieży z widokiem na Stary Rynek, symbolizujące lokalizację usług.',
+            },
+            'pila': {
+                eyebrow: 'Strony internetowe Piła',
+                titleHighlight: 'Strony internetowe w Pile',
+                title: 'dla firm, które chcą pozyskiwać klientów online',
+                description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Piły i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
+                image: pilaHeroImage,
+                imageAlt: 'Strony internetowe w Pile - zdjęcie rynku w Pile z widokiem na Stary Rynek, symbolizujące lokalizację usług.',
             },
         },
     };

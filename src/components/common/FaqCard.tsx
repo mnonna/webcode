@@ -1,3 +1,5 @@
+'use client';
+
 import clsx from "clsx";
 import { useLayoutEffect, useState, useRef } from "react";
 import { Plus, Minus } from 'lucide-react';

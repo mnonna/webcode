@@ -50,7 +50,7 @@
   --space-section-bottom-contact: clamp(64px, calc(55.843137px + 2.091503vw), 96px);
   --space-hero-pt-min: 112px;
   --space-hero-pt-max: 128px;
-  --space-hero-pt: clamp(112px, calc(107.921569px + 1.045752vw), 128px);
+  --space-hero-pt: clamp(72px, calc(107.921569px + 1.045752vw), 112px);
   --space-grid-main-min: 40px;
   --space-grid-main-max: 64px;
   --space-grid-main: clamp(40px, calc(33.882353px + 1.568627vw), 64px);
@@ -302,7 +302,7 @@
   }
 
   .section--hero {
-    padding-top: var(--space-hero-pt);
+    //padding-top: var(--space-hero-pt);
   }
 
   .section--story {

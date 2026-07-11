@@ -1,20 +1,53 @@
 import I_PageParams from '@/src/interface/PageParams';
 import getHeroOfferData from '@/src/data/offer/hero';
+import getOfferFaq from "@/src/data/offer/faq";
 import OfferHero from '@/src/components/offer/Hero';
+import OfferCards from '@/src/components/offer/OfferCards';
+import Faq from '@/src/components/home/Faq';
+import Cta from '@/src/components/offer/Cta';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
+import getOfferCta from '@/src/data/offer/cta';
+import { getOfferDefinition, offerPageSlugs, SITE_URL } from '@/src/data/offer/catalog';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-    return [
-        { slug: 'strony-internetowe-poznan' },
-    ];
+    return offerPageSlugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: I_PageParams): Promise<Metadata> {
+    const { slug } = await params;
+    const offer = getOfferDefinition(slug);
+    if (!offer) return {};
+
+    const { service, location } = offer;
+    const title = `${service.name} ${location.name} | Webcode`;
+    const description = service.metadataDescription(location);
+    const canonical = `${SITE_URL}/oferta/${slug}`;
+
+    return {
+        title,
+        description,
+        alternates: { canonical },
+        openGraph: {
+            title,
+            description,
+            url: canonical,
+            type: 'website',
+            locale: 'pl_PL',
+        },
+    };
 }
 
 export default async function OfferSinglePage({ params }: I_PageParams) {
     const { slug } = await params;
+    if (!getOfferDefinition(slug)) notFound();
     const heroData = getHeroOfferData(slug);
+    const faqData = getOfferFaq(slug);
+    const ctaData = getOfferCta(slug);
 
     return (
         <div
@@ -23,6 +56,9 @@ export default async function OfferSinglePage({ params }: I_PageParams) {
             <Header />
             <main>
                 <OfferHero {...heroData} />
+                <OfferCards />
+                <Cta {...ctaData} />
+                <Faq data={faqData} />
             </main>
             <Footer />
         </div>

@@ -31,7 +31,7 @@ export const faq: I_Faq [] = [
     },
     {
       "question": "Czy oferujesz opiekę techniczną nad stroną WordPress?",
-      "answer": "Tak. Po wdrożeniu mogę zapewnić opiekę techniczną nad stroną WordPress, obejmującą aktualizacje, kopie zapasowe, monitoring, drobne poprawki i rozwój strony. Dzięki temu nie zostajesz sam z techniczną obsługą strony po jej publikacji."
+      "answer": "Tak. Po wdrożeniu mogę zapewnić opiekę techniczną nad stroną WordPress, obejmującą aktualizacje, monitoring, drobne poprawki i rozwój strony. Dzięki temu nie zostajesz sam z techniczną obsługą strony po jej publikacji."
     },
     {
       "question": "Czy mogę samodzielnie edytować treści na stronie?",
