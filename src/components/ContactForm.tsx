@@ -2,6 +2,8 @@
 
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Send } from 'lucide-react';
+import { ToastContainer, Zoom, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type ContactFormProps = {
   onFocusFieldChange?: (field: string | null) => void;
@@ -31,13 +33,13 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
     }
 
     try {
-      const response = await fetch('https://mailer.webcode.com.pl/mail', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         body: payload,
       });
 
       if (response.ok) {
-        alert('Dziękuję za wiadomość. Odezwę się najszybciej, jak to możliwe.');
+        toast.success('Dziękuję za wiadomość. Odezwę się najszybciej, jak to możliwe.');
         setFormData({ name: '', email: '', message: '' });
         setSelectedFile(null);
 
@@ -45,11 +47,11 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
           fileInputRef.current.value = '';
         }
       } else {
-        alert('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
+        toast.error('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
+      toast.error('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
     } finally {
       setIsSubmitting(false);
     }
@@ -72,13 +74,13 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
     const maxSize = 10 * 1024 * 1024;
 
     if (!allowedTypes.includes(file.type)) {
-      alert('Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG.');
+      toast.warning('Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG.');
       event.target.value = '';
       return;
     }
 
     if (file.size > maxSize) {
-      alert('Plik jest za duży. Maksymalny rozmiar to 10 MB.');
+      toast.warning('Plik jest za duży. Maksymalny rozmiar to 10 MB.');
       event.target.value = '';
       return;
     }
@@ -87,7 +89,19 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
+    <>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        pauseOnFocusLoss
+        pauseOnHover
+        theme="light"
+        transition={Zoom}
+      />
+      <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid gap-5 md:grid-cols-2">
         <div>
           <label htmlFor="name" className="wc-label mb-2 block">Imię i nazwisko</label>
@@ -155,6 +169,7 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
         <span>{isSubmitting ? 'Wysyłanie...' : 'Wyślij wiadomość'}</span>
         <Send size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
       </button>
-    </form>
+      </form>
+    </>
   );
 }
