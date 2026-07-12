@@ -3,6 +3,7 @@ import getHeroOfferData from '@/src/data/offer/hero';
 import getOfferFaq from "@/src/data/offer/faq";
 import OfferHero from '@/src/components/offer/Hero';
 import OfferCards from '@/src/components/offer/OfferCards';
+import OfferPricing from '@/src/components/offer/OfferPricing';
 import Faq from '@/src/components/home/Faq';
 import Cta from '@/src/components/offer/Cta';
 import Header from '@/src/components/Header';
@@ -44,7 +45,8 @@ export async function generateMetadata({ params }: I_PageParams): Promise<Metada
 
 export default async function OfferSinglePage({ params }: I_PageParams) {
     const { slug } = await params;
-    if (!getOfferDefinition(slug)) notFound();
+    const offer = getOfferDefinition(slug);
+    if (!offer) notFound();
     const heroData = getHeroOfferData(slug);
     const faqData = getOfferFaq(slug);
     const ctaData = getOfferCta(slug);
@@ -57,6 +59,7 @@ export default async function OfferSinglePage({ params }: I_PageParams) {
             <main>
                 <OfferHero {...heroData} />
                 <OfferCards />
+                <OfferPricing />
                 <Cta {...ctaData} />
                 <Faq data={faqData} />
             </main>

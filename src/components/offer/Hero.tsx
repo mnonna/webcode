@@ -3,7 +3,10 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
 export default function OfferHero(props: I_HeroOffer) {
-    const { eyebrow, titleHighlight, title, description, image, imageAlt } = props;
+    const { eyebrow, titleHighlight, title, description, image, imageAlt, disableSecondButton } = props;
+
+    let hasSecondButton = true;
+    if (disableSecondButton && disableSecondButton === true) hasSecondButton = false;
 
     return (
         <section className="section section--offerHero">
@@ -22,9 +25,11 @@ export default function OfferHero(props: I_HeroOffer) {
                             Bezpłatna wycena
                             <ArrowRight size={18} />
                         </a>
-                        <a href="#process" className="wc-btn-secondary">
-                            Zobacz, jak pracuję
-                        </a>
+                        { hasSecondButton &&  (
+                            <a href="#process" className="wc-btn-secondary">
+                                Zobacz, jak pracuję
+                            </a>
+                        )}
                         </div>
                     </div>
                     <div className="relative aspect-[16/9]">

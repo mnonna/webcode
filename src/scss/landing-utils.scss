@@ -50,6 +50,13 @@
   letter-spacing: -0.02em;
 }
 
+.wc-heading-lg {
+  font-family: var(--font-heading);
+  font-size: 1.725rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .wc-heading-sm {
   font-family: var(--font-heading);
   font-size: 1.125rem;
@@ -293,6 +300,10 @@
 }
 
 @media (max-width: 767px) {
+  .wc-heading-lg {
+    font-size: 1.3rem;
+  }
+  
   .wc-heading-sm {
     font-size: 16px;
   }

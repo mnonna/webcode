@@ -7,4 +7,5 @@ export default interface I_HeroOffer {
     description: string;
     image: string | StaticImport,
     imageAlt?: string;
+    disableSecondButton?: boolean;
 }

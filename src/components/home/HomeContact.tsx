@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { LucideIcon, Mail, MapPin, Phone } from 'lucide-react';
 import ContactForm from '../ContactForm';

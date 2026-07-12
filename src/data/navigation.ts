@@ -4,7 +4,7 @@ export type HomeNavItem = {
 };
 
 export const HOME_NAV_ITEMS: HomeNavItem[] = [
-  { href: '/#services', label: 'Usługi' },
+  { href: '/oferta', label: 'Oferta' },
   { href: '/#story', label: 'Jak działa strona' },
   { href: '/#b2b', label: 'Współpraca B2B' },
   { href: '/#process', label: 'Proces' },
