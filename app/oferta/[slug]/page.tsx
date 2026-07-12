@@ -6,6 +6,7 @@ import OfferCards from '@/src/components/offer/OfferCards';
 import OfferPricing from '@/src/components/offer/OfferPricing';
 import Faq from '@/src/components/home/Faq';
 import Cta from '@/src/components/offer/Cta';
+import OtherLocations from '@/src/components/offer/OtherLocations';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import getOfferCta from '@/src/data/offer/cta';
@@ -61,6 +62,10 @@ export default async function OfferSinglePage({ params }: I_PageParams) {
                 <OfferCards />
                 <OfferPricing />
                 <Cta {...ctaData} />
+                <OtherLocations
+                    serviceSlug={offer.serviceSlug}
+                    currentLocationSlug={offer.locationSlug}
+                />
                 <Faq data={faqData} />
             </main>
             <Footer />
