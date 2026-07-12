@@ -23,8 +23,8 @@ export default function Cta({ eyebrow, title, description, button }: I_Cta) {
     return (
         <section className="section">
             <div className="section-shell">
-                <div className="px-16 py-6 pb-0 wc-bg-blue-soft rounded-lg">
-                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-16">
+                <div className="p-5 lg:px-16 lg:py-6 pb-0 wc-bg-blue-soft rounded-lg">
+                    <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-16">
                         <div className="w-full lg:w-1/2 max-w-[70ch] lg:pb-6">
                             <div className="wc-eyebrow ">{eyebrow}</div>
                             <div className="flex flex-col gap-6">
