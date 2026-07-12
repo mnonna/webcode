@@ -12,7 +12,7 @@ export default function OfferPriceCard (props: I_OfferPriceCard) {
     const [priceType, setPriceType] = useState<'net' | 'gross'>('net');
     const title = resolveOfferPacketName(packetName);
     const price = priceType === 'net' ? priceNet : priceGross;
-    const formattedPrice = new Intl.NumberFormat('pl-PL', { maximumFractionDigits: 2 }).format(price);
+    const formattedPrice = new Intl.NumberFormat('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price);
 
     return (
         <div className="flex flex-col p-4 rounded-[16px] border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
