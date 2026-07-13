@@ -48,7 +48,14 @@ export default function Cta({ eyebrow, title, description, button }: I_Cta) {
                             </div>
                         </div>
                         <div className="flex w-full lg:w-1/2 max-w-[640px] shrink-0 justify-center">
-                            <Image src="/offer/common/cta-offer.png" alt="Contact Character" width={640} height={640} className="w-full h-auto" />
+                            <Image
+                                src="/offer/common/cta-offer.png"
+                                alt="Contact Character"
+                                width={640}
+                                height={640}
+                                sizes="(max-width: 1023px) calc(100vw - 40px), 50vw"
+                                className="h-auto w-full"
+                            />
                         </div>
                     </div>
                 </div>

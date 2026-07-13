@@ -1,4 +1,5 @@
 ﻿import { useLayoutEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import clsx from 'clsx';
 import { BadgeCheck, Eye, Rocket, ShieldCheck } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../../lib/gsap';
@@ -203,10 +204,13 @@ export default function HomeStory() {
         <div className="relative">
           <div ref={previewRef} data-story-preview="" className="wc-surface-panel wc-contain-paint wc-panel-fluid-preview w-full overflow-hidden">
             <div className="absolute inset-x-[10%] top-[4%] h-[52%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.14)_0%,_rgba(21,87,255,0)_72%)] blur-2xl"></div>
-            <img
+            <Image
               src="/landing/story-preview.avif"
               alt="Makieta sekcji pokazującej, jak strona prowadzi klienta do działania"
-              className="relative z-10 w-full rounded-[28px] object-contain"
+              width={1448}
+              height={1086}
+              sizes="(max-width: 1023px) calc(100vw - 32px), 58vw"
+              className="relative z-10 h-auto w-full rounded-[28px] object-contain"
             />
           </div>
         </div>

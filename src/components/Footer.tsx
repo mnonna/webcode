@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { HOME_NAV_ITEMS } from '../data/navigation';
 
 export default function Footer() {
@@ -7,7 +8,7 @@ export default function Footer() {
       <div className="section-shell">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <div>
-            <img src="/logo.png" alt="Webcode Logo" className="h-auto max-w-[178px]" />
+            <Image src="/logo.png" alt="Webcode Logo" width={178} height={34} />
             <p className="mt-4 max-w-[34ch] text-[0.96rem] leading-[1.7] text-[var(--wc-text)]">
               Projektuję i wdrażam strony, które mają wyglądać nowocześnie, działać szybko i prowadzić do kontaktu.
             </p>

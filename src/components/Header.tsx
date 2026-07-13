@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { HOME_NAV_ITEMS } from '../data/navigation';
 
@@ -31,7 +32,7 @@ export default function Header() {
       <nav className="section-shell py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <img src="/logo.png" alt="Webcode Logo" className="h-auto max-w-[208px]" />
+            <Image src="/logo.png" alt="Webcode Logo" width={208} height={40} />
           </Link>
 
           <div className="hidden items-center gap-7 lg:flex">

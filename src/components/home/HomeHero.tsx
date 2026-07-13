@@ -1,6 +1,7 @@
 'use client';
 
 import { useLayoutEffect, useRef } from 'react';
+import Image from 'next/image';
 import { ArrowRight, Code2, Search, ShieldCheck, ShoppingCart, Sparkles, Wrench } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
@@ -233,7 +234,15 @@ export default function HomeHero() {
           <div className="relative z-1 mx-auto w-full max-w-[860px] lg:max-w-none">
             <div className="absolute inset-x-[14%] top-[10%] h-[52%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.16)_0%,_rgba(21,87,255,0)_72%)] opacity-80 blur-2xl min-[1400px]:inset-x-[10%] min-[1400px]:top-[8%] min-[1400px]:h-[58%] min-[1400px]:opacity-100 min-[1400px]:blur-3xl"></div>
             <div data-hero-asset="" className="wc-contain-paint relative z-10">
-              <img src="/landing/hero-main.avif" alt="Mockup panelu projektu Webcode" className="w-full rounded-[32px] object-contain drop-shadow-[0_34px_90px_rgba(15,23,42,0.18)]" />
+              <Image
+                src="/landing/hero-main.avif"
+                alt="Mockup panelu projektu Webcode"
+                width={1448}
+                height={1086}
+                sizes="(max-width: 1023px) calc(100vw - 32px), 53vw"
+                preload
+                className="h-auto w-full rounded-[32px] object-contain drop-shadow-[0_34px_90px_rgba(15,23,42,0.18)]"
+              />
             </div>
             {heroCards.map((card) => (
               <HeroCard key={card.title} {...card} />

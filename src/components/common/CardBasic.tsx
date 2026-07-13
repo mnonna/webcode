@@ -8,11 +8,9 @@ export default function CardBasic({ image, title, description }: I_CardBasic) {
                 <Image
                     src={image}
                     alt={title ?? ''}
-                    width={700}
-                    height={400}
-                    preload
-                    unoptimized
-                    className="absolute top-0 left-0 w-full h-full rounded-[8px] object-cover"
+                    fill
+                    sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) 50vw, 25vw"
+                    className="object-cover"
                 />
             </div>
             <div className="flex flex-col gap-2">

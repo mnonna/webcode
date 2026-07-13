@@ -1,4 +1,5 @@
 ﻿import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
 import clsx from 'clsx';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -417,10 +418,12 @@ export default function HomeProcess() {
                   }}
                   aria-hidden={index === activeIndex ? undefined : true}
                 >
-                  <img
+                  <Image
                     src={slide.imageSrc}
                     alt={slide.imageAlt}
-                    className="h-[100svh] w-full object-cover object-center"
+                    fill
+                    sizes="100vw"
+                    className="object-cover object-center"
                   />
                 </div>
               ))}
@@ -500,11 +503,13 @@ export default function HomeProcess() {
                 {processSlides.map((slide, index) => (
                   <div key={slide.id} className="min-w-0 flex-[0_0_100%] pl-4">
                     <article className="overflow-hidden rounded-[32px] border border-[rgba(230,236,245,0.9)] bg-white lg:shadow-[0_18px_48px_rgba(15,23,42,0.08)]">
-                      <div className="aspect-[0.93] overflow-hidden bg-[var(--wc-surface)] lg:aspect-[1.36]">
-                        <img
+                      <div className="relative aspect-[0.93] overflow-hidden bg-[var(--wc-surface)] lg:aspect-[1.36]">
+                        <Image
                           src={slide.imageSrc}
                           alt={slide.imageAlt}
-                          className="h-full w-full object-cover object-center"
+                          fill
+                          sizes="(max-width: 1023px) calc(100vw - 32px), 100vw"
+                          className="object-cover object-center"
                         />
                       </div>
 
