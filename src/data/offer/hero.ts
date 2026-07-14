@@ -1,8 +1,4 @@
 import I_HeroOffer from "@/src/interface/HeroOffer";
-import poznanHeroImage from "@/public/offer/poznan/hero.avif";
-import wagrowiecHeroImage from "@/public/offer/wagrowiec/wagrowiec-rynek.webp";
-import chodziezHeroImage from "@/public/offer/chodziez/chodziez-rynek.avif";
-import pilaHeroImage from "@/public/offer/pila/pila-rynek.avif";
 import { parseOfferPageSlug } from "@/src/helpers";
 import { getOfferDefinition } from "@/src/data/offer/catalog";
 
@@ -40,7 +36,7 @@ export default function getHeroOfferData(slug: string): I_HeroOffer {
                 titleHighlight: 'Strony internetowe w Poznaniu',
                 title: 'dla firm, które chcą pozyskiwać klientów online',
                 description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Poznania i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
-                image: poznanHeroImage,
+                image: '/offer/poznan/hero.avif',
                 imageAlt: 'Strony internetowe Poznań - zdjęcie rynku w Poznaniu z widokiem na Stary Rynek i Ratusz, symbolizujące lokalizację usług.',
             },
             'komorniki': {
@@ -48,7 +44,7 @@ export default function getHeroOfferData(slug: string): I_HeroOffer {
                 titleHighlight: 'Strony internetowe w Komornikach',
                 title: 'dla firm, które chcą pozyskiwać klientów online',
                 description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Komornik i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
-                image: poznanHeroImage,
+                image: '/offer/poznan/hero.avif',
                 imageAlt: 'Strony internetowe Komorniki - zdjęcie rynku w Poznaniu z widokiem na Stary Rynek i Ratusz, symbolizujące lokalizację usług.',
             },
             'wagrowiec': {
@@ -56,7 +52,7 @@ export default function getHeroOfferData(slug: string): I_HeroOffer {
                 titleHighlight: 'Strony internetowe w Wągrowcu',
                 title: 'dla firm, które chcą pozyskiwać klientów online',
                 description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Wągrowca i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
-                image: wagrowiecHeroImage,
+                image: '/offer/wagrowiec/wagrowiec-rynek.webp',
                 imageAlt: 'Strony internetowe w Wągrowcu - zdjęcie rynku w Wągrowcu z widokiem na Stary Rynek, symbolizujące lokalizację usług.',
             },
             'chodziez': {
@@ -64,7 +60,7 @@ export default function getHeroOfferData(slug: string): I_HeroOffer {
                 titleHighlight: 'Strony internetowe w Chodzieży',
                 title: 'dla firm, które chcą pozyskiwać klientów online',
                 description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Chodzieży i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
-                image: chodziezHeroImage,
+                image: '/offer/chodziez/chodziez-rynek.avif',
                 imageAlt: 'Strony internetowe w Chodzieży - zdjęcie rynku w Chodzieży z widokiem na Stary Rynek, symbolizujące lokalizację usług.',
             },
             'pila': {
@@ -72,7 +68,7 @@ export default function getHeroOfferData(slug: string): I_HeroOffer {
                 titleHighlight: 'Strony internetowe w Pile',
                 title: 'dla firm, które chcą pozyskiwać klientów online',
                 description: 'Projektuję i wdrażam nowoczesne strony WordPress, landing page’e i sklepy WooCommerce dla firm z Piły i okolic. Dbam o czytelny UX, szybkie działanie, podstawy SEO i układ, który prowadzi użytkownika do kontaktu.',
-                image: pilaHeroImage,
+                image: '/offer/pila/pila-rynek.avif',
                 imageAlt: 'Strony internetowe w Pile - zdjęcie rynku w Pile z widokiem na Stary Rynek, symbolizujące lokalizację usług.',
             },
         },

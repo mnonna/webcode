@@ -1,9 +1,3 @@
-import type { StaticImport } from 'next/dist/shared/lib/get-img-props';
-import poznanHeroImage from '@/public/offer/poznan/hero.avif';
-import wagrowiecHeroImage from '@/public/offer/wagrowiec/wagrowiec-rynek.webp';
-import chodziezHeroImage from '@/public/offer/chodziez/chodziez-rynek.avif';
-import pilaHeroImage from '@/public/offer/pila/pila-rynek.avif';
-
 export const SITE_URL = 'https://webcode.com.pl';
 
 export const locations = {
@@ -11,42 +5,42 @@ export const locations = {
     name: 'Poznań',
     inCity: 'w Poznaniu',
     fromCity: 'z Poznania',
-    image: poznanHeroImage,
+    image: '/offer/poznan/hero.avif',
     imageDescription: 'Stary Rynek i Ratusz w Poznaniu',
   },
   komorniki: {
     name: 'Komorniki',
     inCity: 'w Komornikach',
     fromCity: 'z Komornik',
-    image: poznanHeroImage,
+    image: '/offer/poznan/hero.avif',
     imageDescription: 'Stary Rynek i Ratusz w Poznaniu, symbolizujące lokalizację usług dla Komornik',
   },
   wagrowiec: {
     name: 'Wągrowiec',
     inCity: 'w Wągrowcu',
     fromCity: 'z Wągrowca',
-    image: wagrowiecHeroImage,
+    image: '/offer/wagrowiec/wagrowiec-rynek.webp',
     imageDescription: 'rynek w Wągrowcu',
   },
   chodziez: {
     name: 'Chodzież',
     inCity: 'w Chodzieży',
     fromCity: 'z Chodzieży',
-    image: chodziezHeroImage,
+    image: '/offer/chodziez/chodziez-rynek.avif',
     imageDescription: 'rynek w Chodzieży',
   },
   pila: {
     name: 'Piła',
     inCity: 'w Pile',
     fromCity: 'z Piły',
-    image: pilaHeroImage,
+    image: '/offer/pila/pila-rynek.avif',
     imageDescription: 'rynek w Pile',
   },
 } as const satisfies Record<string, {
   name: string;
   inCity: string;
   fromCity: string;
-  image: StaticImport;
+  image: string;
   imageDescription: string;
 }>;
 
