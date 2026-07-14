@@ -1,7 +1,27 @@
 import type { Metadata } from "next";
+import { Inter, JetBrains_Mono, Manrope } from "next/font/google";
 import { localBusinessLd, organizationLd } from "../src/data/jsonLd";
 import "./globals.scss";
 import "../src/scss/landing-utils.scss";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-body",
+  display: "swap",
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-heading",
+  display: "swap",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: "500",
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Webcode - Tworzę strony, które działają",
@@ -36,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="pl"
-      className={`h-full antialiased`}
+      className={`${inter.variable} ${manrope.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <head>
         <script

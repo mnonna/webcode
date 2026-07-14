@@ -39,6 +39,7 @@ export default function OfferHero(props: I_HeroOffer) {
                             fill
                             sizes="(max-width: 1023px) calc(100vw - 32px), 53vw"
                             preload
+                            unoptimized
                             className="wc-hero-image rounded-[16px] object-cover"
                         />
                     </div>

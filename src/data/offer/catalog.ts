@@ -5,14 +5,14 @@ export const locations = {
     name: 'Poznań',
     inCity: 'w Poznaniu',
     fromCity: 'z Poznania',
-    image: '/offer/poznan/hero.avif',
+    image: '/offer/poznan/hero.webp',
     imageDescription: 'Stary Rynek i Ratusz w Poznaniu',
   },
   komorniki: {
     name: 'Komorniki',
     inCity: 'w Komornikach',
     fromCity: 'z Komornik',
-    image: '/offer/poznan/hero.avif',
+    image: '/offer/poznan/hero.webp',
     imageDescription: 'Stary Rynek i Ratusz w Poznaniu, symbolizujące lokalizację usług dla Komornik',
   },
   wagrowiec: {
@@ -26,14 +26,14 @@ export const locations = {
     name: 'Chodzież',
     inCity: 'w Chodzieży',
     fromCity: 'z Chodzieży',
-    image: '/offer/chodziez/chodziez-rynek.avif',
+    image: '/offer/chodziez/chodziez-rynek.webp',
     imageDescription: 'rynek w Chodzieży',
   },
   pila: {
     name: 'Piła',
     inCity: 'w Pile',
     fromCity: 'z Piły',
-    image: '/offer/pila/pila-rynek.avif',
+    image: '/offer/pila/pila-rynek.webp',
     imageDescription: 'rynek w Pile',
   },
 } as const satisfies Record<string, {
