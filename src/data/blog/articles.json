@@ -1,0 +1,61 @@
+[
+    {
+        "id": 1,
+        "title": "WordPress 7.0.2 — dlaczego warto zaktualizować swoją stronę jak najszybciej?",
+        "slug": "wordpress-7-0-2-dlaczego-warto-zaktualizowac-swoja-strone-jak-najszybciej",
+        "excerpt": "WordPress 7.0.2 usuwa dwie poważne podatności związane z SQL Injection. Najgroźniejsza z nich może w określonych warunkach prowadzić do zdalnego wykonania kodu (RCE). Sprawdź, czy Twoja strona wymaga pilnej aktualizacji.",
+        "author": {
+            "name": "Marcin Nonna",
+            "bio": "Jestem developerem z 5-letnim doświadczeniem w tworzeniu nowoczesnych stron i aplikacji internetowych. Na co dzień pracuję z WordPressem, Reactem, Next.js i Laravelem, łącząc frontend z backendem oraz dbając o wydajność, skalowalność i jakość wdrażanych rozwiązań.",
+            "avatar": "/blog/avatar.jpg"
+        },
+        "date": "2026-07-19T12:00:00+02:00",
+        "dateModified": "2026-07-19T12:00:00+02:00",
+        "readTime": "5 min",
+        "image": "/blog/wordpress.webp",
+        "imageAlt": "WordPress - aktualizacje bezpieczeństwa",
+        "hint": "Jedna niezałatana luka może kosztować więcej niż regularna aktualizacja całej strony.",
+        "contentSections": [
+            {
+                "id": "wprowadzenie",
+                "content": "<p>WordPress 7.0.2 został wydany 17 lipca 2026 roku i nie jest zwykłą aktualizacją poprawiającą drobne błędy czy działanie panelu administracyjnego. To pilna aktualizacja bezpieczeństwa usuwająca dwie poważne podatności związane z SQL Injection.</p><p>Najgroźniejsza z nich dotyczy obsługi zbiorczych zapytań REST API i w określonych warunkach może prowadzić od SQL Injection aż do <strong>Remote Code Execution (RCE)</strong>, czyli zdalnego wykonania kodu na serwerze. W praktyce oznacza to potencjalne ryzyko przejęcia kontroli nad stroną i środowiskiem, na którym działa.</p><p>Ze względu na wagę problemu zespół WordPressa zalecił natychmiastową aktualizację, a dla podatnych instalacji uruchomił również wymuszone aktualizacje poprzez mechanizm automatycznych aktualizacji.</p>"
+            },
+            {
+                "id": "wordpress-7-0-2-krytyczna-aktualizacja-bezpieczenstwa",
+                "content": "<h2>WordPress 7.0.2 to krytyczna aktualizacja bezpieczeństwa</h2><p>Wersja 7.0.2 usuwa dwie podatności sklasyfikowane przez zespół WordPressa jako <strong>critical</strong> oraz <strong>high severity</strong>. Obie są związane z możliwością wykonania ataku SQL Injection, ale ich potencjalne konsekwencje są różne.</p><p>Pierwsza podatność umożliwia przeprowadzenie ataku SQL Injection i może prowadzić do nieautoryzowanego dostępu do danych przechowywanych w bazie WordPressa.</p><p>Druga jest znacznie groźniejsza. Dotyczy mechanizmu obsługi zbiorczych tras REST API i również wykorzystuje SQL Injection, ale w odpowiednich warunkach może doprowadzić do <strong>Remote Code Execution</strong>. Oznacza to możliwość wykonania kodu po stronie serwera.</p><p>To właśnie dlatego aktualizacji 7.0.2 nie należy traktować jako kolejnej rutynowej poprawki. W przypadku podatnej instalacji potencjalnym skutkiem ataku może być nie tylko odczyt danych, ale również znacznie głębsza ingerencja w działanie strony.</p>"
+            },
+            {
+                "id": "czym-jest-sql-injection",
+                "content": "<h2>Czym jest SQL Injection i dlaczego jest tak niebezpieczny?</h2><p>WordPress przechowuje dużą część informacji w bazie danych. Znajdują się tam między innymi treści wpisów i podstron, dane użytkowników, konfiguracja serwisu oraz informacje wykorzystywane przez wiele wtyczek.</p><p>Atak <strong>SQL Injection</strong> polega na wykorzystaniu nieprawidłowo zabezpieczonego zapytania do bazy danych. Atakujący próbuje wpłynąć na treść wykonywanego zapytania SQL, aby uzyskać dostęp do danych lub wykonać operację, która normalnie nie powinna być dla niego dostępna.</p><p>W zależności od konkretnej podatności skutki mogą obejmować między innymi:</p><ul><li>odczyt informacji z bazy danych,</li><li>ujawnienie poufnych danych,</li><li>modyfikację lub usunięcie danych,</li><li>wykorzystanie podatności jako elementu bardziej zaawansowanego ataku.</li></ul><p>W przypadku jednej z luk poprawionych w WordPressie 7.0.2 problem jest jeszcze poważniejszy, ponieważ możliwy scenariusz ataku może prowadzić do zdalnego wykonania kodu.</p>"
+            },
+            {
+                "id": "sql-injection-do-remote-code-execution",
+                "content": "<h2>Od SQL Injection do Remote Code Execution — co może oznaczać taki atak?</h2><p><strong>Remote Code Execution</strong>, w skrócie RCE, to jedna z najpoważniejszych klas podatności w aplikacjach internetowych. Jeżeli atakujący jest w stanie doprowadzić do wykonania własnego kodu na serwerze, konsekwencje mogą wykraczać daleko poza sam dostęp do bazy danych.</p><p>W skrajnym przypadku może to prowadzić do:</p><ul><li>przejęcia kontroli nad witryną,</li><li>modyfikacji plików strony,</li><li>umieszczenia złośliwego oprogramowania,</li><li>przekierowywania użytkowników na inne strony,</li><li>wykorzystania serwera do wysyłania spamu lub dalszych ataków,</li><li>kradzieży lub ujawnienia danych.</li></ul><p>Nie oznacza to, że każda nieaktualna instalacja WordPressa zostanie automatycznie przejęta. Oznacza jednak, że pozostawienie podatnej wersji zwiększa powierzchnię ataku i nie ma uzasadnienia, gdy oficjalna poprawka jest już dostępna.</p>"
+            },
+            {
+                "id": "ktore-wersje-wordpressa-sa-podatne",
+                "content": "<h2>Które wersje WordPressa wymagają aktualizacji?</h2><p>Jeżeli korzystasz z WordPressa 7.0 lub 7.0.1, powinieneś przejść do wersji <strong>7.0.2</strong>.</p><p>Poprawki bezpieczeństwa zostały przygotowane również dla starszych wspieranych gałęzi:</p><ul><li>WordPress 6.9 należy zaktualizować do wersji <strong>6.9.5</strong> — ta gałąź jest podatna na obie luki,</li><li>WordPress 6.8 należy zaktualizować do wersji <strong>6.8.6</strong> — ta gałąź jest podatna na pierwszą z opisanych luk,</li><li>wersje wcześniejsze niż WordPress 6.8 nie są podatne na te dwie konkretne podatności.</li></ul><p>Warto jednak pamiętać, że brak podatności na te konkretne błędy nie oznacza, że bardzo stara wersja WordPressa jest bezpieczna. Utrzymywanie aktualnej i wspieranej wersji CMS-a nadal pozostaje dobrą praktyką.</p>"
+            },
+            {
+                "id": "dlaczego-nie-warto-odkladac-aktualizacji",
+                "content": "<h2>Dlaczego nie warto odkładać aktualizacji na później?</h2><p>W przypadku luk bezpieczeństwa sytuacja zmienia się w momencie publikacji poprawki i informacji o podatności. Od tej chwili szczegóły problemu stają się znane coraz większej liczbie osób, a podatne instalacje pozostają narażone do czasu aktualizacji.</p><p>Zespół WordPressa uznał problem za na tyle poważny, że dla stron działających na podatnych wersjach uruchomiono wymuszone aktualizacje poprzez system automatycznych aktualizacji.</p><p>Nie należy jednak zakładać, że aktualizacja wykonała się poprawnie na każdej stronie. Automatyczne aktualizacje mogą być wyłączone, zablokowane przez konfigurację hostingu albo zakończyć się błędem.</p><p>Dlatego nawet jeżeli nie zarządzasz aktualizacjami WordPressa ręcznie, warto zalogować się do panelu i sprawdzić aktualnie zainstalowaną wersję.</p>"
+            },
+            {
+                "id": "jak-bezpiecznie-zaktualizowac-wordpressa",
+                "content": "<h2>Jak bezpiecznie zaktualizować WordPressa?</h2><p>W przypadku aktualizacji bezpieczeństwa liczy się czas, ale nie oznacza to, że należy pomijać podstawowe zasady bezpiecznego wdrażania zmian.</p><h3>1. Sprawdź aktualną wersję WordPressa</h3><p>Zaloguj się do panelu administracyjnego i przejdź do sekcji <strong>Kokpit → Aktualizacje</strong>. Sprawdź, czy aktualizacja nie została już wykonana automatycznie.</p><h3>2. Wykonaj kopię zapasową</h3><p>Przed ręczną aktualizacją wykonaj pełny backup plików strony oraz bazy danych. Kopia powinna umożliwiać szybkie odtworzenie serwisu w przypadku problemów z kompatybilnością.</p><h3>3. Zaktualizuj WordPressa</h3><p>Jeżeli korzystasz z podatnej wersji, zainstaluj najnowszą poprawkę bezpieczeństwa dostępną dla Twojej gałęzi WordPressa.</p><h3>4. Sprawdź motyw i wtyczki</h3><p>Po aktualizacji rdzenia warto również zweryfikować dostępność aktualizacji dla używanych motywów i wtyczek. Nieaktualny WordPress nie jest jedynym potencjalnym źródłem podatności w całym systemie.</p><h3>5. Wyczyść cache</h3><p>Jeżeli korzystasz z mechanizmów cache, CDN lub cache po stronie serwera, wyczyść pamięć podręczną po zakończeniu aktualizacji.</p>"
+            },
+            {
+                "id": "co-sprawdzic-po-aktualizacji",
+                "content": "<h2>Co sprawdzić po aktualizacji WordPressa?</h2><p>Sama informacja o poprawnym zakończeniu procesu aktualizacji nie oznacza jeszcze, że nie wystąpił konflikt z motywem, wtyczką lub niestandardowym kodem.</p><p>Po aktualizacji warto sprawdzić przede wszystkim:</p><ul><li>stronę główną i kluczowe podstrony,</li><li>logowanie do panelu administracyjnego,</li><li>formularze kontaktowe i wysyłkę wiadomości,</li><li>menu oraz nawigację,</li><li>widok strony na urządzeniach mobilnych,</li><li>integracje z zewnętrznymi usługami,</li><li>koszyk, płatności i składanie zamówień w przypadku WooCommerce.</li></ul><p>Jeżeli po aktualizacji pojawi się problem, w pierwszej kolejności sprawdź logi błędów, wyczyść cache oraz zweryfikuj kompatybilność wtyczek. Powrót do podatnej wersji WordPressa powinien być ostatecznością — znacznie lepiej znaleźć źródło konfliktu i je usunąć.</p>"
+            },
+            {
+                "id": "aktualizacja-wordpressa-to-nie-wszystko",
+                "content": "<h2>Aktualizacja WordPressa to nie wszystko</h2><p>Instalacja wersji 7.0.2 usuwa opisane podatności w rdzeniu WordPressa, ale bezpieczeństwo strony zależy również od pozostałych elementów środowiska.</p><h3>Regularnie aktualizuj wtyczki</h3><p>Każda aktywna wtyczka jest dodatkowym kodem wykonywanym w obrębie aplikacji. Nieużywane rozszerzenia najlepiej usuwać, a wykorzystywane regularnie aktualizować.</p><h3>Aktualizuj motyw</h3><p>Motyw również może zawierać błędy i podatności. Dotyczy to zarówno gotowych motywów, jak i bardziej rozbudowanych rozwiązań korzystających z dodatkowych bibliotek.</p><h3>Dbaj o kopie zapasowe</h3><p>Backup nie chroni przed wykorzystaniem podatności, ale znacząco ułatwia odzyskanie serwisu po awarii lub skutecznym ataku. Kopie powinny być wykonywane automatycznie i przechowywane niezależnie od głównego serwera.</p><h3>Monitoruj aktualizacje bezpieczeństwa</h3><p>Warto regularnie sprawdzać nowe wersje WordPressa i wykorzystywanych rozszerzeń. Krytycznych aktualizacji bezpieczeństwa nie należy odkładać do kolejnego planowanego przeglądu strony.</p>"
+            },
+            {
+                "id": "czy-warto-aktualizowac-wordpressa-7-0-2",
+                "content": "<h2>Czy trzeba aktualizować WordPressa do wersji 7.0.2?</h2><p><strong>Jeżeli korzystasz z podatnej wersji — aktualizację należy wykonać możliwie szybko.</strong></p><p>WordPress 7.0.2 usuwa dwie poważne podatności bezpieczeństwa związane z SQL Injection. Jedna z nich, dotycząca obsługi zbiorczych tras REST API, może w określonych warunkach prowadzić do Remote Code Execution.</p><p>To scenariusz o znacznie poważniejszych konsekwencjach niż typowy błąd aplikacji. Dlatego najlepszy schemat działania jest prosty:</p><p><strong>sprawdzenie wersji → backup → aktualizacja → test strony</strong></p><p>Jeżeli automatyczne aktualizacje są włączone, bardzo możliwe, że poprawka została już zainstalowana. Mimo to warto sprawdzić wersję WordPressa ręcznie i upewnić się, że strona działa prawidłowo.</p><p>Regularne aktualizacje nie eliminują całego ryzyka związanego z bezpieczeństwem strony, ale w przypadku znanych i już poprawionych podatności są jednym z najważniejszych działań, jakie można wykonać.</p>"
+            }
+        ]
+    }
+]
