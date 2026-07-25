@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Manrope } from "next/font/google";
+import CookiebotScript from "../src/components/CookiebotScript";
 import { localBusinessLd, organizationLd } from "../src/data/jsonLd";
 import "./globals.scss";
 import "../src/scss/landing-utils.scss";
@@ -59,16 +60,6 @@ export default function RootLayout({
       className={`${inter.variable} ${manrope.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <head>
-        {/* Cookiebot must load synchronously to block scripts before consent. */}
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-        <script
-          id="Cookiebot"
-          src="https://consent.cookiebot.com/uc.js"
-          data-cbid="be4e92a1-753d-4615-ae2f-8df7a5dfd991"
-          data-blockingmode="auto"
-          type="text/javascript"
-          suppressHydrationWarning
-        />
         <script
           type="application/ld+json"
           data-cookieconsent="ignore"
@@ -86,7 +77,10 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <CookiebotScript />
+      </body>
     </html>
   );
 }
