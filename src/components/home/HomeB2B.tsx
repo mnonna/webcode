@@ -1,10 +1,8 @@
 'use client';
 
-import { useLayoutEffect, useRef } from 'react';
 import Image from 'next/image';
 import { Handshake, Lock, ShieldCheck, Users } from 'lucide-react';
-import { gsap } from '../../lib/gsap';
-import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import { useGsapReveal } from '@/src/hooks/useGsapReveal';
 
 const trustPoints = [
   { title: 'Poufność', copy: 'Szanuję ustalenia z klientami i nie publikuję projektów bez zgody.', icon: Lock },
@@ -14,38 +12,13 @@ const trustPoints = [
 ] as const;
 
 export default function HomeB2B() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const reducedMotion = usePrefersReducedMotion();
-
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-
-    if (!section || reducedMotion) {
-      return;
-    }
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        '[data-b2b-reveal]',
-        {
-          y: 24,
-          scale: 0.992,
-          opacity: 0.01,
-        },
-        {
-          y: 0,
-          scale: 1,
-          opacity: 1,
-          duration: 0.9,
-          ease: 'power2.out',
-          stagger: 0.08,
-          scrollTrigger: { trigger: section, start: 'top 74%', once: true },
-        }
-      );
-    }, section);
-
-    return () => ctx.revert();
-  }, [reducedMotion]);
+  const sectionRef = useGsapReveal<HTMLElement>({
+    selector: '[data-b2b-reveal]',
+    start: 'top 74%',
+    duration: 0.9,
+    scale: 0.992,
+    ease: 'power2.out',
+  });
 
   return (
     <section id="b2b" ref={sectionRef} className="section">

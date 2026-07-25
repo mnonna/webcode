@@ -1,9 +1,7 @@
 import type { MetadataRoute } from "next";
+import { SITE_URL } from "@/src/config/site";
 import { getArticles } from "@/src/data/blog/articles";
-import {
-  offerPageSlugs,
-  SITE_URL,
-} from "@/src/data/offer/catalog";
+import { offerPageSlugs } from "@/src/data/offer/catalog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [

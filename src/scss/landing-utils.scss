@@ -57,6 +57,13 @@
   line-height: 1.35;
 }
 
+.wc-heading-md {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
 .wc-heading-sm {
   font-family: var(--font-heading);
   font-size: 1.125rem;
@@ -301,11 +308,15 @@
 
 @media (max-width: 767px) {
   .wc-heading-lg {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
   
   .wc-heading-sm {
     font-size: 16px;
+  }
+
+  .wc-heading-md {
+    font-size: 1.3rem;
   }
 
   .wc-body-md {

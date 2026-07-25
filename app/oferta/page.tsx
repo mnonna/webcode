@@ -9,8 +9,8 @@ import I_PageParams from "@/src/interface/PageParams";
 export default async function OfferPage({ params }: I_PageParams) {
     const heroData = {
         eyebrow: "Oferta",
-        title: "do Twojego biznesu",
-        titleHighlight: "Rozwiązania dopasowane",
+        title: "Rozwiązania dopasowane<br>",
+        titleHighlight: "do twojego biznesu",
         description: "Wybierz usługę i sprawdź orientacyjny zakres projektu. Tworzymy strony i sklepy, które przyciągają klientów i realnie zwiększają sprzedaż.",
         image: "/offer/common/offer-hero.avif",
         disableSecondButton: true,

@@ -4,10 +4,9 @@ import ArticleTop from "@/src/components/blog/ArticleTop";
 import ArticleTableOfContents from "@/src/components/blog/ArticleTableOfContents";
 import ArticleAuthor from "@/src/components/blog/ArticleAuthor";
 import HomeContact from '@/src/components/home/HomeContact';
+import { SITE_URL } from "@/src/config/site";
 import { getArticleBySlug, getArticles } from "@/src/data/blog/articles";
 import { notFound } from "next/navigation";
-
-const SITE_URL = "https://webcode.com.pl";
 
 interface BlogPostPageProps {
     params: Promise<{ slug: string }>;

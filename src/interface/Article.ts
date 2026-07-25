@@ -28,6 +28,18 @@ export interface I_ArticleResponse extends I_Article {
     slug: string;
 }
 
+export type BlogListItem = Pick<
+    I_ArticleResponse,
+    | 'slug'
+    | 'title'
+    | 'excerpt'
+    | 'date'
+    | 'readTime'
+    | 'image'
+    | 'imageAlt'
+    | 'category'
+>;
+
 export interface I_ArticleAuthor {
     name: string;
     bio: string;

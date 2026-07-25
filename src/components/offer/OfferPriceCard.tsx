@@ -15,7 +15,7 @@ export default function OfferPriceCard (props: I_OfferPriceCard) {
     const formattedPrice = new Intl.NumberFormat('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price);
 
     return (
-        <div className="flex flex-col p-4 rounded-[16px] border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
+        <div data-offer-pricing-card="" className="flex flex-col p-4 rounded-[16px] border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
             <div className="flex flex-col gap-4 mb-4 last:mb-0">
                 <h3 className="wc-body-section">{title}</h3>
                 <div className="wc-body-sm">{ description }</div>

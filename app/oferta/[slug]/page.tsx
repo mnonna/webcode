@@ -10,7 +10,8 @@ import OtherLocations from '@/src/components/offer/OtherLocations';
 import Header from '@/src/components/Header';
 import Footer from '@/src/components/Footer';
 import getOfferCta from '@/src/data/offer/cta';
-import { getOfferDefinition, offerPageSlugs, SITE_URL } from '@/src/data/offer/catalog';
+import { SITE_URL } from '@/src/config/site';
+import { getOfferDefinition, offerPageSlugs } from '@/src/data/offer/catalog';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 

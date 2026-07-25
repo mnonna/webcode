@@ -1,5 +1,3 @@
-export const SITE_URL = 'https://webcode.com.pl';
-
 export const locations = {
   poznan: {
     name: 'Poznań',

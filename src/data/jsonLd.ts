@@ -1,8 +1,10 @@
+import { SITE_URL } from '@/src/config/site';
+
 export const organizationLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "url": "https://webcode.com.pl",
-    "logo": "https://webcode.com.pl/logo-icon.png",
+    "url": SITE_URL,
+    "logo": `${SITE_URL}/logo-icon.png`,
     "name": "Webcode - Tworzę strony, które działają",
     "description": "Projektujemy nowoczesne strony internetowe, sklepy online i aplikacje webowe. Szybkie realizacje, SEO, responsywność i profesjonalne wsparcie.",
     "email": "webcode.kontakt@gmail.com",

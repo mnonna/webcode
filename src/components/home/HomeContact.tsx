@@ -1,9 +1,10 @@
 'use client'
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { LucideIcon, Mail, MapPin, Phone } from 'lucide-react';
 import ContactForm from '../ContactForm';
 import { gsap } from '../../lib/gsap';
+import { useGsapReveal } from '@/src/hooks/useGsapReveal';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
 
 type ContactDetail = {
@@ -20,31 +21,13 @@ const contactDetails: ContactDetail[] = [
 ];
 
 export default function HomeContact() {
-  const sectionRef = useRef<HTMLElement>(null);
+  const sectionRef = useGsapReveal<HTMLElement>({
+    selector: '[data-contact-reveal]',
+    start: 'top 76%',
+  });
   const illustrationCardRef = useRef<HTMLDivElement>(null);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const reducedMotion = usePrefersReducedMotion();
-
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-
-    if (!section || reducedMotion) {
-      return;
-    }
-
-    const ctx = gsap.context(() => {
-      gsap.from('[data-contact-reveal]', {
-        y: 26,
-        opacity: 0,
-        duration: 0.75,
-        ease: 'power3.out',
-        stagger: 0.08,
-        scrollTrigger: { trigger: section, start: 'top 76%', once: true },
-      });
-    }, section);
-
-    return () => ctx.revert();
-  }, [reducedMotion]);
 
   useEffect(() => {
     const illustration = illustrationCardRef.current;
