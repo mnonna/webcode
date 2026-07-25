@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Manrope } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import CookiebotScript from "../src/components/CookiebotScript";
 import { localBusinessLd, organizationLd } from "../src/data/jsonLd";
 import "./globals.scss";
@@ -81,6 +82,7 @@ export default function RootLayout({
         {children}
         <CookiebotScript />
       </body>
+      <GoogleAnalytics gaId="G-57MFRNNQMF" />
     </html>
   );
 }
