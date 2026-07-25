@@ -15,7 +15,8 @@ export default function OfferHero(props: I_HeroOffer) {
                     <div className="relative z-10">
                         <div data-hero-eyebrow="" className="wc-eyebrow">{ eyebrow }</div>
                         <h1 data-hero-heading="" className="wc-heading-hero wc-text-dark">
-                            <span className="wc-text-blue">{titleHighlight}</span> {title}
+                            <span dangerouslySetInnerHTML={{ __html: title }} />
+                            <span className="wc-text-blue">{ titleHighlight }</span>
                         </h1>
                         <p data-hero-copy="" className="wc-body-lg mt-6 max-w-[60ch]">
                             { description }

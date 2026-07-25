@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
-import { HOME_NAV_ITEMS } from '../data/navigation';
+import { NAV_ITEMS } from '../data/navigation';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -36,7 +36,7 @@ export default function Header() {
           </Link>
 
           <div className="hidden items-center gap-7 lg:flex">
-            {HOME_NAV_ITEMS.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <Link key={item.href} href={item.href} className="wc-body-sm text-[0.95rem] font-[600] transition-colors hover:text-[var(--wc-blue)]">
                 {item.label}
               </Link>
@@ -54,7 +54,7 @@ export default function Header() {
         {isMenuOpen && (
           <div className="wc-surface-card mt-4 p-4 lg:hidden">
             <div className="flex flex-col gap-2">
-              {HOME_NAV_ITEMS.map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}

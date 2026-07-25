@@ -317,14 +317,29 @@
       @apply mb-4 last:mb-0;
     }
 
-    ul {
+    ul, ol {
       @apply mb-4 last:mb-0;
       list-style: none;
     }
 
-    ul li {
-      position: relative;
-      padding-left: 1.5rem;
+    ul {
+      & > li {
+        @apply relative pl-[1.5rem] mb-4 last:mb-0;
+
+        li {
+          @apply mb-2 last:mb-0;
+        }
+      }
+    }
+
+    ol {
+      & > li {
+        @apply relative mb-4 last:mb-0;
+
+        li {
+          @apply pl-[1.5rem] mb-2 last:mb-0;
+        }
+      }
     }
 
     ul li::before {
@@ -342,6 +357,18 @@
       font-size: 0.625rem;
       font-weight: 700;
       line-height: 1;
+    }
+
+    ol {
+      counter-reset: n;
+
+      & > li {
+        counter-increment: n;
+
+        &::before {
+          content: counter(n) ". ";
+        }
+      }
     }
 
     h1,h2 {

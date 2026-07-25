@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { HOME_NAV_ITEMS } from '../data/navigation';
+import { FOOTER_NAV_ITEMS } from '../data/navigation';
 
 export default function Footer() {
   return (
@@ -15,7 +15,7 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap gap-x-6 gap-y-3">
-            {HOME_NAV_ITEMS.map((item) => (
+            {FOOTER_NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}

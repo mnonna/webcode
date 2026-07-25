@@ -1,12 +1,16 @@
-export type HomeNavItem = {
-  href: string;
-  label: string;
+export type NavItem = {
+    href: string;
+    label: string;
 };
 
-export const HOME_NAV_ITEMS: HomeNavItem[] = [
-  { href: '/oferta', label: 'Oferta' },
-  { href: '/#story', label: 'Jak działa strona' },
-  { href: '/#b2b', label: 'Współpraca B2B' },
-  { href: '/#process', label: 'Proces' },
-  { href: '/#contact', label: 'Kontakt' },
+export const NAV_ITEMS: NavItem[] = [
+    { href: '/oferta', label: 'Oferta' },
+    { href: '/blog', label: 'Blog' },
+    { href: '/kontakt', label: 'Kontakt' },
 ];
+
+export const FOOTER_NAV_ITEMS: NavItem[] = [
+    { href: '/oferta', label: 'Oferta' },
+    { href: '/polityka-prywatnosci', label: 'Polityka prywatności' },
+    { href: '/kontakt', label: 'Kontakt' },
+]
