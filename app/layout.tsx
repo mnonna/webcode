@@ -59,14 +59,28 @@ export default function RootLayout({
       className={`${inter.variable} ${manrope.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <head>
+        {/* Cookiebot must load synchronously to block scripts before consent. */}
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script
+          id="Cookiebot"
+          src="https://consent.cookiebot.com/uc.js"
+          data-cbid="be4e92a1-753d-4615-ae2f-8df7a5dfd991"
+          data-blockingmode="auto"
+          type="text/javascript"
+          suppressHydrationWarning
+        />
         <script
           type="application/ld+json"
+          data-cookieconsent="ignore"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationLd).replace(/</g, '\\u003c'),
           }}
         />
         <script
           type="application/ld+json"
+          data-cookieconsent="ignore"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(localBusinessLd).replace(/</g, '\\u003c'),
           }}

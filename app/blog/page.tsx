@@ -8,7 +8,7 @@ import { getArticles } from '@/src/data/blog/articles';
 import type { BlogListItem } from '@/src/interface/Article';
 
 export const metadata: Metadata = {
-  title: 'Blog o stronach internetowych, SEO i technologii | Webcode',
+  title: 'Blog - Webcode - Tworzę strony, które działają',
   description:
     'Praktyczna wiedza o tworzeniu stron internetowych, SEO, UX i technologii. Konkretne porady, które pomagają rozwijać skuteczny biznes online.',
   alternates: {
