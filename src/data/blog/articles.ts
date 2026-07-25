@@ -14,10 +14,12 @@ export function createArticleSlug(title: string) {
 }
 
 export function getArticles(): I_ArticleResponse[] {
-  return articles.map((article) => ({
-    slug: createArticleSlug(article.title),
-    ...article,
-  }));
+  return articles
+    .map((article) => ({
+      slug: createArticleSlug(article.title),
+      ...article,
+    }))
+    .sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 }
 
 export function getArticleBySlug(slug: string) {
