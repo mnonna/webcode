@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Manrope } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import CookiebotScript from "../src/components/CookiebotScript";
+import RecaptchaProvider from "../src/components/RecaptchaProvider";
 import { localBusinessLd, organizationLd } from "../src/data/jsonLd";
 import "./globals.scss";
 import "../src/scss/landing-utils.scss";
@@ -55,6 +56,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
+
   return (
     <html
       lang="pl"
@@ -79,10 +82,12 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        {children}
+        <RecaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY}>
+          {children}
+        </RecaptchaProvider>
         <CookiebotScript />
       </body>
-      <GoogleAnalytics gaId="G-57MFRNNQMF" />
+      {googleAnalyticsId && <GoogleAnalytics gaId={googleAnalyticsId} />}
     </html>
   );
 }

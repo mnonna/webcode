@@ -3,6 +3,7 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Send } from 'lucide-react';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
+import { useRecaptcha } from '../hooks/useRecaptcha';
 import 'react-toastify/dist/ReactToastify.css';
 
 type ContactFormProps = {
@@ -18,6 +19,7 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { verify } = useRecaptcha();
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -33,6 +35,9 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
     }
 
     try {
+      const { proof } = await verify('contact_form');
+      payload.append('recaptchaProof', proof);
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         body: payload,

@@ -133,10 +133,6 @@ export default function BlogListing({ articles }: BlogListingProps) {
                 Najnowsze artykuły
               </h2>
             </div>
-            <p className="hidden text-sm text-muted-foreground sm:block">
-              {filteredArticles.length}{' '}
-              {filteredArticles.length === 1 ? 'artykuł' : 'artykułów'}
-            </p>
           </div>
 
           <div

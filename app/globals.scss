@@ -449,6 +449,10 @@
   }
 }
 
+.grecaptcha-badge {
+  display: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
