@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     canonical: `${SITE_URL}/blog`,
   },
   openGraph: {
-    title: 'Blog Webcode — praktyczna wiedza, realne efekty',
+    title: 'Blog Webcode - praktyczna wiedza, realne efekty',
     description:
       'Poradniki i analizy o stronach internetowych, SEO, UX i technologii.',
     type: 'website',

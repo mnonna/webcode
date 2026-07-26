@@ -87,7 +87,7 @@ export default function BlogListing({ articles }: BlogListingProps) {
             >
               <p className="wc-body-lg text-muted-foreground">
                 Dzielę się doświadczeniem z zakresu tworzenia stron
-                internetowych, SEO i technologii. Bez lania wody — konkretnie
+                internetowych, SEO i technologii. Bez lania wody - konkretnie
                 i na temat.
               </p>
               <ArrowUpRight

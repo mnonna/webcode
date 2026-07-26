@@ -138,7 +138,7 @@ export function getOfferDefinition(slug: string) {
 function locationQuestion(location: (typeof locations)[LocationSlug]) {
   return {
     question: `Czy muszę być ${location.fromCity}, żeby rozpocząć współpracę?`,
-    answer: `Nie. Współpracuję z firmami ${location.fromCity} i okolic, ale cały proces można wygodnie przeprowadzić zdalnie — od rozmowy i przekazania materiałów po realizację oraz odbiór.`,
+    answer: `Nie. Współpracuję z firmami ${location.fromCity} i okolic, ale cały proces można wygodnie przeprowadzić zdalnie - od rozmowy i przekazania materiałów po realizację oraz odbiór.`,
   };
 }
 

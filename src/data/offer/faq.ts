@@ -24,7 +24,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy muszę być z Poznania, żeby rozpocząć współpracę?",
-                    "answer": "Nie. Współpracuję zarówno z firmami z Poznania i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie — od omówienia potrzeb, przez projekt, po wdrożenie strony."
+                    "answer": "Nie. Współpracuję zarówno z firmami z Poznania i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie - od omówienia potrzeb, przez projekt, po wdrożenie strony."
                 },
                 {
                     "question": "Czy strona będzie oparta o WordPress?",
@@ -40,7 +40,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy wykonujesz też sklepy WooCommerce?",
-                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce — od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
+                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce - od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
                 },
                 {
                     "question": "Czy projektujesz landing page’e pod kampanie?",
@@ -58,7 +58,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy muszę być z Komornik, żeby rozpocząć współpracę?",
-                    "answer": "Nie. Współpracuję zarówno z firmami z Komornik i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie — od omówienia potrzeb, przez projekt, po wdrożenie strony."
+                    "answer": "Nie. Współpracuję zarówno z firmami z Komornik i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie - od omówienia potrzeb, przez projekt, po wdrożenie strony."
                 },
                 {
                     "question": "Czy strona będzie oparta o WordPress?",
@@ -74,7 +74,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy wykonujesz też sklepy WooCommerce?",
-                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce — od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
+                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce - od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
                 },
                 {
                     "question": "Czy projektujesz landing page’e pod kampanie?",
@@ -92,7 +92,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy muszę być z Wągrowca, żeby rozpocząć współpracę?",
-                    "answer": "Nie. Współpracuję zarówno z firmami z Wągrowca i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie — od omówienia potrzeb, przez projekt, po wdrożenie strony."
+                    "answer": "Nie. Współpracuję zarówno z firmami z Wągrowca i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie - od omówienia potrzeb, przez projekt, po wdrożenie strony."
                 },
                 {
                     "question": "Czy strona będzie oparta o WordPress?",
@@ -108,7 +108,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy wykonujesz też sklepy WooCommerce?",
-                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce — od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
+                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce - od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
                 },
                 {
                     "question": "Czy projektujesz landing page’e pod kampanie?",
@@ -126,7 +126,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy muszę być z Chodzieży, żeby rozpocząć współpracę?",
-                    "answer": "Nie. Współpracuję zarówno z firmami z Chodzieży i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie — od omówienia potrzeb, przez projekt, po wdrożenie strony."
+                    "answer": "Nie. Współpracuję zarówno z firmami z Chodzieży i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie - od omówienia potrzeb, przez projekt, po wdrożenie strony."
                 },
                 {
                     "question": "Czy strona będzie oparta o WordPress?",
@@ -142,7 +142,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy wykonujesz też sklepy WooCommerce?",
-                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce — od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
+                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce - od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
                 },
                 {
                     "question": "Czy projektujesz landing page’e pod kampanie?",
@@ -160,7 +160,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy muszę być z Piły, żeby rozpocząć współpracę?",
-                    "answer": "Nie. Współpracuję zarówno z firmami z Piły i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie — od omówienia potrzeb, przez projekt, po wdrożenie strony."
+                    "answer": "Nie. Współpracuję zarówno z firmami z Piły i okolic, jak i z klientami z całej Polski. Cały proces można wygodnie przeprowadzić zdalnie - od omówienia potrzeb, przez projekt, po wdrożenie strony."
                 },
                 {
                     "question": "Czy strona będzie oparta o WordPress?",
@@ -176,7 +176,7 @@ export default function getOfferFaq(slug: string): I_Faq[] {
                 },
                 {
                     "question": "Czy wykonujesz też sklepy WooCommerce?",
-                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce — od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
+                    "answer": "Tak. Projektuję i wdrażam sklepy internetowe oparte o WooCommerce - od konfiguracji produktów i płatności po przygotowanie wygodnej ścieżki zakupowej."
                 },
                 {
                     "question": "Czy projektujesz landing page’e pod kampanie?",

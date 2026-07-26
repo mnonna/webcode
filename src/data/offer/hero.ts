@@ -23,7 +23,7 @@ export default function getHeroOfferData(slug: string): I_HeroOffer {
             title: service.title,
             description: service.description(location),
             image: location.image,
-            imageAlt: `${service.name} ${location.inCity} — ${location.imageDescription}.`,
+            imageAlt: `${service.name} ${location.inCity} - ${location.imageDescription}.`,
         };
     }
 

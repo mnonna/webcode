@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "title": "WordPress 7.0.2 — dlaczego warto zaktualizować swoją stronę jak najszybciej?",
+        "title": "WordPress 7.0.2 - dlaczego warto zaktualizować swoją stronę jak najszybciej?",
         "slug": "wordpress-7-0-2-dlaczego-warto-zaktualizowac-swoja-strone-jak-najszybciej",
         "excerpt": "WordPress 7.0.2 usuwa dwie poważne podatności związane z SQL Injection. Najgroźniejsza z nich może w określonych warunkach prowadzić do zdalnego wykonania kodu (RCE). Sprawdź, czy Twoja strona wymaga pilnej aktualizacji.",
         "author": {
@@ -30,11 +30,11 @@
             },
             {
                 "id": "sql-injection-do-remote-code-execution",
-                "content": "<h2>Od SQL Injection do Remote Code Execution — co może oznaczać taki atak?</h2><p><strong>Remote Code Execution</strong>, w skrócie RCE, to jedna z najpoważniejszych klas podatności w aplikacjach internetowych. Jeżeli atakujący jest w stanie doprowadzić do wykonania własnego kodu na serwerze, konsekwencje mogą wykraczać daleko poza sam dostęp do bazy danych.</p><p>W skrajnym przypadku może to prowadzić do:</p><ul><li>przejęcia kontroli nad witryną,</li><li>modyfikacji plików strony,</li><li>umieszczenia złośliwego oprogramowania,</li><li>przekierowywania użytkowników na inne strony,</li><li>wykorzystania serwera do wysyłania spamu lub dalszych ataków,</li><li>kradzieży lub ujawnienia danych.</li></ul><p>Nie oznacza to, że każda nieaktualna instalacja WordPressa zostanie automatycznie przejęta. Oznacza jednak, że pozostawienie podatnej wersji zwiększa powierzchnię ataku i nie ma uzasadnienia, gdy oficjalna poprawka jest już dostępna.</p>"
+                "content": "<h2>Od SQL Injection do Remote Code Execution - co może oznaczać taki atak?</h2><p><strong>Remote Code Execution</strong>, w skrócie RCE, to jedna z najpoważniejszych klas podatności w aplikacjach internetowych. Jeżeli atakujący jest w stanie doprowadzić do wykonania własnego kodu na serwerze, konsekwencje mogą wykraczać daleko poza sam dostęp do bazy danych.</p><p>W skrajnym przypadku może to prowadzić do:</p><ul><li>przejęcia kontroli nad witryną,</li><li>modyfikacji plików strony,</li><li>umieszczenia złośliwego oprogramowania,</li><li>przekierowywania użytkowników na inne strony,</li><li>wykorzystania serwera do wysyłania spamu lub dalszych ataków,</li><li>kradzieży lub ujawnienia danych.</li></ul><p>Nie oznacza to, że każda nieaktualna instalacja WordPressa zostanie automatycznie przejęta. Oznacza jednak, że pozostawienie podatnej wersji zwiększa powierzchnię ataku i nie ma uzasadnienia, gdy oficjalna poprawka jest już dostępna.</p>"
             },
             {
                 "id": "ktore-wersje-wordpressa-sa-podatne",
-                "content": "<h2>Które wersje WordPressa wymagają aktualizacji?</h2><p>Jeżeli korzystasz z WordPressa 7.0 lub 7.0.1, powinieneś przejść do wersji <strong>7.0.2</strong>.</p><p>Poprawki bezpieczeństwa zostały przygotowane również dla starszych wspieranych gałęzi:</p><ul><li>WordPress 6.9 należy zaktualizować do wersji <strong>6.9.5</strong> — ta gałąź jest podatna na obie luki,</li><li>WordPress 6.8 należy zaktualizować do wersji <strong>6.8.6</strong> — ta gałąź jest podatna na pierwszą z opisanych luk,</li><li>wersje wcześniejsze niż WordPress 6.8 nie są podatne na te dwie konkretne podatności.</li></ul><p>Warto jednak pamiętać, że brak podatności na te konkretne błędy nie oznacza, że bardzo stara wersja WordPressa jest bezpieczna. Utrzymywanie aktualnej i wspieranej wersji CMS-a nadal pozostaje dobrą praktyką.</p>"
+                "content": "<h2>Które wersje WordPressa wymagają aktualizacji?</h2><p>Jeżeli korzystasz z WordPressa 7.0 lub 7.0.1, powinieneś przejść do wersji <strong>7.0.2</strong>.</p><p>Poprawki bezpieczeństwa zostały przygotowane również dla starszych wspieranych gałęzi:</p><ul><li>WordPress 6.9 należy zaktualizować do wersji <strong>6.9.5</strong> - ta gałąź jest podatna na obie luki,</li><li>WordPress 6.8 należy zaktualizować do wersji <strong>6.8.6</strong> - ta gałąź jest podatna na pierwszą z opisanych luk,</li><li>wersje wcześniejsze niż WordPress 6.8 nie są podatne na te dwie konkretne podatności.</li></ul><p>Warto jednak pamiętać, że brak podatności na te konkretne błędy nie oznacza, że bardzo stara wersja WordPressa jest bezpieczna. Utrzymywanie aktualnej i wspieranej wersji CMS-a nadal pozostaje dobrą praktyką.</p>"
             },
             {
                 "id": "dlaczego-nie-warto-odkladac-aktualizacji",
@@ -46,7 +46,7 @@
             },
             {
                 "id": "co-sprawdzic-po-aktualizacji",
-                "content": "<h2>Co sprawdzić po aktualizacji WordPressa?</h2><p>Sama informacja o poprawnym zakończeniu procesu aktualizacji nie oznacza jeszcze, że nie wystąpił konflikt z motywem, wtyczką lub niestandardowym kodem.</p><p>Po aktualizacji warto sprawdzić przede wszystkim:</p><ul><li>stronę główną i kluczowe podstrony,</li><li>logowanie do panelu administracyjnego,</li><li>formularze kontaktowe i wysyłkę wiadomości,</li><li>menu oraz nawigację,</li><li>widok strony na urządzeniach mobilnych,</li><li>integracje z zewnętrznymi usługami,</li><li>koszyk, płatności i składanie zamówień w przypadku WooCommerce.</li></ul><p>Jeżeli po aktualizacji pojawi się problem, w pierwszej kolejności sprawdź logi błędów, wyczyść cache oraz zweryfikuj kompatybilność wtyczek. Powrót do podatnej wersji WordPressa powinien być ostatecznością — znacznie lepiej znaleźć źródło konfliktu i je usunąć.</p>"
+                "content": "<h2>Co sprawdzić po aktualizacji WordPressa?</h2><p>Sama informacja o poprawnym zakończeniu procesu aktualizacji nie oznacza jeszcze, że nie wystąpił konflikt z motywem, wtyczką lub niestandardowym kodem.</p><p>Po aktualizacji warto sprawdzić przede wszystkim:</p><ul><li>stronę główną i kluczowe podstrony,</li><li>logowanie do panelu administracyjnego,</li><li>formularze kontaktowe i wysyłkę wiadomości,</li><li>menu oraz nawigację,</li><li>widok strony na urządzeniach mobilnych,</li><li>integracje z zewnętrznymi usługami,</li><li>koszyk, płatności i składanie zamówień w przypadku WooCommerce.</li></ul><p>Jeżeli po aktualizacji pojawi się problem, w pierwszej kolejności sprawdź logi błędów, wyczyść cache oraz zweryfikuj kompatybilność wtyczek. Powrót do podatnej wersji WordPressa powinien być ostatecznością - znacznie lepiej znaleźć źródło konfliktu i je usunąć.</p>"
             },
             {
                 "id": "aktualizacja-wordpressa-to-nie-wszystko",
@@ -54,13 +54,13 @@
             },
             {
                 "id": "czy-warto-aktualizowac-wordpressa-7-0-2",
-                "content": "<h2>Czy trzeba aktualizować WordPressa do wersji 7.0.2?</h2><p><strong>Jeżeli korzystasz z podatnej wersji — aktualizację należy wykonać możliwie szybko.</strong></p><p>WordPress 7.0.2 usuwa dwie poważne podatności bezpieczeństwa związane z SQL Injection. Jedna z nich, dotycząca obsługi zbiorczych tras REST API, może w określonych warunkach prowadzić do Remote Code Execution.</p><p>To scenariusz o znacznie poważniejszych konsekwencjach niż typowy błąd aplikacji. Dlatego najlepszy schemat działania jest prosty:</p><p><strong>sprawdzenie wersji → backup → aktualizacja → test strony</strong></p><p>Jeżeli automatyczne aktualizacje są włączone, bardzo możliwe, że poprawka została już zainstalowana. Mimo to warto sprawdzić wersję WordPressa ręcznie i upewnić się, że strona działa prawidłowo.</p><p>Regularne aktualizacje nie eliminują całego ryzyka związanego z bezpieczeństwem strony, ale w przypadku znanych i już poprawionych podatności są jednym z najważniejszych działań, jakie można wykonać.</p>"
+                "content": "<h2>Czy trzeba aktualizować WordPressa do wersji 7.0.2?</h2><p><strong>Jeżeli korzystasz z podatnej wersji - aktualizację należy wykonać możliwie szybko.</strong></p><p>WordPress 7.0.2 usuwa dwie poważne podatności bezpieczeństwa związane z SQL Injection. Jedna z nich, dotycząca obsługi zbiorczych tras REST API, może w określonych warunkach prowadzić do Remote Code Execution.</p><p>To scenariusz o znacznie poważniejszych konsekwencjach niż typowy błąd aplikacji. Dlatego najlepszy schemat działania jest prosty:</p><p><strong>sprawdzenie wersji → backup → aktualizacja → test strony</strong></p><p>Jeżeli automatyczne aktualizacje są włączone, bardzo możliwe, że poprawka została już zainstalowana. Mimo to warto sprawdzić wersję WordPressa ręcznie i upewnić się, że strona działa prawidłowo.</p><p>Regularne aktualizacje nie eliminują całego ryzyka związanego z bezpieczeństwem strony, ale w przypadku znanych i już poprawionych podatności są jednym z najważniejszych działań, jakie można wykonać.</p>"
             }
         ]
     },
     {
         "id": 2,
-        "title": "WooCommerce 11.0 nadchodzi — najważniejsze zmiany i usprawnienia",
+        "title": "WooCommerce 11.0 nadchodzi - najważniejsze zmiany i usprawnienia",
         "slug": "woocommerce-11-0-najwazniejsze-zmiany-i-usprawnienia",
         "excerpt": "WooCommerce 11.0 przyniesie usprawnienia wydajności, zmiany w obsłudze kont klientów, dokładniejsze raportowanie oraz ważne modyfikacje dla twórców wtyczek i integracji. Sprawdź, jak przygotować sklep do aktualizacji.",
         "author": {
@@ -72,7 +72,7 @@
         "dateModified": "2026-07-25T12:00:00+02:00",
         "readTime": "8 min",
         "image": "/blog/woocommerce-11.avif",
-        "imageAlt": "WooCommerce 11.0 — najważniejsze zmiany i usprawnienia",
+        "imageAlt": "WooCommerce 11.0 - najważniejsze zmiany i usprawnienia",
         "hint": "Duża aktualizacja WooCommerce to dobry moment, aby sprawdzić nie tylko nowe funkcje, ale również zgodność całego sklepu.",
         "contentSections": [
             {
@@ -109,7 +109,7 @@
             },
             {
                 "id": "walidacja-numerow-telefonow",
-                "content": "<h2>Nowe możliwości walidacji numerów telefonów</h2><p>WooCommerce 11.0 wprowadzi dwa nowe hooki związane z obsługą numerów telefonów:</p><ul><li><code>woocommerce_validate_phone</code> — umożliwiający dodanie własnych reguł walidacji,</li><li><code>woocommerce_format_phone_number</code> — pozwalający zmienić sposób prezentowania numeru bez wpływania na jego walidację.</li></ul><p>Pierwszy z nich może być szczególnie przydatny w sklepach obsługujących lokalne formaty numerów lub cyfry zapisywane w innych systemach znaków. Rozdzielenie walidacji od formatowania pozwoli rozszerzeniom precyzyjniej kontrolować dane podawane przez klientów.</p><p>Do WooCommerce zostanie dodana także metoda <code>WC_Validation::is_phone_format()</code>, która umożliwi ogólne sprawdzenie struktury numeru niezależnie od konkretnego kraju.</p>"
+                "content": "<h2>Nowe możliwości walidacji numerów telefonów</h2><p>WooCommerce 11.0 wprowadzi dwa nowe hooki związane z obsługą numerów telefonów:</p><ul><li><code>woocommerce_validate_phone</code> - umożliwiający dodanie własnych reguł walidacji,</li><li><code>woocommerce_format_phone_number</code> - pozwalający zmienić sposób prezentowania numeru bez wpływania na jego walidację.</li></ul><p>Pierwszy z nich może być szczególnie przydatny w sklepach obsługujących lokalne formaty numerów lub cyfry zapisywane w innych systemach znaków. Rozdzielenie walidacji od formatowania pozwoli rozszerzeniom precyzyjniej kontrolować dane podawane przez klientów.</p><p>Do WooCommerce zostanie dodana także metoda <code>WC_Validation::is_phone_format()</code>, która umożliwi ogólne sprawdzenie struktury numeru niezależnie od konkretnego kraju.</p>"
             },
             {
                 "id": "pozostale-zmiany-techniczne",
@@ -121,7 +121,7 @@
             },
             {
                 "id": "czy-warto-zaktualizowac",
-                "content": "<h2>Czy warto zaktualizować WooCommerce do wersji 11.0?</h2><p>WooCommerce 11.0 zapowiada się jako aktualizacja skupiona na stabilności, skalowalności i uporządkowaniu technicznych fundamentów platformy. Największe sklepy powinny skorzystać z optymalizacji zapytań, usprawnień HPOS oraz mechanizmu cache obiektów produktów. Administratorzy otrzymają bardziej niezawodne importy danych analitycznych, natomiast klienci — wygodniejszy sposób łączenia zamówień gościnnych ze swoim kontem.</p><p>Jednocześnie usunięcie eksperymentalnego edytora produktów oraz zmiany w taksonomiach, obrazach responsywnych i narzędziach deweloperskich oznaczają, że aktualizacja powinna zostać wcześniej sprawdzona pod kątem zgodności rozszerzeń.</p><p>Po zakończeniu testów i potwierdzeniu kompatybilności używanych wtyczek przejście na WooCommerce 11.0 będzie rekomendowanym krokiem. Aktualna wersja platformy to nie tylko dostęp do nowych funkcji, ale również większa szansa na zachowanie zgodności, wydajności i bezpieczeństwa sklepu w kolejnych miesiącach.</p><p><strong>Oficjalne źródło:</strong> <a href='https://developer.woocommerce.com/2026/07/13/woocommerce-11-0-pre-release/' target='_blank' rel='noopener noreferrer'>WooCommerce 11.0: What’s coming for developers</a>.</p>"
+                "content": "<h2>Czy warto zaktualizować WooCommerce do wersji 11.0?</h2><p>WooCommerce 11.0 zapowiada się jako aktualizacja skupiona na stabilności, skalowalności i uporządkowaniu technicznych fundamentów platformy. Największe sklepy powinny skorzystać z optymalizacji zapytań, usprawnień HPOS oraz mechanizmu cache obiektów produktów. Administratorzy otrzymają bardziej niezawodne importy danych analitycznych, natomiast klienci - wygodniejszy sposób łączenia zamówień gościnnych ze swoim kontem.</p><p>Jednocześnie usunięcie eksperymentalnego edytora produktów oraz zmiany w taksonomiach, obrazach responsywnych i narzędziach deweloperskich oznaczają, że aktualizacja powinna zostać wcześniej sprawdzona pod kątem zgodności rozszerzeń.</p><p>Po zakończeniu testów i potwierdzeniu kompatybilności używanych wtyczek przejście na WooCommerce 11.0 będzie rekomendowanym krokiem. Aktualna wersja platformy to nie tylko dostęp do nowych funkcji, ale również większa szansa na zachowanie zgodności, wydajności i bezpieczeństwa sklepu w kolejnych miesiącach.</p><p><strong>Oficjalne źródło:</strong> <a href='https://developer.woocommerce.com/2026/07/13/woocommerce-11-0-pre-release/' target='_blank' rel='noopener noreferrer'>WooCommerce 11.0: What’s coming for developers</a>.</p>"
             }
         ]
     }

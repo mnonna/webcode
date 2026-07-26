@@ -11,7 +11,7 @@ export const faq: I_Faq [] = [
     },
     {
       "question": "Czy tworzysz strony internetowe WordPress dla firm z całej Polski?",
-      "answer": "Tak. Projektuję i wdrażam strony internetowe WordPress dla firm z całej Polski. Współpraca może odbywać się w pełni zdalnie — od omówienia potrzeb, przez projekt UX/UI, aż po wdrożenie, testy i publikację strony."
+      "answer": "Tak. Projektuję i wdrażam strony internetowe WordPress dla firm z całej Polski. Współpraca może odbywać się w pełni zdalnie - od omówienia potrzeb, przez projekt UX/UI, aż po wdrożenie, testy i publikację strony."
     },
     {
       "question": "Czy realizujesz strony internetowe dla firm z Poznania, Komornik i okolic?",
@@ -27,7 +27,7 @@ export const faq: I_Faq [] = [
     },
     {
       "question": "Czy strona będzie przygotowana pod SEO?",
-      "answer": "Tak. Podczas wdrożenia dbam o techniczne podstawy SEO, poprawną strukturę nagłówków, czytelny układ treści, responsywność, szybkość działania i logiczną architekturę podstron. Mogę też pomóc w zaplanowaniu sekcji oraz treści tak, aby strona była lepiej widoczna w Google — zarówno na frazy ogólne, jak i lokalne."
+      "answer": "Tak. Podczas wdrożenia dbam o techniczne podstawy SEO, poprawną strukturę nagłówków, czytelny układ treści, responsywność, szybkość działania i logiczną architekturę podstron. Mogę też pomóc w zaplanowaniu sekcji oraz treści tak, aby strona była lepiej widoczna w Google - zarówno na frazy ogólne, jak i lokalne."
     },
     {
       "question": "Czy oferujesz opiekę techniczną nad stroną WordPress?",
