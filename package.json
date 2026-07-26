@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p 3001",
+    "deploy": "npm run build && pm2 startOrRestart ecosystem.config.cjs --env production --update-env",
     "lint": "eslint"
   },
   "dependencies": {
