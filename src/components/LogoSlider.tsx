@@ -13,14 +13,9 @@ const brands: { name: string; logo: string; url: string }[] = [
     url: 'https://justgood.app/',
   },
   {
-    name: 'mda.pl',
-    logo: '',
-    url: 'https://mda.pl/',
-  },
-  {
-    name: 'crafton.eu',
-    logo: '',
-    url: 'https://crafton.eu/',
+    name: 'justgood',
+    logo: '/logos/justgood-app.png',
+    url: 'https://justgood.app/',
   },
   {
     name: 'justgood',
@@ -28,14 +23,9 @@ const brands: { name: string; logo: string; url: string }[] = [
     url: 'https://justgood.app/',
   },
   {
-    name: 'mda.pl',
-    logo: '',
-    url: 'https://mda.pl/',
-  },
-  {
-    name: 'crafton.eu',
-    logo: '',
-    url: 'https://crafton.eu/',
+    name: 'justgood',
+    logo: '/logos/justgood-app.png',
+    url: 'https://justgood.app/',
   },
   {
     name: 'justgood',
@@ -43,14 +33,29 @@ const brands: { name: string; logo: string; url: string }[] = [
     url: 'https://justgood.app/',
   },
   {
-    name: 'mda.pl',
-    logo: '',
-    url: 'https://mda.pl/',
+    name: 'justgood',
+    logo: '/logos/justgood-app.png',
+    url: 'https://justgood.app/',
   },
   {
-    name: 'crafton.eu',
-    logo: '',
-    url: 'https://crafton.eu/',
+    name: 'justgood',
+    logo: '/logos/justgood-app.png',
+    url: 'https://justgood.app/',
+  },
+  {
+    name: 'justgood',
+    logo: '/logos/justgood-app.png',
+    url: 'https://justgood.app/',
+  },
+  {
+    name: 'justgood',
+    logo: '/logos/justgood-app.png',
+    url: 'https://justgood.app/',
+  },
+  {
+    name: 'justgood',
+    logo: '/logos/justgood-app.png',
+    url: 'https://justgood.app/',
   },
 ] as const;
 
