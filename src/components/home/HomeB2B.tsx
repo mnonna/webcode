@@ -23,8 +23,8 @@ export default function HomeB2B() {
   return (
     <section id="b2b" ref={sectionRef} className="section">
       <div className="section-shell wc-surface-panel wc-panel-fluid-b2b overflow-hidden">
-        <div className="wc-fluid-gap-feature grid items-center lg:grid-cols-[0.95fr_0.8fr_0.72fr]">
-          <div data-b2b-reveal="" className="relative mx-auto max-w-[560px]">
+        <div className="wc-fluid-gap-feature grid items-center xl:[grid-template-areas:'a_b''c_c'] 2xl:[grid-template-areas:auto] 2xl:grid-cols-[0.95fr_0.8fr_0.72fr] xl:gap-y-0">
+          <div data-b2b-reveal="" className="relative xl:[grid-area:a] 2xl:[grid-area:auto] mx-auto max-lg:max-w-[300px]">
             <div className="absolute inset-x-[12%] top-[18%] h-[46%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.16)_0%,_rgba(21,87,255,0)_72%)] blur-3xl"></div>
             <Image
               src="/landing/b2b-illustration.avif"
@@ -36,15 +36,15 @@ export default function HomeB2B() {
             />
           </div>
 
-          <div data-b2b-reveal="">
+          <div data-b2b-reveal="" className="xl:[grid-area:b] 2xl:[grid-area:auto]">
             <div className="wc-eyebrow">Współpraca B2B</div>
-            <h2 className="wc-heading-section wc-text-dark max-w-[12ch]">Pracuję przy projektach komercyjnych <span className="wc-text-highlight">w modelu B2B</span></h2>
+            <h2 className="wc-heading-section wc-text-dark xl:max-w-[12ch]">Pracuję przy projektach komercyjnych <span className="wc-text-highlight">w modelu B2B</span></h2>
             <p className="wc-body-lg mt-5">
               Część projektów realizuję dla agencji i firm technologicznych jako partner lub podwykonawca. W takich współpracach liczy się poufność, terminowość i odpowiedzialność za jakość wdrożenia.
             </p>
           </div>
 
-          <div className="grid gap-4">
+          <div className="grid gap-4 xl:[grid-area:c] xl:grid-cols-[1fr_1fr] 2xl:[grid-area:auto] 2xl:grid-cols-1">
             {trustPoints.map(({ icon: Icon, title, copy }) => (
               <div key={title} data-b2b-reveal="" className="wc-surface-card wc-card-row">
                 <div className="wc-icon-badge shrink-0">
