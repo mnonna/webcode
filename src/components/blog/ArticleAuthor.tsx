@@ -14,6 +14,7 @@ export default function ArticleAuthor(author: I_ArticleAuthor) {
                             height={170}
                             src={avatar}
                             alt={`Avatar autora: ${name}`}
+                            className="h-auto object-cover aspect-1/1"
                         />
                     </div>
                     <div className="flex flex-col gap-4 text-dark">

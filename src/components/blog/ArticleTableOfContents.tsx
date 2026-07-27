@@ -183,7 +183,7 @@ export default function ArticleTableOfContents({ items, hint }: ArticleTableOfCo
                         </ol>
                     </div>
 
-                    <div className="grid min-h-16 w-full grid-cols-[2.75rem_minmax(0,1fr)_2.75rem] items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 shadow-[0_12px_36px_rgba(15,23,42,0.18)]">
+                    <div className="grid min-h-16 w-full grid-cols-[2.75rem_minmax(0,1fr)_auto] items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 shadow-[0_12px_36px_rgba(15,23,42,0.18)]">
                         <button
                             type="button"
                             aria-expanded={isMobileOpen}
@@ -206,13 +206,13 @@ export default function ArticleTableOfContents({ items, hint }: ArticleTableOfCo
                             <span className="truncate text-sm font-semibold text-slate-950">{activeItem.title}</span>
                         </div>
 
-                        <div className="flex flex-col items-center" aria-label="Nawigacja między sekcjami">
+                        <div className="flex items-center" aria-label="Nawigacja między sekcjami">
                             <button
                                 type="button"
                                 disabled={!previousItem}
                                 aria-label="Przejdź do poprzedniej sekcji"
                                 onClick={() => previousItem && scrollToSection(previousItem.id)}
-                                className="grid h-7 w-11 place-items-center rounded-md text-blue transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:text-slate-300"
+                                className="shrink-0 grid h-8 w-8 place-items-center rounded-md text-blue transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:text-slate-300"
                             >
                                 <ChevronUp aria-hidden="true" className="size-4.5" strokeWidth={2.25} />
                             </button>
@@ -221,7 +221,7 @@ export default function ArticleTableOfContents({ items, hint }: ArticleTableOfCo
                                 disabled={!nextItem}
                                 aria-label="Przejdź do następnej sekcji"
                                 onClick={() => nextItem && scrollToSection(nextItem.id)}
-                                className="grid h-7 w-11 place-items-center rounded-md text-blue transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:text-slate-300"
+                                className="shrink-0 grid h-8 w-8 place-items-center rounded-md text-blue transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:text-slate-300"
                             >
                                 <ChevronDown aria-hidden="true" className="size-4.5" strokeWidth={2.25} />
                             </button>
