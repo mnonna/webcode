@@ -145,6 +145,7 @@ function ProcessStepNav({ activeIndex, fillScale, onSelect, compact = false }: P
 
 export default function HomeProcess() {
   const sectionRef = useRef<HTMLElement>(null);
+  const desktopTrackRef = useRef<HTMLDivElement>(null);
   const desktopStageRef = useRef<HTMLDivElement>(null);
   const desktopTriggerRef = useRef<ScrollTrigger | null>(null);
   const desktopFadeTimeoutRef = useRef<number | null>(null);
@@ -273,21 +274,31 @@ export default function HomeProcess() {
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
+    const track = desktopTrackRef.current;
     const stage = desktopStageRef.current;
 
-    if (!section || !stage || !useScrollMode) {
+    if (!section || !track || !stage || !useScrollMode) {
       desktopTriggerRef.current = null;
       setHeaderHidden(false);
       return;
     }
 
     const ctx = gsap.context(() => {
+      const getScrollDistance = () => PROCESS_SCROLL_UNITS * Math.max(window.innerHeight * 0.95, 780);
+      const syncTrackHeight = () => {
+        track.style.height = `${stage.offsetHeight + getScrollDistance()}px`;
+      };
+
+      syncTrackHeight();
+
       const trigger = ScrollTrigger.create({
-        trigger: stage,
+        trigger: track,
         start: 'top top',
-        end: () => `+=${PROCESS_SCROLL_UNITS * Math.max(window.innerHeight * 0.95, 780)}`,
-        pin: stage,
-        pinSpacing: true,
+        end: () => {
+          const scrollDistance = getScrollDistance();
+          track.style.height = `${stage.offsetHeight + scrollDistance}px`;
+          return `+=${scrollDistance}`;
+        },
         scrub: true,
         invalidateOnRefresh: true,
         onToggle: (self) => {
@@ -367,7 +378,7 @@ export default function HomeProcess() {
     <section
       id="process"
       ref={sectionRef}
-      className="section overflow-hidden"
+      className="section"
       style={{ ['--process-progress-scale' as string]: `${manualProgressScale}` }}
     >
       <div className="section-shell">
@@ -395,9 +406,13 @@ export default function HomeProcess() {
 
       {useScrollMode ? (
         <div
-          ref={desktopStageRef}
-          className="wc-contain-layout-paint relative h-[100svh] min-h-[100svh] w-full overflow-hidden"
+          ref={desktopTrackRef}
+          className="relative w-full"
         >
+          <div
+            ref={desktopStageRef}
+            className="wc-contain-layout-paint sticky top-0 h-[100svh] min-h-[100svh] w-full overflow-hidden"
+          >
             <div className="absolute inset-0">
               {processSlides.map((slide, index) => (
                 <div
@@ -495,6 +510,7 @@ export default function HomeProcess() {
               </div>
             </div>
           </div>
+        </div>
       ) : (
         <div className="section-shell">
           <div>
