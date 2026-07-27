@@ -50,10 +50,10 @@ const technologies = [
     position: 'lg:right-[20%] lg:top-[23%]',
   },
   {
-    name: 'SCSS',
-    src: '/logos/scss.png',
-    width: 330,
-    height: 248,
+    name: 'Woocommerce',
+    src: '/logos/woo-logo.svg',
+    width: 270,
+    height: 188,
     position: 'lg:right-[4%] lg:top-[47%]',
   },
   {
