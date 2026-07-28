@@ -16,7 +16,6 @@ type ContactDetail = {
 
 const contactDetails: ContactDetail[] = [
   { icon: Mail, label: 'E-mail', value: 'webcode.kontakt@gmail.com', href: 'mailto:webcode.kontakt@gmail.com' },
-  { icon: Phone, label: 'Telefon', value: '+48 798 344 959', href: 'tel:+48798344959' },
   { icon: MapPin, label: 'Lokalizacja', value: '62-052 Komorniki, Polska' },
 ];
 

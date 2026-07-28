@@ -38,6 +38,9 @@
   --space-section-y-min: 44px;
   --space-section-y-max: 56px;
   --space-section-y: clamp(44px, calc(40.941176px + 0.784314vw), 56px);
+  --space-section-y-big-min: 56px;
+  --space-section-y-big-max: 96px;
+  --space-section-y-big: clamp(56px, calc(45.803922px + 2.614379vw), 96px);
   --space-section-bottom-story-min: 44px;
   --space-section-bottom-story-max: 96px;
   --space-section-bottom-story: clamp(44px, calc(30.745098px + 3.398693vw), 96px);
@@ -164,6 +167,7 @@
 }
 
 @theme inline {
+  --spacing-section-y-big: var(--space-section-y-big);
   --color-blue: var(--wc-blue);
   --color-blue-soft: var(--wc-blue-soft);
   --color-background: var(--background);

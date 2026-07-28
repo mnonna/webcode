@@ -3,7 +3,7 @@ import Footer from "@/src/components/Footer";
 import OfferHero from "@/src/components/offer/Hero";
 import HomeContact from '@/src/components/home/HomeContact';
 import LogoSlider from '@/src/components/LogoSlider';
-
+import HomeTechnologies from '@/src/components/home/HomeTechnologies';
 import I_PageParams from "@/src/interface/PageParams";
 
 export default async function OfferPage({ params }: I_PageParams) {
@@ -23,6 +23,7 @@ export default async function OfferPage({ params }: I_PageParams) {
             <Header />
             <main>
                 <OfferHero {...heroData} />
+                <HomeTechnologies />
                 <LogoSlider />
                 <HomeContact />
             </main>

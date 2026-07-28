@@ -3,9 +3,8 @@
 import Header from '../src/components/Header';
 import Footer from '../src/components/Footer';
 import HomeHero from '../src/components/home/HomeHero';
-import HomeStory from '../src/components/home/HomeStory';
+import HomeAbout from '../src/components/home/HomeAbout';
 import HomeServices from '../src/components/home/HomeServices';
-import HomeTechnologies from '../src/components/home/HomeTechnologies';
 import HomeB2B from '../src/components/home/HomeB2B';
 import HomeProcess from '../src/components/home/HomeProcess';
 import Faq from '../src/components/home/Faq';
@@ -17,9 +16,8 @@ export default function HomePageClient() {
       <Header />
       <main>
         <HomeHero />
-        <HomeStory />
+        <HomeAbout />
         <HomeServices />
-        <HomeTechnologies />
         <HomeB2B />
         <HomeProcess />
         <Faq data={null}/>
