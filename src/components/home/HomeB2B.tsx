@@ -24,7 +24,7 @@ export default function HomeB2B() {
     <section id="b2b" ref={sectionRef} className="section">
       <div className="section-shell">
         <div className="wc-fluid-gap-feature grid items-center xl:[grid-template-areas:'a_b''c_c']">
-          <div data-b2b-reveal="" className="relative mx-auto max-w-[1049px] max-lg:max-w-[300px] xl:[grid-area:a]">
+          <div data-b2b-reveal="" className="relative mx-auto max-w-[500px] max-lg:max-w-[300px] xl:[grid-area:a]">
             <div className="absolute inset-x-[12%] top-[18%] h-[46%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.16)_0%,_rgba(21,87,255,0)_72%)] blur-3xl"></div>
             <Image
               src="/landing/b2b-illustration-1049x881.avif"
@@ -36,7 +36,7 @@ export default function HomeB2B() {
             />
           </div>
 
-          <div data-b2b-reveal="" className="xl:[grid-area:b]">
+          <div data-b2b-reveal="" className="xl:[grid-area:b] xl:max-w-[500px]">
             <div className="wc-eyebrow">Współpraca B2B</div>
             <h2 className="wc-heading-section wc-text-dark">Pracuję przy projektach komercyjnych <br /><span className="wc-text-highlight">w modelu B2B</span></h2>
             <p className="wc-body-lg mt-5">

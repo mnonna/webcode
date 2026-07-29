@@ -12,7 +12,7 @@ const services = [
 
 export default function HomeServices() {
   return (
-    <section id="services" className="section pt-section-y-big">
+    <section id="services" className="section">
       <div className="section-shell">
         <div className="mx-auto max-w-[40ch] text-center">
           <div className="wc-eyebrow justify-center">Co mogę dla Ciebie zrobić?</div>
