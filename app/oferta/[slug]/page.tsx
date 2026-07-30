@@ -61,7 +61,7 @@ export default async function OfferSinglePage({ params }: I_PageParams) {
             <main>
                 <OfferHero {...heroData} />
                 <OfferCards />
-                <OfferPricing />
+                <OfferPricing serviceSlug={offer.serviceSlug} />
                 <Cta {...ctaData} />
                 <OtherLocations
                     serviceSlug={offer.serviceSlug}

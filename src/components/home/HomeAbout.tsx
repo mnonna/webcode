@@ -43,13 +43,13 @@ export default function HomeAbout() {
                   href="#contact"
                   className="wc-btn-primary justify-between px-7 py-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--wc-blue)]"
                 >
-                  Poznaj nas lepiej
+                  Poznaj mnie
                   <ArrowRight size={20} aria-hidden="true" />
                 </a>
               </div>
             </div>
 
-            <div className="relative flex min-h-[440px] items-end justify-center sm:min-h-[520px] lg:min-h-full mt-[64px] lg:mt-[120px]">
+            <div className="relative flex items-end justify-center lg:min-h-[520px] lg:min-h-full mt-[64px] lg:mt-[120px]">
               <div
                 className="wc-about-dot-grid wc-about-dot-grid--mobile !-z-1"
                 aria-hidden="true"

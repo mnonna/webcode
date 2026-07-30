@@ -279,7 +279,9 @@
 .wc-about-character {
   position: relative;
   z-index: 1;
-  width: min(78vw, 330px);
+  width: auto;
+  height: min(168.75vw, 300px);
+  aspect-ratio: 409 / 885;
 
   img {
     position: relative;

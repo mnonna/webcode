@@ -6,6 +6,7 @@ import HomeHero from '../src/components/home/HomeHero';
 import HomeAbout from '../src/components/home/HomeAbout';
 import HomeStory from '../src/components/home/HomeStory';
 import HomeServices from '../src/components/home/HomeServices';
+import HomeApproach from '../src/components/home/HomeApproach';
 import HomeB2B from '../src/components/home/HomeB2B';
 import HomeProcess from '../src/components/home/HomeProcess';
 import Faq from '../src/components/home/Faq';
@@ -20,6 +21,7 @@ export default function HomePageClient() {
         <HomeAbout />
         <HomeStory />
         <HomeServices />
+        <HomeApproach />
         <HomeB2B />
         <HomeProcess />
         <Faq data={null}/>
