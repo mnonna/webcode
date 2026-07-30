@@ -7,7 +7,7 @@ export default function HomeApproach() {
   return (
     <section id="approach" className="section relative py-section-y-big isolate overflow-hidden bg-blue-soft">
       <Image
-        src="/landing/approach-background.png"
+        src="/landing/approach-background.avif"
         alt=""
         fill
         sizes="100vw"
