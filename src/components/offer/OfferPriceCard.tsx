@@ -8,9 +8,9 @@ import Link from "next/link";
 import Toggle from "@/src/components/common/Toggle";
 
 export default function OfferPriceCard (props: I_OfferPriceCard) {
-    const { packetName, priceNet, priceGross, description, realizationTime, features, buttonText, buttonLink } = props;
+    const { packetName, displayName, priceNet, priceGross, description, realizationTime, features, buttonText, buttonLink } = props;
     const [priceType, setPriceType] = useState<'net' | 'gross'>('net');
-    const title = resolveOfferPacketName(packetName);
+    const title = displayName ?? resolveOfferPacketName(packetName);
     const price = priceType === 'net' ? priceNet : priceGross;
     const formattedPrice = new Intl.NumberFormat('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price);
 
@@ -55,10 +55,10 @@ export default function OfferPriceCard (props: I_OfferPriceCard) {
             <div className="mb-6 last:mb-0">
                 {features && features.length > 0 && (
                     <ul>
-                        {features.map((feature) => (
+                        {features.map((feature, index) => (
                             <li key={feature} className="flex gap-2 mb-2 last:mb-0">
-                                <Check className="wc-text-blue" size={20} />
-                                <span className="wc-body-sm">{ feature }</span>
+                                {!(index === 0 && packetName !== 'basic') && <Check className="wc-text-blue" size={20} />}
+                                <span className={`wc-body-sm ${index === 0 && packetName !== 'basic' ? 'font-bold' : ''}`}>{ feature }</span>
                             </li>
                         )) }
                     </ul>

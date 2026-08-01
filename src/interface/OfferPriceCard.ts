@@ -2,6 +2,7 @@ export type OfferPacketName = 'basic' | 'standard' | 'premium' | 'custom';
 
 export default interface I_OfferPriceCard {
     packetName: OfferPacketName;
+    displayName?: string;
     priceNet: number;
     priceGross: number;
     description: string;

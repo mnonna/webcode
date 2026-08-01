@@ -4,10 +4,10 @@ import Link from 'next/link';
 const services = [
   { title: 'Strony internetowe WordPress', copy: 'Profesjonalne strony firmowe z ofertą, formularzami i łatwą edycją treści.', icon: LayoutTemplate, href: '/oferta/strony-internetowe-poznan' },
   { title: 'Sklepy WooCommerce', copy: 'Sklepy dopasowane do oferty, płatności i wygodnej obsługi zamówień.', icon: ShoppingCart, href: '/oferta/sklepy-woocommerce-poznan' },
+  { title: 'Aplikacje webowe', copy: 'Dedykowane systemy i panele dopasowane do procesów w Twojej firmie.', icon: Code2, href: '/oferta/aplikacje-webowe-poznan' },
   { title: 'Opieka nad stronami', copy: 'Aktualizacje, kopie zapasowe, monitoring i szybka reakcja techniczna.', icon: Shield, href: '/oferta/opieka-nad-stronami-poznan' },
   { title: 'Optymalizacja SEO', copy: 'Lepsza widoczność w Google dzięki technicznie poprawnym wdrożeniom.', icon: Search, href: '/oferta/optymalizacja-seo-poznan' },
-  { title: 'Aplikacje webowe', copy: 'Dedykowane systemy i panele dopasowane do procesów w Twojej firmie.', icon: Code2, href: '/oferta/aplikacje-webowe-poznan' },
-  { title: 'Projekty graficzne / UI', copy: 'Nowoczesne layouty, bannery, interfejsy i materiały wizualne do projektu.', icon: PencilRuler, href: '/oferta/projekty-graficzne-ui-poznan' },
+  { title: 'Projekty graficzne / UI', copy: 'Projekty interfejsów w Figmie, tworzone ze wsparciem AI i dopasowane do potrzeb klienta oraz późniejszego wdrożenia.', icon: PencilRuler, href: '/oferta/projekty-graficzne-ui-poznan' },
 ] as const;
 
 export default function HomeServices() {

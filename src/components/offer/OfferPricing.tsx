@@ -11,10 +11,10 @@ import { useGsapReveal } from '@/src/hooks/useGsapReveal';
 const offerTabs: TabItem<ServiceSlug>[] = [
     { value: 'strony-internetowe', label: 'Strony internetowe', icon: LayoutTemplate },
     { value: 'sklepy-woocommerce', label: 'Sklepy internetowe', icon: ShoppingCart },
-    { value: 'optymalizacja-seo', label: 'Pozycjonowanie (SEO)', icon: Search },
-    { value: 'opieka-nad-stronami', label: 'Opieka i rozwój', icon: ShieldCheck },
     { value: 'aplikacje-webowe', label: 'Aplikacje webowe', icon: Code2 },
-    { value: 'projekty-graficzne-ui', label: 'Projekty graficzne i UI', icon: PencilRuler },
+    { value: 'opieka-nad-stronami', label: 'Opieka i rozwój', icon: ShieldCheck },
+    { value: 'optymalizacja-seo', label: 'Pozycjonowanie (SEO)', icon: Search },
+    { value: 'projekty-graficzne-ui', label: 'Projekty UI/UX', icon: PencilRuler },
 ];
 
 type OfferPricingProps = {
