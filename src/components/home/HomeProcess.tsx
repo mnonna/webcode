@@ -1,597 +1,209 @@
-﻿import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import Image from 'next/image';
-import useEmblaCarousel from 'embla-carousel-react';
-import clsx from 'clsx';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { gsap, ScrollTrigger } from '../../lib/gsap';
-import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+﻿'use client';
 
-const processSlides = [
+import { useCallback, useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  CodeXml,
+  LayoutPanelTop,
+  MessageCircleMore,
+  ShieldCheck,
+} from 'lucide-react';
+
+const processSteps = [
   {
     id: 'process-01',
-    stepLabel: 'Rozmowa',
-    title: 'Rozmowa i potrzeby',
-    copy: 'Ustalamy cele, grupę docelową i funkcje, które ma spełniać Twoja strona.',
-    ctaLabel: 'Omówmy potrzeby',
-    imageSrc: '/landing/process/process-step-01.avif',
-    imageAlt: 'Spotkanie projektowe poświęcone zebraniu potrzeb i celów strony internetowej',
+    title: 'Brief',
+    copy: 'Krótka rozmowa o celach, zakresie i potrzebach projektu.',
+    icon: MessageCircleMore,
   },
   {
     id: 'process-02',
-    stepLabel: 'Struktura',
-    title: 'Struktura i zakres',
-    copy: 'Plan strony, układ sekcji, treści i funkcjonalności dopasowane do biznesu.',
-    ctaLabel: 'Plan strony i funkcje',
-    imageSrc: '/landing/process/process-step-02.avif',
-    imageAlt: 'Projektowanie mapy strony i struktury treści przy wspólnej analizie zakresu projektu',
+    title: 'Struktura',
+    copy: 'Układ strony, zakres prac i konkretny plan działania.',
+    icon: LayoutPanelTop,
   },
   {
     id: 'process-03',
-    stepLabel: 'Projekt',
     title: 'Projekt i wdrożenie',
-    copy: 'Tworzę UI/UX i techniczne wdrożenie w WordPressie lub jako aplikację webową.',
-    ctaLabel: 'Zobacz etapy wdrożenia',
-    imageSrc: '/landing/process/process-step-03.avif',
-    imageAlt: 'Praca nad projektem interfejsu i technicznym wdrożeniem strony lub aplikacji',
+    copy: 'Projektuję interfejs i wdrażam gotowe rozwiązanie.',
+    icon: CodeXml,
   },
   {
     id: 'process-04',
-    stepLabel: 'Testy',
     title: 'Testy i publikacja',
-    copy: 'Sprawdzamy działanie, responsywność, formularze, szybkość i podstawy SEO.',
-    ctaLabel: 'Przygotujmy publikację',
-    imageSrc: '/landing/process/process-step-04.avif',
-    imageAlt: 'Weryfikacja jakości projektu, testy wydajności i przygotowanie do publikacji',
-  },
-  {
-    id: 'process-05',
-    stepLabel: 'Wsparcie',
-    title: 'Wsparcie po starcie',
-    copy: 'Możesz liczyć na opiekę techniczną, aktualizacje i dalszy rozwój projektu.',
-    ctaLabel: 'Zaplanujmy opiekę',
-    imageSrc: '/landing/process/process-step-05.avif',
-    imageAlt: 'Opieka techniczna nad stroną po wdrożeniu, aktualizacje i bieżące wsparcie',
+    copy: 'Sprawdzamy całość, nanosimy poprawki i publikujemy.',
+    icon: CheckCircle2,
   },
 ] as const;
 
-const DESKTOP_BREAKPOINT = '(min-width: 1024px)';
-const PROCESS_STEPS_COUNT = processSlides.length;
-const PROCESS_SEGMENTS = PROCESS_STEPS_COUNT - 1;
-const PROCESS_FINAL_HOLD_SEGMENT = 1.25;
-const PROCESS_SCROLL_UNITS = PROCESS_SEGMENTS + PROCESS_FINAL_HOLD_SEGMENT;
-const PROCESS_ACTIVE_PROGRESS_MULTIPLIER = PROCESS_SCROLL_UNITS / Math.max(1, PROCESS_SEGMENTS);
-
-function setHeaderHidden(hidden: boolean) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  window.dispatchEvent(
-    new CustomEvent('webcode:header-visibility', {
-      detail: { hidden },
-    })
-  );
-}
-
-function clampSlideIndex(index: number) {
-  return Math.min(PROCESS_STEPS_COUNT - 1, Math.max(0, index));
-}
+const PROCESS_STEPS_COUNT = processSteps.length;
 
 function formatStepNumber(index: number) {
   return String(index + 1).padStart(2, '0');
 }
 
-type ProcessStepNavProps = {
-  activeIndex: number;
-  fillScale: number | string;
-  onSelect: (index: number) => void;
-  compact?: boolean;
-};
-
-function ProcessStepNav({ activeIndex, fillScale, onSelect, compact = false }: ProcessStepNavProps) {
-  return (
-    <div className={clsx('relative', compact ? 'pt-8' : 'pt-9')}>
-      <div className="absolute left-[10%] right-[10%] top-5">
-        <div
-          className="h-px origin-left bg-[var(--wc-blue)] transition-transform duration-300"
-          style={{ transform: `scaleX(${fillScale})` }}
-        ></div>
-      </div>
-
-      <div className="grid grid-cols-5 gap-2">
-        {processSlides.map((slide, index) => {
-          const isActive = index === activeIndex;
-          const isPast = index < activeIndex;
-
-          return (
-            <button
-              key={slide.id}
-              type="button"
-              onClick={() => onSelect(index)}
-              className="group text-center"
-              aria-label={`Przejdź do kroku ${formatStepNumber(index)}: ${slide.title}`}
-              aria-current={isActive ? 'step' : undefined}
-            >
-              <span
-                className={clsx(
-                  'wc-font-heading relative z-10 mx-auto flex h-12 w-12 items-center justify-center rounded-full border text-[1rem] font-[800] transition-all duration-300',
-                  isActive
-                    ? 'border-[var(--wc-blue)] bg-[var(--wc-blue)] text-white shadow-[0_16px_40px_rgba(21,87,255,0.24)]'
-                    : isPast
-                      ? 'border-[rgba(21,87,255,0.22)] bg-[var(--wc-blue-soft)] text-[var(--wc-blue)]'
-                      : 'border-[rgba(214,224,241,1)] bg-white text-[var(--wc-text)]'
-                )}
-              >
-                {formatStepNumber(index)}
-              </span>
-
-              {!compact && (
-                <span
-                  className={clsx(
-                    'mt-4 block text-[0.95rem] font-[600] transition-colors duration-300',
-                    isActive ? 'text-[var(--wc-blue)]' : 'text-[var(--wc-dark)]'
-                  )}
-                >
-                  {slide.stepLabel}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
 export default function HomeProcess() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const desktopTrackRef = useRef<HTMLDivElement>(null);
-  const desktopStageRef = useRef<HTMLDivElement>(null);
-  const desktopTriggerRef = useRef<ScrollTrigger | null>(null);
-  const desktopFadeTimeoutRef = useRef<number | null>(null);
-  const previousDesktopIndexRef = useRef(0);
-  const reducedMotion = usePrefersReducedMotion();
-  const [isDesktop, setIsDesktop] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [transitioningFromIndex, setTransitioningFromIndex] = useState<number | null>(null);
   const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: false,
     align: 'start',
-    skipSnaps: false,
+    containScroll: 'trimSnaps',
+    loop: false,
   });
-  const manualProgressScale = useMemo(() => activeIndex / Math.max(1, PROCESS_SEGMENTS), [activeIndex]);
-  const useScrollMode = isDesktop && !reducedMotion;
-  const activeSlide = processSlides[activeIndex];
-  const canGoPrev = activeIndex > 0;
-  const canGoNext = activeIndex < PROCESS_STEPS_COUNT - 1;
-  const desktopTransitioningFromIndex = useScrollMode ? transitioningFromIndex : null;
 
-  const updateActiveIndex = useCallback(
-    (nextIndex: number) => {
-      setActiveIndex((previous) => {
-        if (previous === nextIndex) {
-          return previous;
-        }
+  useEffect(() => {
+    if (!emblaApi) {
+      return;
+    }
 
-        if (useScrollMode) {
-          if (desktopFadeTimeoutRef.current !== null) {
-            window.clearTimeout(desktopFadeTimeoutRef.current);
-          }
+    const syncActiveIndex = () => setActiveIndex(emblaApi.selectedScrollSnap());
 
-          setTransitioningFromIndex(previous);
-          previousDesktopIndexRef.current = nextIndex;
-          desktopFadeTimeoutRef.current = window.setTimeout(() => {
-            setTransitioningFromIndex((current) => (current === previous ? null : current));
-            desktopFadeTimeoutRef.current = null;
-          }, 260);
-        } else {
-          previousDesktopIndexRef.current = nextIndex;
-        }
+    syncActiveIndex();
+    emblaApi.on('select', syncActiveIndex);
+    emblaApi.on('reInit', syncActiveIndex);
 
-        return nextIndex;
-      });
+    return () => {
+      emblaApi.off('select', syncActiveIndex);
+      emblaApi.off('reInit', syncActiveIndex);
+    };
+  }, [emblaApi]);
+
+  const goToStep = useCallback(
+    (index: number) => {
+      emblaApi?.scrollTo(index);
     },
-    [useScrollMode]
+    [emblaApi]
   );
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia(DESKTOP_BREAKPOINT);
-    const syncDesktopState = () => setIsDesktop(mediaQuery.matches);
-
-    syncDesktopState();
-    mediaQuery.addEventListener('change', syncDesktopState);
-
-    return () => mediaQuery.removeEventListener('change', syncDesktopState);
-  }, []);
-
-  useEffect(() => {
-    const section = sectionRef.current;
-
-    if (!section || useScrollMode) {
-      return;
-    }
-
-    section.style.setProperty('--process-progress-scale', `${manualProgressScale}`);
-  }, [manualProgressScale, useScrollMode]);
-
-  useEffect(() => {
-    if (!useScrollMode) {
-      if (desktopFadeTimeoutRef.current !== null) {
-        window.clearTimeout(desktopFadeTimeoutRef.current);
-        desktopFadeTimeoutRef.current = null;
-      }
-
-      previousDesktopIndexRef.current = activeIndex;
-    }
-  }, [activeIndex, useScrollMode]);
-
-  useEffect(() => {
-    if (useScrollMode || transitioningFromIndex === null) {
-      return;
-    }
-
-    const resetTimer = window.setTimeout(() => {
-      setTransitioningFromIndex(null);
-    }, 0);
-
-    return () => window.clearTimeout(resetTimer);
-  }, [transitioningFromIndex, useScrollMode]);
-
-  useEffect(() => {
-    return () => {
-      if (desktopFadeTimeoutRef.current !== null) {
-        window.clearTimeout(desktopFadeTimeoutRef.current);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!emblaApi || useScrollMode) {
-      return;
-    }
-
-    const syncEmblaState = () => {
-      updateActiveIndex(emblaApi.selectedScrollSnap());
-    };
-
-    syncEmblaState();
-    emblaApi.on('select', syncEmblaState);
-    emblaApi.on('reInit', syncEmblaState);
-
-    return () => {
-      emblaApi.off('select', syncEmblaState);
-      emblaApi.off('reInit', syncEmblaState);
-    };
-  }, [emblaApi, updateActiveIndex, useScrollMode]);
-
-  useEffect(() => {
-    if (!emblaApi || useScrollMode) {
-      return;
-    }
-
-    emblaApi.scrollTo(activeIndex, true);
-  }, [activeIndex, emblaApi, useScrollMode]);
-
-  useLayoutEffect(() => {
-    const section = sectionRef.current;
-    const track = desktopTrackRef.current;
-    const stage = desktopStageRef.current;
-
-    if (!section || !track || !stage || !useScrollMode) {
-      desktopTriggerRef.current = null;
-      setHeaderHidden(false);
-      return;
-    }
-
-    const ctx = gsap.context(() => {
-      const getScrollDistance = () => PROCESS_SCROLL_UNITS * Math.max(window.innerHeight * 0.95, 780);
-      const syncTrackHeight = () => {
-        track.style.height = `${stage.offsetHeight + getScrollDistance()}px`;
-      };
-
-      syncTrackHeight();
-
-      const trigger = ScrollTrigger.create({
-        trigger: track,
-        start: 'top top',
-        end: () => {
-          const scrollDistance = getScrollDistance();
-          track.style.height = `${stage.offsetHeight + scrollDistance}px`;
-          return `+=${scrollDistance}`;
-        },
-        scrub: true,
-        invalidateOnRefresh: true,
-        onToggle: (self) => {
-          setHeaderHidden(self.isActive);
-        },
-        onRefresh: (self) => {
-          const activeProgress = Math.min(1, self.progress * PROCESS_ACTIVE_PROGRESS_MULTIPLIER);
-          section.style.setProperty('--process-progress-scale', `${activeProgress}`);
-        },
-        onUpdate: (self) => {
-          const activeProgress = Math.min(1, self.progress * PROCESS_ACTIVE_PROGRESS_MULTIPLIER);
-          section.style.setProperty('--process-progress-scale', `${activeProgress}`);
-
-          const nextIndex = clampSlideIndex(Math.floor(activeProgress * PROCESS_SEGMENTS + 0.0001));
-          updateActiveIndex(nextIndex);
-        },
-      });
-
-      desktopTriggerRef.current = trigger;
-    }, section);
-
-    return () => {
-      desktopTriggerRef.current = null;
-      setHeaderHidden(false);
-      ctx.revert();
-    };
-  }, [updateActiveIndex, useScrollMode]);
-
-  const goToSlide = useCallback(
-    (nextIndex: number) => {
-      const targetIndex = clampSlideIndex(nextIndex);
-
-      if (useScrollMode) {
-        const trigger = desktopTriggerRef.current;
-
-        if (!trigger) {
-          return;
-        }
-
-        const progress = targetIndex / Math.max(1, PROCESS_SCROLL_UNITS);
-        const scrollTop = trigger.start + (trigger.end - trigger.start) * progress;
-
-        window.scrollTo({
-          top: scrollTop,
-          behavior: 'smooth',
-        });
-
-        return;
-      }
-
-      if (emblaApi) {
-        emblaApi.scrollTo(targetIndex);
-      } else {
-        updateActiveIndex(targetIndex);
-      }
-    },
-    [emblaApi, updateActiveIndex, useScrollMode]
-  );
-
-  const handlePrev = useCallback(() => {
-    if (!canGoPrev) {
-      return;
-    }
-
-    goToSlide(activeIndex - 1);
-  }, [activeIndex, canGoPrev, goToSlide]);
-
-  const handleNext = useCallback(() => {
-    if (!canGoNext) {
-      return;
-    }
-
-    goToSlide(activeIndex + 1);
-  }, [activeIndex, canGoNext, goToSlide]);
 
   return (
-    <section
-      id="process"
-      ref={sectionRef}
-      className="section"
-      style={{ ['--process-progress-scale' as string]: `${manualProgressScale}` }}
-    >
+    <section id="process" className="section">
       <div className="section-shell">
-        <div className={clsx('wc-process-intro mx-auto flex max-w-[75%] flex-col items-center text-center lg:max-w-[50%]')}>
-          <div className={clsx('wc-eyebrow')}>
-            Jak wygląda współpraca?
-          </div>
-          <h2
-            className={clsx('wc-heading-section wc-text-dark lg:max-w-[20ch] leading-[1.02]')}
-          >
-            Przejrzysty proces <span className="wc-text-highlight">od briefu do publikacji</span>
-          </h2>
-          <p
-            className={clsx(
-              'wc-body-lg mt-5 text-[1rem] leading-[1.75]',
-              useScrollMode
-                ? 'max-w-[40ch]'
-                : 'max-w-[24ch] lg:mx-auto lg:max-w-[42ch] lg:text-center'
-            )}
-          >
-            Każdy etap ma jasny cel. Dzięki temu wiesz, co dzieje się z projektem i gdzie jesteśmy w danym momencie.
-          </p>
-        </div>
-      </div>
+        <div className="wc-surface-panel px-0 py-0 max-lg:!rounded-none max-lg:!border-0 max-lg:!bg-transparent max-lg:!shadow-none max-lg:!backdrop-blur-none sm:px-0 sm:py-0 lg:overflow-hidden lg:px-12 lg:py-16 xl:px-16 xl:py-20">
+          <header className="mx-auto flex max-w-[900px] flex-col items-center text-center">
+            <div className="wc-eyebrow">Jak wygląda współpraca?</div>
+            <h2 className="wc-heading-section wc-text-dark max-w-[22ch]">
+              Przejrzysty proces od briefu do publikacji
+            </h2>
+            <p className="wc-body-lg mt-4 max-w-[62ch] lg:mt-5">
+              Prosty, uporządkowany proces. Na każdym etapie wiesz, co robimy i co jest dalej.
+            </p>
+          </header>
 
-      {useScrollMode ? (
-        <div
-          ref={desktopTrackRef}
-          className="relative w-full"
-        >
-          <div
-            ref={desktopStageRef}
-            className="wc-contain-layout-paint sticky top-0 h-[100svh] min-h-[100svh] w-full overflow-hidden"
-          >
-            <div className="absolute inset-0">
-              {processSlides.map((slide, index) => (
-                <div
-                  key={slide.id}
-                  data-process-desktop-slide=""
-                  className={clsx('absolute inset-0', index !== activeIndex && index !== desktopTransitioningFromIndex && 'pointer-events-none')}
-                  style={{
-                    opacity: index === activeIndex ? 1 : 0,
-                    visibility: index === activeIndex || index === desktopTransitioningFromIndex ? 'visible' : 'hidden',
-                    transform: index === activeIndex ? 'scale(1)' : 'scale(1.008)',
-                    transition:
-                      index === activeIndex
-                        ? 'transform 280ms ease-out'
-                        : index === desktopTransitioningFromIndex
-                          ? 'opacity 260ms ease-out, transform 260ms ease-out'
-                          : 'none',
-                    willChange: index === activeIndex || index === desktopTransitioningFromIndex ? 'transform, opacity' : 'auto',
-                  }}
-                  aria-hidden={index === activeIndex ? undefined : true}
-                >
-                  <Image
-                    src={slide.imageSrc}
-                    alt={slide.imageAlt}
-                    fill
-                    sizes="100vw"
-                    className="object-cover object-center"
-                  />
-                </div>
-              ))}
-            </div>
+          <div className="mt-10 hidden lg:grid lg:grid-cols-4 xl:mt-14" aria-label="Etapy współpracy">
+            {processSteps.map((step, index) => {
+              const Icon = step.icon;
 
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(248,250,252,0.95)_0%,rgba(248,250,252,0.9)_24%,rgba(248,250,252,0.72)_40%,rgba(248,250,252,0.18)_60%,rgba(248,250,252,0.08)_100%)]"></div>
-            <div className="absolute inset-y-0 left-0 w-[52%] bg-[radial-gradient(circle_at_left_center,rgba(21,87,255,0.14)_0%,rgba(21,87,255,0)_72%)]"></div>
-            <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,rgba(248,250,252,0)_0%,rgba(248,250,252,0.84)_100%)]"></div>
+              return (
+                <article key={step.id} className="relative flex flex-col items-center px-3 text-center xl:px-5">
+                  {index > 0 && (
+                    <div className="absolute right-1/2 top-10 z-0 flex w-full -translate-y-1/2 items-center px-[52px]" aria-hidden="true">
+                      <span className="h-px flex-1 border-t border-dashed border-[rgba(21,87,255,0.28)]" />
+                      <ArrowRight className="-ml-px text-[rgba(21,87,255,0.55)]" size={20} strokeWidth={1.5} />
+                    </div>
+                  )}
 
-            <div className="wc-process-stage-shell relative z-10 flex h-[100svh] flex-col">
-              <div className="section-shell relative flex min-h-[420px] mt-auto">
-                <div className="absolute inset-0 flex flex-col justify-start">
-                  <div className="flex items-end gap-5">
-                    <span className="wc-process-step-display text-[var(--wc-blue)]">
-                      {formatStepNumber(activeIndex)}
-                    </span>
-                    <span className="wc-process-step-total mb-3 text-[rgba(71,85,105,0.9)]">
-                      / {String(PROCESS_STEPS_COUNT).padStart(2, '0')}
-                    </span>
+                  <div className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full border-[7px] border-white bg-[var(--wc-blue-soft)] text-[var(--wc-blue)] shadow-[0_14px_36px_rgba(21,87,255,0.12)]">
+                    <Icon size={38} strokeWidth={1.8} aria-hidden="true" />
                   </div>
 
-                  <h3 className="wc-process-step-title wc-text-dark mt-6 leading-[1.02]">
-                    {activeSlide.title}
-                  </h3>
-                  <p className="wc-body-lg mt-5 max-w-[28ch] text-[1.08rem] leading-[1.8]">{activeSlide.copy}</p>
-                  <div className="mt-8">
-                    <a href="#contact" className="wc-btn-primary">
-                      {activeSlide.ctaLabel}
-                      <ArrowRight size={16} />
-                    </a>
+                  <div className="mt-7">
+                    <span className="wc-kicker">{formatStepNumber(index)}</span>
+                    <h3 className="wc-heading-sm wc-text-dark mt-2">{step.title}</h3>
+                    <p className="wc-body-md mt-3 max-w-[24ch]">{step.copy}</p>
                   </div>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={handlePrev}
-                disabled={!canGoPrev}
-                className={clsx(
-                  'absolute left-8 top-1/2 z-20 flex h-10 w-10 2xl:h-16 2xl:w-16 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-white/88 text-[var(--wc-dark)] shadow-[0_20px_50px_rgba(15,23,42,0.12)] transition-all duration-200',
-                  canGoPrev ? 'hover:-translate-y-1/2 hover:scale-[1.02]' : 'cursor-not-allowed opacity-45'
-                )}
-                aria-label="Poprzedni krok procesu"
-                style={{ willChange: 'transform, opacity' }}
-              >
-                <ChevronLeft size={24} />
-              </button>
-
-              <button
-                type="button"
-                onClick={handleNext}
-                disabled={!canGoNext}
-                className={clsx(
-                  'absolute right-8 top-1/2 z-20 flex h-10 w-10 2xl:h-16 2xl:w-16 -translate-y-1/2 items-center justify-center rounded-full border border-white/70 bg-white/88 text-[var(--wc-dark)] shadow-[0_20px_50px_rgba(15,23,42,0.12)] transition-all duration-200',
-                  canGoNext ? 'hover:-translate-y-1/2 hover:scale-[1.02]' : 'cursor-not-allowed opacity-45'
-                )}
-                aria-label="Następny krok procesu"
-                style={{ willChange: 'transform, opacity' }}
-              >
-                <ChevronRight size={24} />
-              </button>
-
-              <div className="wc-process-nav-shell relative z-10 mt-auto pb-2">
-                <ProcessStepNav
-                  activeIndex={activeIndex}
-                  fillScale="var(--process-progress-scale)"
-                  onSelect={goToSlide}
-                />
-              </div>
-            </div>
+                </article>
+              );
+            })}
           </div>
-        </div>
-      ) : (
-        <div className="section-shell">
-          <div>
-            <div className="mt-8 overflow-hidden" ref={emblaRef}>
-              <div className="-ml-4 flex">
-                {processSlides.map((slide, index) => (
-                  <div key={slide.id} className="min-w-0 flex-[0_0_100%] pl-4">
-                    <article className="overflow-hidden rounded-[32px] border border-[rgba(230,236,245,0.9)] bg-white lg:shadow-[0_18px_48px_rgba(15,23,42,0.08)]">
-                      <div className="relative aspect-[0.93] overflow-hidden bg-[var(--wc-surface)] lg:aspect-[1.36]">
-                        <Image
-                          src={slide.imageSrc}
-                          alt={slide.imageAlt}
-                          fill
-                          sizes="(max-width: 1023px) calc(100vw - 32px), 100vw"
-                          className="object-cover object-center"
-                        />
-                      </div>
 
-                      <div className="wc-process-card-body bg-white">
+          <div className="mt-9 lg:hidden">
+            <div
+              ref={emblaRef}
+              className="-mx-5 -my-12 overflow-hidden px-5 py-12"
+              role="region"
+              aria-roledescription="karuzela"
+              aria-label="Etapy współpracy"
+            >
+              <div className="-ml-3 flex touch-pan-y">
+                {processSteps.map((step, index) => {
+                  const Icon = step.icon;
+
+                  return (
+                    <div
+                      key={step.id}
+                      className="min-w-0 flex-[0_0_88%] pl-3 sm:flex-[0_0_62%]"
+                      role="group"
+                      aria-roledescription="slajd"
+                      aria-label={`${index + 1} z ${PROCESS_STEPS_COUNT}: ${step.title}`}
+                    >
+                      <article className="h-full rounded-[24px] border border-[var(--wc-border)] bg-white p-6 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
                         <div className="flex items-center justify-between gap-4">
-                          <div className="flex items-end gap-3">
-                            <span className="wc-process-step-display-compact text-[var(--wc-blue)]">
-                              {formatStepNumber(index)}
-                            </span>
-                            <span className="wc-process-step-total mb-2 text-[rgba(71,85,105,0.9)]">
-                              / {String(PROCESS_STEPS_COUNT).padStart(2, '0')}
-                            </span>
+                          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[var(--wc-blue-soft)] text-[var(--wc-blue)]">
+                            <Icon size={32} strokeWidth={1.8} aria-hidden="true" />
                           </div>
-
-                          <div className="flex items-center gap-3">
-                            <button
-                              type="button"
-                              onClick={handlePrev}
-                              disabled={!canGoPrev}
-                              className={clsx(
-                                'flex h-10 w-10 lg:h-14 lg:w-14 items-center justify-center rounded-full border border-[rgba(230,236,245,1)] bg-white text-[var(--wc-dark)] shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition-all duration-200',
-                                canGoPrev ? 'hover:scale-[1.02]' : 'cursor-not-allowed opacity-40'
-                              )}
-                              aria-label="Poprzedni krok procesu"
-                            >
-                              <ChevronLeft size={24} />
-                            </button>
-                            <button
-                              type="button"
-                              onClick={handleNext}
-                              disabled={!canGoNext}
-                              className={clsx(
-                                'flex h-10 w-10 lg:h-14 lg:w-14 items-center justify-center rounded-full border border-[rgba(230,236,245,1)] bg-white text-[var(--wc-dark)] shadow-[0_12px_30px_rgba(15,23,42,0.06)] transition-all duration-200',
-                                canGoNext ? 'hover:scale-[1.02]' : 'cursor-not-allowed opacity-40'
-                              )}
-                              aria-label="Następny krok procesu"
-                            >
-                              <ChevronRight size={24} />
-                            </button>
-                          </div>
+                          <span className="wc-font-heading text-[1rem] font-[800] text-[var(--wc-blue)]">
+                            {formatStepNumber(index)}
+                          </span>
                         </div>
+                        <h3 className="wc-heading-card wc-text-dark mt-6">{step.title}</h3>
+                        <p className="wc-body-md mt-3">{step.copy}</p>
+                      </article>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
 
-                        <h3 className="wc-process-step-title-compact wc-text-dark mt-6 leading-[1.06]">
-                          {slide.title}
-                        </h3>
-                        <p className="wc-body-lg mt-2 lg:mt-5 max-w-[24ch] text-[1rem] leading-[1.8] lg:max-w-[32ch]">
-                          {slide.copy}
-                        </p>
-
-                        <div className="mt-8 hidden lg:block">
-                          <ProcessStepNav
-                            activeIndex={activeIndex}
-                            fillScale={manualProgressScale}
-                            onSelect={goToSlide}
-                            compact
-                          />
-                        </div>
-                      </div>
-                    </article>
-                  </div>
+            <div className="mt-6 flex items-center justify-between gap-5">
+              <div className="flex gap-2" aria-label="Wybierz krok procesu">
+                {processSteps.map((step, index) => (
+                  <button
+                    key={step.id}
+                    type="button"
+                    onClick={() => goToStep(index)}
+                    className={`h-2.5 rounded-full transition-[width,background-color] duration-200 ${
+                      index === activeIndex ? 'w-8 bg-[var(--wc-blue)]' : 'w-2.5 bg-[rgba(21,87,255,0.18)]'
+                    }`}
+                    aria-label={`Przejdź do kroku ${index + 1}: ${step.title}`}
+                    aria-current={index === activeIndex ? 'step' : undefined}
+                  />
                 ))}
               </div>
+
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => goToStep(activeIndex - 1)}
+                  disabled={activeIndex === 0}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--wc-border)] bg-white text-[var(--wc-dark)] transition-opacity disabled:cursor-not-allowed disabled:opacity-35"
+                  aria-label="Poprzedni krok procesu"
+                >
+                  <ChevronLeft size={20} aria-hidden="true" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => goToStep(activeIndex + 1)}
+                  disabled={activeIndex === PROCESS_STEPS_COUNT - 1}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--wc-border)] bg-white text-[var(--wc-dark)] transition-opacity disabled:cursor-not-allowed disabled:opacity-35"
+                  aria-label="Następny krok procesu"
+                >
+                  <ChevronRight size={20} aria-hidden="true" />
+                </button>
+              </div>
             </div>
           </div>
+
+          <div className="mx-auto mt-10 flex w-fit max-w-full items-center gap-3 rounded-full bg-[var(--wc-blue-soft)] px-5 py-3 text-left lg:mt-14 lg:px-7">
+            <ShieldCheck className="shrink-0 text-[var(--wc-blue)]" size={21} aria-hidden="true" />
+            <p className="wc-body-sm font-[600] text-[var(--wc-dark)]">
+              Po publikacji możliwe jest dalsze wsparcie i rozwój projektu.
+            </p>
+          </div>
         </div>
-      )}
+      </div>
     </section>
   );
 }
