@@ -5,6 +5,7 @@ import Footer from '../src/components/Footer';
 import HomeHero from '../src/components/home/HomeHero';
 import HomeAbout from '../src/components/home/HomeAbout';
 import HomeStory from '../src/components/home/HomeStory';
+import HomeCaseStudies from '../src/components/home/HomeCaseStudies';
 import HomeServices from '../src/components/home/HomeServices';
 import HomeApproach from '../src/components/home/HomeApproach';
 import HomeB2B from '../src/components/home/HomeB2B';
@@ -20,6 +21,7 @@ export default function HomePageClient() {
         <HomeHero />
         <HomeAbout />
         <HomeStory />
+        <HomeCaseStudies />
         <HomeServices />
         <HomeApproach />
         <HomeB2B />
