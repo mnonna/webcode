@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Manrope } from "next/font/google";
-import { GoogleAnalytics } from "@next/third-parties/google";
-import CookiebotScript from "../src/components/CookiebotScript";
+import Script from "next/script";
 import RecaptchaProvider from "../src/components/RecaptchaProvider";
 import { localBusinessLd, organizationLd } from "../src/data/jsonLd";
 import "./globals.scss";
@@ -66,7 +65,6 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          data-cookieconsent="ignore"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationLd).replace(/</g, '\\u003c'),
@@ -74,7 +72,6 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          data-cookieconsent="ignore"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(localBusinessLd).replace(/</g, '\\u003c'),
@@ -82,12 +79,33 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
+        <Script
+          id="kookiok-consent"
+          src="https://cdn.kookiok.com/consent.js?id=019fd853-f692-74cd-8b9f-533060f58a5a"
+          strategy="afterInteractive"
+        />
+
+        {googleAnalyticsId && (
+          <>
+            <script
+              type="text/plain"
+              data-ag-consent="statistics"
+              data-ag-src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`}
+            />
+            <script
+              type="text/plain"
+              data-ag-consent="statistics"
+              dangerouslySetInnerHTML={{
+                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config',${JSON.stringify(googleAnalyticsId).replace(/</g, "\\u003c")})`,
+              }}
+            />
+          </>
+        )}
+
         <RecaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY}>
           {children}
         </RecaptchaProvider>
-        <CookiebotScript />
       </body>
-      {googleAnalyticsId && <GoogleAnalytics gaId={googleAnalyticsId} />}
     </html>
   );
 }
