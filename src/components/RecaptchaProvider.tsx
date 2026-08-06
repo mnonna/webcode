@@ -1,27 +1,25 @@
 'use client';
 
-import { ReactNode } from 'react';
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
+import { createContext, ReactNode, useContext } from 'react';
 
 type RecaptchaProviderProps = {
   children: ReactNode;
   siteKey?: string;
 };
 
+const RecaptchaSiteKeyContext = createContext<string | undefined>(undefined);
+
+export function useRecaptchaSiteKey() {
+  return useContext(RecaptchaSiteKeyContext);
+}
+
 export default function RecaptchaProvider({
   children,
   siteKey,
 }: RecaptchaProviderProps) {
-  if (!siteKey) {
-    return children;
-  }
-
   return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={siteKey}
-      scriptProps={{ async: true, defer: true, appendTo: 'head' }}
-    >
+    <RecaptchaSiteKeyContext.Provider value={siteKey}>
       {children}
-    </GoogleReCaptchaProvider>
+    </RecaptchaSiteKeyContext.Provider>
   );
 }

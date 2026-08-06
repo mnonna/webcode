@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Manrope } from "next/font/google";
-import Script from "next/script";
+import ConsentAwareGoogleAnalytics from "../src/components/ConsentAwareGoogleAnalytics";
 import RecaptchaProvider from "../src/components/RecaptchaProvider";
 import { localBusinessLd, organizationLd } from "../src/data/jsonLd";
 import "./globals.scss";
@@ -64,6 +64,11 @@ export default function RootLayout({
     >
       <head>
         <script
+          id="kookiok-consent"
+          src="https://cdn.kookiok.com/consent.js?id=019fd853-f692-74cd-8b9f-533060f58a5a"
+          defer
+        />
+        <script
           type="application/ld+json"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
@@ -79,27 +84,8 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-full flex flex-col">
-        <Script
-          id="kookiok-consent"
-          src="https://cdn.kookiok.com/consent.js?id=019fd853-f692-74cd-8b9f-533060f58a5a"
-          strategy="afterInteractive"
-        />
-
         {googleAnalyticsId && (
-          <>
-            <script
-              type="text/plain"
-              data-ag-consent="statistics"
-              data-ag-src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(googleAnalyticsId)}`}
-            />
-            <script
-              type="text/plain"
-              data-ag-consent="statistics"
-              dangerouslySetInnerHTML={{
-                __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config',${JSON.stringify(googleAnalyticsId).replace(/</g, "\\u003c")})`,
-              }}
-            />
-          </>
+          <ConsentAwareGoogleAnalytics measurementId={googleAnalyticsId} />
         )}
 
         <RecaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY}>

@@ -275,7 +275,7 @@ export default function HomeCaseStudies() {
                   <div className="wc-kicker">{project.category}</div>
                   <h3 className="wc-heading-sm wc-text-dark mt-3">{project.title}</h3>
                   <p className="wc-body-md mt-2 max-w-[56ch]">{project.description}</p>
-                  <div className="mt-5 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+                  <div className="mt-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
                         <span key={tag} className="wc-chip px-3 py-2 text-[0.75rem]">

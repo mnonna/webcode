@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { useRecaptchaSiteKey } from '../components/RecaptchaProvider';
 
 type RecaptchaVerification = {
   success: true;
@@ -13,16 +13,69 @@ type RecaptchaErrorResponse = {
   error?: string;
 };
 
+type Grecaptcha = {
+  ready: (callback: () => void) => void;
+  execute: (siteKey: string, options: { action: string }) => Promise<string>;
+};
+
+declare global {
+  interface Window {
+    grecaptcha?: Grecaptcha;
+  }
+}
+
+const RECAPTCHA_SCRIPT_ID = 'google-recaptcha';
+let recaptchaLoadPromise: Promise<Grecaptcha> | null = null;
+
+function loadRecaptcha(siteKey: string): Promise<Grecaptcha> {
+  if (window.grecaptcha) {
+    return new Promise((resolve) => {
+      window.grecaptcha?.ready(() => resolve(window.grecaptcha as Grecaptcha));
+    });
+  }
+
+  if (recaptchaLoadPromise) {
+    return recaptchaLoadPromise;
+  }
+
+  recaptchaLoadPromise = new Promise<Grecaptcha>((resolve, reject) => {
+    document.getElementById(RECAPTCHA_SCRIPT_ID)?.remove();
+
+    const script = document.createElement('script');
+    script.id = RECAPTCHA_SCRIPT_ID;
+    script.async = true;
+    script.defer = true;
+    script.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(siteKey)}`;
+    script.onload = () => {
+      if (!window.grecaptcha) {
+        reject(new Error('Nie udało się uruchomić reCAPTCHA.'));
+        return;
+      }
+
+      window.grecaptcha.ready(() => resolve(window.grecaptcha as Grecaptcha));
+    };
+    script.onerror = () => reject(new Error('Nie udało się załadować reCAPTCHA.'));
+    document.head.appendChild(script);
+  }).catch((error) => {
+    recaptchaLoadPromise = null;
+    document.getElementById(RECAPTCHA_SCRIPT_ID)?.remove();
+    throw error;
+  });
+
+  return recaptchaLoadPromise;
+}
+
 export function useRecaptcha() {
-  const { executeRecaptcha } = useGoogleReCaptcha();
+  const siteKey = useRecaptchaSiteKey();
 
   const verify = useCallback(
     async (action = 'form_submit'): Promise<RecaptchaVerification> => {
-      if (!executeRecaptcha) {
-        throw new Error('reCAPTCHA nie jest jeszcze gotowa. Spróbuj ponownie.');
+      if (!siteKey) {
+        throw new Error('Brak klucza reCAPTCHA.');
       }
 
-      const token = await executeRecaptcha(action);
+      const recaptcha = await loadRecaptcha(siteKey);
+      const token = await recaptcha.execute(siteKey, { action });
       const response = await fetch('/api/verify-recaptcha', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -42,8 +95,8 @@ export function useRecaptcha() {
 
       return data;
     },
-    [executeRecaptcha],
+    [siteKey],
   );
 
-  return { verify, isReady: Boolean(executeRecaptcha) };
+  return { verify };
 }
