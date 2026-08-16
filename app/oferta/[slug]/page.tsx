@@ -14,8 +14,10 @@ import { SITE_URL } from '@/src/config/site';
 import { getOfferDefinition, offerPageSlugs } from '@/src/data/offer/catalog';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import CmsPageBlocks from '@/src/components/cms/CmsPageBlocks';
+import { getCmsPageBySlug } from '@/src/lib/strapi';
 
-export const dynamicParams = false;
+export const dynamicParams = true;
 
 export function generateStaticParams() {
     return offerPageSlugs.map((slug) => ({ slug }));
@@ -23,6 +25,27 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: I_PageParams): Promise<Metadata> {
     const { slug } = await params;
+    const page = await getCmsPageBySlug(slug);
+    if (page?.template === 'offer-detail' && page.seo) {
+        const canonical = page.seo.canonicalPath
+            ? `${SITE_URL}${page.seo.canonicalPath}`
+            : `${SITE_URL}/oferta/${slug}`;
+
+        return {
+            title: page.seo.metaTitle,
+            description: page.seo.metaDescription,
+            alternates: { canonical },
+            robots: page.seo.noIndex ? { index: false, follow: false } : undefined,
+            openGraph: {
+                title: page.seo.metaTitle,
+                description: page.seo.metaDescription,
+                url: canonical,
+                type: 'website',
+                locale: 'pl_PL',
+            },
+        };
+    }
+
     const offer = getOfferDefinition(slug);
     if (!offer) return {};
 
@@ -47,7 +70,23 @@ export async function generateMetadata({ params }: I_PageParams): Promise<Metada
 
 export default async function OfferSinglePage({ params }: I_PageParams) {
     const { slug } = await params;
+    const page = await getCmsPageBySlug(slug);
+    if (page && page.template !== 'offer-detail') notFound();
+
     const offer = getOfferDefinition(slug);
+    if (!page && !offer) notFound();
+    if (page) {
+        return (
+            <div className="min-h-screen">
+                <Header />
+                <main>
+                    <CmsPageBlocks blocks={page.blocks} />
+                </main>
+                <Footer />
+            </div>
+        );
+    }
+
     if (!offer) notFound();
     const heroData = getHeroOfferData(slug);
     const faqData = getOfferFaq(slug);

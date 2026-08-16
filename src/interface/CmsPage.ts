@@ -223,6 +223,83 @@ export type CmsCtaBlock = CmsBlockBase<'sections.cta'> & {
   imageAlternativeText?: string | null;
 };
 
+export type CmsOfferHeroBlock = CmsBlockBase<'sections.offer-hero'> & {
+  eyebrow: string;
+  title: string;
+  titleHighlight: string;
+  description: string;
+  primaryButton: CmsButton;
+  secondaryButton?: CmsButton | null;
+  image: CmsMedia;
+  imageAlternativeText: string;
+};
+
+export type CmsOfferAudienceBlock = CmsBlockBase<'sections.offer-audience'> & {
+  eyebrow?: string | null;
+  title: string;
+  titleHighlight: string;
+  items: Array<{
+    id?: number;
+    image: CmsMedia;
+    imageAlternativeText: string;
+    title: string;
+    description: string;
+  }>;
+};
+
+export type CmsPricingPackage = {
+  id?: number;
+  packetName: 'basic' | 'standard' | 'premium' | 'custom';
+  displayName?: string | null;
+  priceNet: number | string;
+  priceGross: number | string;
+  description: string;
+  realizationTime: string;
+  features: Array<{ id?: number; text: string }>;
+  buttonText: string;
+  buttonLink: string;
+};
+
+export type CmsPricingSet = {
+  id?: number;
+  key: string;
+  label: string;
+  iconKey: string;
+  packages: CmsPricingPackage[];
+};
+
+export type CmsOfferPricingBlock = CmsBlockBase<'sections.offer-pricing'> & {
+  eyebrow?: string | null;
+  title: string;
+  titleHighlight: string;
+  description: string;
+  pricingKey?: string | null;
+  showTabs: boolean;
+  pricingSets?: CmsPricingSet[];
+};
+
+export type CmsOtherLocationsBlock = CmsBlockBase<'sections.other-locations'> & {
+  eyebrow: string;
+  title: string;
+  titleHighlight: string;
+  serviceSlug: string;
+  items: Array<{ id?: number; name: string; slug: string }>;
+};
+
+export type CmsBlogListingBlock = CmsBlockBase<'sections.blog-listing'> & {
+  eyebrow: string;
+  title: string;
+  titleHighlight: string;
+  description: string;
+  featuredLabel: string;
+  allArticlesLabel: string;
+  listingEyebrow: string;
+  listingTitle: string;
+  ctaTitle: string;
+  ctaDescription: string;
+  ctaButton: CmsButton;
+};
+
 export type CmsPageBlock =
   | CmsHeroBlock
   | CmsAboutBlock
@@ -236,13 +313,29 @@ export type CmsPageBlock =
   | CmsTechnologiesBlock
   | CmsPartnersBlock
   | CmsContactBlock
-  | CmsCtaBlock;
+  | CmsCtaBlock
+  | CmsOfferHeroBlock
+  | CmsOfferAudienceBlock
+  | CmsOfferPricingBlock
+  | CmsOtherLocationsBlock
+  | CmsBlogListingBlock;
+
+export type CmsPageRelation = {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  template: 'standard' | 'offer-index' | 'offer-detail' | 'blog-index';
+};
 
 export type CmsPage = {
   id: number;
   documentId: string;
   title: string;
   slug: string;
+  template: 'standard' | 'offer-index' | 'offer-detail' | 'blog-index';
+  parent?: CmsPageRelation | null;
+  children?: CmsPageRelation[];
   blocks: CmsPageBlock[];
   seo?: {
     metaTitle: string;

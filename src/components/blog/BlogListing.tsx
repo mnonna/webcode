@@ -9,15 +9,18 @@ import Section from '@/src/components/common/Section';
 import { getArticleCategory } from '@/src/helpers/blog-listing-utils';
 import { useGsapReveal } from '@/src/hooks/useGsapReveal';
 import type { BlogListItem } from '@/src/interface/Article';
+import type { CmsBlogListingBlock } from '@/src/interface/CmsPage';
 
 const ALL_ARTICLES = 'Wszystkie';
 
 interface BlogListingProps {
   articles: BlogListItem[];
+  data?: CmsBlogListingBlock;
 }
 
-export default function BlogListing({ articles }: BlogListingProps) {
-  const [activeCategory, setActiveCategory] = useState(ALL_ARTICLES);
+export default function BlogListing({ articles, data }: BlogListingProps) {
+  const allArticlesLabel = data?.allArticlesLabel ?? ALL_ARTICLES;
+  const [activeCategory, setActiveCategory] = useState(allArticlesLabel);
   const heroRef = useGsapReveal<HTMLElement>({
     selector: '[data-blog-hero-reveal]',
     start: 'top 88%',
@@ -40,41 +43,47 @@ export default function BlogListing({ articles }: BlogListingProps) {
   });
   const categories = useMemo(
     () => [
-      ALL_ARTICLES,
+      allArticlesLabel,
       ...Array.from(new Set(articles.map(getArticleCategory))).sort((a, b) =>
         a.localeCompare(b, 'pl-PL'),
       ),
     ],
-    [articles],
+    [allArticlesLabel, articles],
   );
   const filteredArticles = useMemo(
     () =>
-      activeCategory === ALL_ARTICLES
+      activeCategory === allArticlesLabel
         ? articles
         : articles.filter(
             (article) => getArticleCategory(article) === activeCategory,
           ),
-    [activeCategory, articles],
+    [activeCategory, allArticlesLabel, articles],
   );
 
   const featuredArticle = articles[0];
 
   return (
     <>
-      <Section ref={heroRef} className="relative overflow-hidden">
+      <Section
+        ref={heroRef}
+        id={data?.anchor ?? undefined}
+        paddingTop={data?.paddingTop}
+        paddingBottom={data?.paddingBottom}
+        className="relative overflow-hidden"
+      >
         <div className="section-shell relative">
           <div className="grid items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
             <div>
               <p data-blog-hero-reveal="" className="wc-eyebrow mb-4">
-                Blog
+                {data?.eyebrow ?? 'Blog'}
               </p>
               <h1
                 data-blog-hero-reveal=""
                 className="max-w-[13ch] font-[family-name:var(--font-heading)] text-[clamp(2.5rem,6vw,4.75rem)] font-extrabold text-dark"
               >
-                Praktyczna wiedza.{' '}
+                {data?.title ?? 'Praktyczna wiedza.'}{' '}
                 <span className="relative inline-block">
-                  <span className="wc-text-highlight">Realne efekty.</span>
+                  <span className="wc-text-highlight">{data?.titleHighlight ?? 'Realne efekty.'}</span>
                   <span
                     className="absolute -bottom-2 left-[4%] h-1 w-[92%] -rotate-2 rounded-full bg-blue"
                     aria-hidden="true"
@@ -87,9 +96,7 @@ export default function BlogListing({ articles }: BlogListingProps) {
               className="relative max-w-xl pb-2 lg:justify-self-end"
             >
               <p className="wc-body-lg text-muted-foreground">
-                Dzielę się doświadczeniem z zakresu tworzenia stron
-                internetowych, SEO i technologii. Bez lania wody - konkretnie
-                i na temat.
+                {data?.description ?? 'Dzielę się doświadczeniem z zakresu tworzenia stron internetowych, SEO i technologii. Bez lania wody - konkretnie i na temat.'}
               </p>
               <ArrowUpRight
                 className="mt-6 ml-auto hidden text-blue sm:block"
@@ -106,7 +113,7 @@ export default function BlogListing({ articles }: BlogListingProps) {
                 data-blog-hero-reveal=""
                 className="mt-12 sm:mt-16 lg:mt-20"
               >
-                <FeaturedArticle article={featuredArticle} />
+                <FeaturedArticle article={featuredArticle} featuredLabel={data?.featuredLabel} />
               </div>
             </div>
           )}
@@ -125,13 +132,13 @@ export default function BlogListing({ articles }: BlogListingProps) {
           >
             <div>
               <p className="wc-eyebrow">
-                Baza wiedzy
+                {data?.listingEyebrow ?? 'Baza wiedzy'}
               </p>
               <h2
                 id="articles-title"
                 className="mt-2 font-[family-name:var(--font-heading)] text-2xl font-bold tracking-[-0.03em] text-dark sm:text-3xl"
               >
-                Najnowsze artykuły
+                {data?.listingTitle ?? 'Najnowsze artykuły'}
               </h2>
             </div>
           </div>
@@ -190,18 +197,18 @@ export default function BlogListing({ articles }: BlogListingProps) {
             </span>
             <div>
               <h2 className="font-[family-name:var(--font-heading)] text-xl font-bold sm:text-2xl">
-                Masz temat, który warto omówić?
+                {data?.ctaTitle ?? 'Masz temat, który warto omówić?'}
               </h2>
               <p className="mt-1 text-sm leading-6 text-white/70">
-                Porozmawiajmy o Twojej stronie lub pomyśle na rozwój.
+                {data?.ctaDescription ?? 'Porozmawiajmy o Twojej stronie lub pomyśle na rozwój.'}
               </p>
             </div>
           </div>
           <Link
-            href="/kontakt"
+            href={data?.ctaButton.href ?? '/kontakt'}
             className="inline-flex min-h-12 items-center justify-center gap-3 rounded-sm bg-blue px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
           >
-            Skontaktuj się
+            {data?.ctaButton.label ?? 'Skontaktuj się'}
             <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>

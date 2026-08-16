@@ -3,11 +3,12 @@ import Footer from "@/src/components/Footer";
 import ArticleTop from "@/src/components/blog/ArticleTop";
 import ArticleTableOfContents from "@/src/components/blog/ArticleTableOfContents";
 import ArticleAuthor from "@/src/components/blog/ArticleAuthor";
-import Section from "@/src/components/common/Section";
 import HomeContact from '@/src/components/home/HomeContact';
 import { SITE_URL } from "@/src/config/site";
 import { getArticleBySlug, getArticles } from "@/src/data/blog/articles";
 import { notFound } from "next/navigation";
+import { getCmsArticleBySlug } from '@/src/lib/strapi';
+import type { Metadata } from 'next';
 
 interface BlogPostPageProps {
     params: Promise<{ slug: string }>;
@@ -17,9 +18,34 @@ export function generateStaticParams() {
     return getArticles().map(({ slug }) => ({ slug }));
 }
 
+export const dynamicParams = true;
+
+export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const article = await getCmsArticleBySlug(slug) ?? getArticleBySlug(slug);
+    if (!article) return {};
+
+    const canonical = article.seo?.canonicalPath
+        ? `${SITE_URL}${article.seo.canonicalPath}`
+        : `${SITE_URL}/blog/${slug}`;
+    return {
+        title: article.seo?.metaTitle ?? `${article.title} | Webcode`,
+        description: article.seo?.metaDescription ?? article.excerpt,
+        alternates: { canonical },
+        robots: article.seo?.noIndex ? { index: false, follow: false } : undefined,
+        openGraph: {
+            title: article.seo?.metaTitle ?? article.title,
+            description: article.seo?.metaDescription ?? article.excerpt,
+            url: canonical,
+            type: 'article',
+            images: article.seo?.shareImage ?? article.image,
+        },
+    };
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
     const { slug } = await params;
-    const article = getArticleBySlug(slug);
+    const article = await getCmsArticleBySlug(slug) ?? getArticleBySlug(slug);
 
     if (!article) {
         notFound();
@@ -77,7 +103,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                             <ArticleTableOfContents items={tableOfContents} hint={article.hint} />
 
                             <div className="min-w-0 w-full">
-                                <Section className="py-0 mb-8 xl:mb-12">
+                                <section className="py-0 mb-8 xl:mb-12">
                                     <ArticleTop
                                         category={article.category}
                                         title={article.title}
@@ -88,13 +114,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                         image={article.image}
                                         imageAlt={article.imageAlt}
                                     />
-                                </Section>
+                                </section>
                                 <div className="wysiwyg">
                                     {article.contentSections.map((section) => (
-                                        <Section
+                                        <section
                                             key={section.id}
                                             id={section.id}
-                                            className="py-0 scroll-mt-28"
+                                            className="scroll-mt-28"
                                             dangerouslySetInnerHTML={{ __html: section.content }}
                                         />
                                     ))}

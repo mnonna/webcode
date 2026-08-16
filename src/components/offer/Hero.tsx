@@ -7,7 +7,20 @@ import Image from "next/image";
 import Section from "@/src/components/common/Section";
 
 export default function OfferHero(props: I_HeroOffer) {
-    const { eyebrow, titleHighlight, title, description, image, imageAlt, disableSecondButton } = props;
+    const {
+        eyebrow,
+        titleHighlight,
+        title,
+        description,
+        image,
+        imageAlt,
+        disableSecondButton,
+        primaryButton = { label: 'Bezpłatna wycena', href: '#contact' },
+        secondaryButton = { label: 'Zobacz, jak pracuję', href: '#process' },
+        anchor,
+        paddingTop,
+        paddingBottom,
+    } = props;
     const sectionRef = useGsapReveal<HTMLElement>({
         selector: '[data-offer-hero-reveal]',
         start: 'top 88%',
@@ -15,10 +28,10 @@ export default function OfferHero(props: I_HeroOffer) {
     });
 
     let hasSecondButton = true;
-    if (disableSecondButton && disableSecondButton === true) hasSecondButton = false;
+    if (disableSecondButton || !secondaryButton) hasSecondButton = false;
 
     return (
-        <Section ref={sectionRef}>
+        <Section ref={sectionRef} id={anchor ?? undefined} paddingTop={paddingTop} paddingBottom={paddingBottom}>
             <div className="section-shell">
                 <div className="grid gap-grid-hero items-center lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
                     <div className="relative z-10">
@@ -31,13 +44,13 @@ export default function OfferHero(props: I_HeroOffer) {
                             { description }
                         </p>
                         <div data-offer-hero-reveal="" className="mt-8 flex flex-wrap gap-4">
-                        <a href="#contact" className="wc-btn-primary">
-                            Bezpłatna wycena
+                        <a href={primaryButton.href} className="wc-btn-primary">
+                            {primaryButton.label}
                             <ArrowRight size={18} />
                         </a>
                         { hasSecondButton &&  (
-                            <a href="#process" className="wc-btn-secondary">
-                                Zobacz, jak pracuję
+                            <a href={secondaryButton?.href ?? '#process'} className="wc-btn-secondary">
+                                {secondaryButton?.label}
                             </a>
                         )}
                         </div>

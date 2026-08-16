@@ -6,8 +6,10 @@ import BlogListing from '@/src/components/blog/BlogListing';
 import { SITE_URL } from '@/src/config/site';
 import { getArticles } from '@/src/data/blog/articles';
 import type { BlogListItem } from '@/src/interface/Article';
+import CmsPageBlocks from '@/src/components/cms/CmsPageBlocks';
+import { getCmsArticles, getCmsPageBySlug } from '@/src/lib/strapi';
 
-export const metadata: Metadata = {
+const fallbackMetadata: Metadata = {
   title: 'Blog - Webcode - Tworzę strony, które działają',
   description:
     'Praktyczna wiedza o tworzeniu stron internetowych, SEO, UX i technologii. Konkretne porady, które pomagają rozwijać skuteczny biznes online.',
@@ -25,8 +27,35 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
-  const articles = getArticles();
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getCmsPageBySlug('blog');
+  if (!page?.seo) return fallbackMetadata;
+
+  const canonical = page.seo.canonicalPath
+    ? `${SITE_URL}${page.seo.canonicalPath}`
+    : `${SITE_URL}/blog`;
+  return {
+    title: page.seo.metaTitle,
+    description: page.seo.metaDescription,
+    alternates: { canonical },
+    robots: page.seo.noIndex ? { index: false, follow: false } : undefined,
+    openGraph: {
+      title: page.seo.metaTitle,
+      description: page.seo.metaDescription,
+      type: 'website',
+      url: canonical,
+      locale: 'pl_PL',
+      siteName: 'Webcode',
+    },
+  };
+}
+
+export default async function BlogPage() {
+  const [page, cmsArticles] = await Promise.all([
+    getCmsPageBySlug('blog'),
+    getCmsArticles(),
+  ]);
+  const articles = cmsArticles.length ? cmsArticles : getArticles();
   const listingArticles: BlogListItem[] = articles.map(
     ({ slug, title, excerpt, date, readTime, image, imageAlt, category }) => ({
       slug,
@@ -98,7 +127,11 @@ export default function BlogPage() {
             __html: JSON.stringify(blogJsonLd).replace(/</g, '\\u003c'),
           }}
         />
-        <BlogListing articles={listingArticles} />
+        {page?.blocks?.length ? (
+          <CmsPageBlocks blocks={page.blocks} articles={listingArticles} />
+        ) : (
+          <BlogListing articles={listingArticles} />
+        )}
       </main>
       <div className="relative z-10">
         <Footer />

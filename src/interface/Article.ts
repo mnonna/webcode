@@ -22,6 +22,13 @@ export interface I_Article {
     imageAlt?: string;
     hint: string;
     contentSections: I_ArticleContentSection[];
+    seo?: {
+        metaTitle: string;
+        metaDescription: string;
+        canonicalPath?: string | null;
+        noIndex: boolean;
+        shareImage?: string;
+    } | null;
 }
 
 export interface I_ArticleResponse extends I_Article {

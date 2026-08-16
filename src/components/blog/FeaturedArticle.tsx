@@ -6,10 +6,12 @@ import { formatArticleDate } from '@/src/helpers/blog-listing-utils';
 
 interface FeaturedArticleProps {
   article: BlogListItem;
+  featuredLabel?: string;
 }
 
 export default function FeaturedArticle({
   article,
+  featuredLabel = 'Polecany artykuł',
 }: FeaturedArticleProps) {
   return (
     <article className="grid overflow-hidden rounded-lg border border-border bg-card shadow-xl lg:grid-cols-2">
@@ -36,7 +38,7 @@ export default function FeaturedArticle({
 
       <div className="flex flex-col justify-center p-6 sm:p-9 lg:p-12">
         <span className="mb-5 w-fit rounded-sm bg-blue-soft px-3 py-2 text-xs font-bold uppercase tracking-[0.08em] text-blue">
-          Polecany artykuł
+          {featuredLabel}
         </span>
         <time className="text-sm text-muted-foreground" dateTime={article.date}>
           {formatArticleDate(article.date)}
