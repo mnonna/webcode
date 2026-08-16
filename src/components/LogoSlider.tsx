@@ -133,6 +133,8 @@ export default function LogoSlider({ data }: { data?: CmsPartnersBlock }) {
   return (
     <Section
       id={data?.anchor ?? undefined}
+      paddingTop={data?.paddingTop}
+      paddingBottom={data?.paddingBottom}
       aria-labelledby="trusted-brands-heading"
       className="overflow-hidden border-y border-[rgba(230,236,245,0.72)]"
     >

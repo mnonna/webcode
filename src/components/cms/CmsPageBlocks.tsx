@@ -28,7 +28,7 @@ export default function CmsPageBlocks({ blocks }: { blocks: CmsPageBlock[] }) {
         return <HomeCaseStudies key={`${block.__component}-${block.id}`} data={block} />;
       case 'sections.services':
         return (
-          <Section key={`${block.__component}-${block.id}`} id={block.anchor ?? undefined} className="py-section-y-big">
+          <Section key={`${block.__component}-${block.id}`} id={block.anchor ?? undefined} paddingTop={block.paddingTop} paddingBottom={block.paddingBottom} className="py-section-y-big">
             <HomeServices data={block} />
           </Section>
         );
@@ -36,7 +36,7 @@ export default function CmsPageBlocks({ blocks }: { blocks: CmsPageBlock[] }) {
         return <HomeApproach key={`${block.__component}-${block.id}`} data={block} />;
       case 'sections.b2b':
         return (
-          <Section key={`${block.__component}-${block.id}`} id={block.anchor ?? undefined} className="py-section-y-big">
+          <Section key={`${block.__component}-${block.id}`} id={block.anchor ?? undefined} paddingTop={block.paddingTop} paddingBottom={block.paddingBottom} className="py-section-y-big">
             <HomeB2B data={block} />
           </Section>
         );
@@ -64,6 +64,8 @@ export default function CmsPageBlocks({ blocks }: { blocks: CmsPageBlock[] }) {
               width: block.image.width,
               height: block.image.height,
             } : undefined}
+            paddingTop={block.paddingTop}
+            paddingBottom={block.paddingBottom}
           />
         );
       default:

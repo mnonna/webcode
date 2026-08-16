@@ -35,6 +35,8 @@ type CmsBlockBase<TComponent extends string> = {
   id: number;
   __component: TComponent;
   anchor?: string | null;
+  paddingTop?: import('@/src/components/common/Section').SectionSpacing | null;
+  paddingBottom?: import('@/src/components/common/Section').SectionSpacing | null;
 };
 
 export type CmsHeroBlock = CmsBlockBase<'sections.hero'> & {

@@ -47,7 +47,7 @@ export default function HomeContact({ data }: { data?: CmsContactBlock }) {
   }, [focusedField, reducedMotion]);
 
   return (
-    <Section id={data?.anchor ?? 'contact'} ref={sectionRef} className="pb-section-bottom-contact">
+    <Section id={data?.anchor ?? 'contact'} ref={sectionRef} paddingTop={data?.paddingTop} paddingBottom={data?.paddingBottom} className="pb-section-bottom-contact">
       <div className="section-shell grid gap-grid-main lg:grid-cols-[0.92fr_minmax(0,1.08fr)]">
         <div>
           <div data-contact-reveal="" className="wc-eyebrow">{data?.eyebrow ?? 'Masz projekt? Napisz do mnie.'}</div>

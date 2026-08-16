@@ -82,7 +82,7 @@ export default function HomeProcess({ data }: { data?: CmsProcessBlock }) {
   );
 
   return (
-    <Section id={data?.anchor ?? 'process'}>
+    <Section id={data?.anchor ?? 'process'} paddingTop={data?.paddingTop} paddingBottom={data?.paddingBottom}>
       <div className="section-shell">
         <div className="wc-surface-panel px-0 py-0 max-lg:!rounded-none max-lg:!border-0 max-lg:!bg-transparent max-lg:!shadow-none max-lg:!backdrop-blur-none sm:px-0 sm:py-0 lg:overflow-hidden lg:px-12 lg:py-16 xl:px-16 xl:py-20">
           <header className="mx-auto flex max-w-[900px] flex-col items-center text-center">

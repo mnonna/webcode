@@ -8,7 +8,7 @@ export default function HomeAbout({ data }: { data?: CmsAboutBlock }) {
   const imageSrc = data?.image ? getStrapiMediaUrl(data.image) : '/landing/about-character-cutout.png';
 
   return (
-    <Section id={data?.anchor ?? 'about'} className="overflow-hidden pb-0">
+    <Section id={data?.anchor ?? 'about'} paddingTop={data?.paddingTop} paddingBottom={data?.paddingBottom} className="overflow-hidden pb-0">
       <div className="section-shell">
         <div className="relative grid lg:min-h-[680px] lg:grid-cols-[minmax(0,0.8fr)_minmax(460px,0.98fr)]">
           <div

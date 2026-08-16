@@ -234,7 +234,7 @@ export default function HomeCaseStudies({ data }: { data?: CmsCaseStudiesBlock }
   const featured = caseStudies[0];
 
   return (
-    <Section id={data?.anchor ?? 'case-studies'} ref={sectionRef} className="overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f5f8ff_48%,#ffffff_100%)] py-section-y-big">
+    <Section id={data?.anchor ?? 'case-studies'} ref={sectionRef} paddingTop={data?.paddingTop} paddingBottom={data?.paddingBottom} className="overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f5f8ff_48%,#ffffff_100%)] py-section-y-big">
       <div className="section-shell">
         <div className="mx-auto flex max-w-[62ch] flex-col items-center text-center">
           <div className="wc-eyebrow justify-center">{data?.eyebrow ?? 'Wybrane projekty'}</div>

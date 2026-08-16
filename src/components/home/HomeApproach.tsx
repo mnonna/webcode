@@ -8,7 +8,7 @@ import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 
 export default function HomeApproach({ data }: { data?: CmsApproachBlock }) {
   return (
-    <Section id={data?.anchor ?? 'approach'} className="relative py-section-y-big isolate overflow-hidden bg-blue-soft">
+    <Section id={data?.anchor ?? 'approach'} paddingTop={data?.paddingTop} paddingBottom={data?.paddingBottom} className="relative py-section-y-big isolate overflow-hidden bg-blue-soft">
       <Image
         src={data?.backgroundImage ? getStrapiMediaUrl(data.backgroundImage) : '/landing/approach-background.avif'}
         alt=""

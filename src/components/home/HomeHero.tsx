@@ -217,7 +217,7 @@ export default function HomeHero({ data }: { data?: CmsHeroBlock }) {
   }, [reducedMotion]);
 
   return (
-    <Section id={data?.anchor ?? 'hero'} ref={sectionRef} className="overflow-hidden">
+    <Section id={data?.anchor ?? 'hero'} ref={sectionRef} paddingTop={data?.paddingTop} paddingBottom={data?.paddingBottom} className="overflow-hidden">
       <div className="section-shell">
         <div className="grid gap-grid-hero items-center lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
           <div className="relative z-10">

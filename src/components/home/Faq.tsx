@@ -7,7 +7,7 @@ import { I_Data_Faq } from "@/src/interface/Faq";
 import Section from "@/src/components/common/Section";
 import type { CmsFaqBlock } from '@/src/interface/CmsPage';
 
-export default function Faq({ data, heading }: I_Data_Faq & { heading?: Pick<CmsFaqBlock, 'anchor' | 'eyebrow' | 'title' | 'titleHighlight'> }) {
+export default function Faq({ data, heading }: I_Data_Faq & { heading?: Pick<CmsFaqBlock, 'anchor' | 'eyebrow' | 'title' | 'titleHighlight' | 'paddingTop' | 'paddingBottom'> }) {
     const sectionEl = useRef<HTMLElement>(null);
     const faqData = (!data) ? faq : data;
 
@@ -33,7 +33,7 @@ export default function Faq({ data, heading }: I_Data_Faq & { heading?: Pick<Cms
                 }}
             />
 
-            <Section id={heading?.anchor ?? undefined} ref={sectionEl}>
+            <Section id={heading?.anchor ?? undefined} ref={sectionEl} paddingTop={heading?.paddingTop} paddingBottom={heading?.paddingBottom}>
                 <div className="section-shell">
                     <div className="flex flex-col items-center justify-center text-center mb-12 lg:mb-16">
                         <div className="wc-eyebrow">{heading?.eyebrow ?? 'FAQ'}</div>

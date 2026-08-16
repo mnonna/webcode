@@ -1,3 +1,5 @@
+import type { SectionSpacing } from '@/src/components/common/Section';
+
 export default interface I_Cta {
     eyebrow: string;
     title: string | TrustedHTML;
@@ -12,4 +14,6 @@ export default interface I_Cta {
         width?: number | null;
         height?: number | null;
     },
+    paddingTop?: SectionSpacing | null;
+    paddingBottom?: SectionSpacing | null;
 }

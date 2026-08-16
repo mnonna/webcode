@@ -144,6 +144,8 @@ export default function HomeStory({ data }: { data?: CmsStoryBlock }) {
     <Section
       id={data?.anchor ?? 'story'}
       ref={sectionRef}
+      paddingTop={data?.paddingTop}
+      paddingBottom={data?.paddingBottom}
       className="pt-section-y-big pb-section-bottom-story"
       style={{ ['--story-progress-scale' as string]: reducedMotion || !isDesktop ? '1' : '0' }}
     >

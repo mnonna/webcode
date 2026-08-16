@@ -192,7 +192,9 @@ export default function HomeTechnologies({ data }: { data?: CmsTechnologiesBlock
     <Section
       id={data?.anchor ?? 'technologies'}
       ref={sectionRef}
-      className="relative flex min-h-[100svh] items-center overflow-hidden py-16 lg:py-8"
+      paddingTop={data?.paddingTop}
+      paddingBottom={data?.paddingBottom}
+      className={`relative flex min-h-[100svh] items-center overflow-hidden ${data?.paddingTop ? '' : 'pt-16 lg:pt-8'} ${data?.paddingBottom ? '' : 'pb-16 lg:pb-8'}`}
     >
       <div className="pointer-events-none absolute -left-24 top-0 h-80 w-80 rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.12)_0%,_rgba(21,87,255,0)_70%)]"></div>
       <div className="pointer-events-none absolute right-[8%] top-[12%] h-[68%] w-[46%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.11)_0%,_rgba(21,87,255,0)_70%)] blur-3xl"></div>

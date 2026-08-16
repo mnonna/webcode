@@ -5,7 +5,7 @@ import { MessagesSquare, SquarePen, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Section from "@/src/components/common/Section";
 
-export default function Cta({ eyebrow, title, description, button, image }: I_Cta) {
+export default function Cta({ eyebrow, title, description, button, image, paddingTop, paddingBottom }: I_Cta) {
     const icons = [
         {
             icon: MessagesSquare,
@@ -22,7 +22,7 @@ export default function Cta({ eyebrow, title, description, button, image }: I_Ct
     ];
 
     return (
-        <Section>
+        <Section paddingTop={paddingTop} paddingBottom={paddingBottom}>
             <div className="section-shell">
                 <div className="p-5 lg:px-16 lg:py-6 !pb-0 wc-bg-blue-soft rounded-lg">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-16">
