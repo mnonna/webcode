@@ -1,10 +1,11 @@
 import CardBasic from "../common/CardBasic";
 import { I_CardBasic } from "@/src/interface/CardBasic";
 import { offerCardsData } from "@/src/data/offer/offerCards";
+import Section from "@/src/components/common/Section";
 
 export default function OfferCards() {
     return (
-        <section className="section section--offerCards">
+        <Section>
             <div className="section-shell">
                 <div className="gap-8 mb-10 max-lg:max-w-[24ch] text-center mx-auto">
                     <h2 className="wc-heading-section">Dla kogo jest <span className="wc-text-highlight">ta oferta?</span></h2>
@@ -18,6 +19,6 @@ export default function OfferCards() {
                     ))}
                 </div>
             </div>
-        </section>
+        </Section>
     );
 }

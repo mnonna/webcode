@@ -2,6 +2,9 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
+import Section from '@/src/components/common/Section';
+import { getCmsIcon } from '@/src/components/cms/icons';
+import type { CmsProcessBlock } from '@/src/interface/CmsPage';
 import {
   ArrowRight,
   CheckCircle2,
@@ -13,7 +16,7 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 
-const processSteps = [
+const defaultProcessSteps = [
   {
     id: 'process-01',
     title: 'Brief',
@@ -40,13 +43,13 @@ const processSteps = [
   },
 ] as const;
 
-const PROCESS_STEPS_COUNT = processSteps.length;
-
 function formatStepNumber(index: number) {
   return String(index + 1).padStart(2, '0');
 }
 
-export default function HomeProcess() {
+export default function HomeProcess({ data }: { data?: CmsProcessBlock }) {
+  const processSteps = data?.steps ?? defaultProcessSteps;
+  const processStepsCount = processSteps.length;
   const [activeIndex, setActiveIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: 'start',
@@ -79,25 +82,27 @@ export default function HomeProcess() {
   );
 
   return (
-    <section id="process" className="section">
+    <Section id={data?.anchor ?? 'process'}>
       <div className="section-shell">
         <div className="wc-surface-panel px-0 py-0 max-lg:!rounded-none max-lg:!border-0 max-lg:!bg-transparent max-lg:!shadow-none max-lg:!backdrop-blur-none sm:px-0 sm:py-0 lg:overflow-hidden lg:px-12 lg:py-16 xl:px-16 xl:py-20">
           <header className="mx-auto flex max-w-[900px] flex-col items-center text-center">
-            <div className="wc-eyebrow">Jak wygląda współpraca?</div>
+            <div className="wc-eyebrow">{data?.eyebrow ?? 'Jak wygląda współpraca?'}</div>
             <h2 className="wc-heading-section wc-text-dark max-w-[22ch]">
-              Przejrzysty proces od briefu do publikacji
+              {data?.title ?? 'Przejrzysty proces od briefu do publikacji'}{data?.titleHighlight ? <> <span className="wc-text-highlight">{data.titleHighlight}</span></> : null}
             </h2>
             <p className="wc-body-lg mt-4 max-w-[62ch] lg:mt-5">
-              Prosty, uporządkowany proces. Na każdym etapie wiesz, co robimy i co jest dalej.
+              {data?.description ?? 'Prosty, uporządkowany proces. Na każdym etapie wiesz, co robimy i co jest dalej.'}
             </p>
           </header>
 
           <div className="mt-10 hidden lg:grid lg:grid-cols-4 xl:mt-14" aria-label="Etapy współpracy">
             {processSteps.map((step, index) => {
-              const Icon = step.icon;
+              const Icon = 'icon' in step ? step.icon : getCmsIcon(step.iconKey);
+              const stepKey = step.id ?? ('key' in step ? step.key : undefined) ?? `process-${index}`;
+              const copy = 'copy' in step ? step.copy : step.description;
 
               return (
-                <article key={step.id} className="relative flex flex-col items-center px-3 text-center xl:px-5">
+                <article key={stepKey} className="relative flex flex-col items-center px-3 text-center xl:px-5">
                   {index > 0 && (
                     <div className="absolute right-1/2 top-10 z-0 flex w-full -translate-y-1/2 items-center px-[52px]" aria-hidden="true">
                       <span className="h-px flex-1 border-t border-dashed border-[rgba(21,87,255,0.28)]" />
@@ -112,7 +117,7 @@ export default function HomeProcess() {
                   <div className="mt-7">
                     <span className="wc-kicker">{formatStepNumber(index)}</span>
                     <h3 className="wc-heading-sm wc-text-dark mt-2">{step.title}</h3>
-                    <p className="wc-body-md mt-3 max-w-[24ch]">{step.copy}</p>
+                    <p className="wc-body-md mt-3 max-w-[24ch]">{copy}</p>
                   </div>
                 </article>
               );
@@ -129,15 +134,17 @@ export default function HomeProcess() {
             >
               <div className="-ml-3 flex touch-pan-y">
                 {processSteps.map((step, index) => {
-                  const Icon = step.icon;
+                  const Icon = 'icon' in step ? step.icon : getCmsIcon(step.iconKey);
+                  const stepKey = step.id ?? ('key' in step ? step.key : undefined) ?? `process-${index}`;
+                  const copy = 'copy' in step ? step.copy : step.description;
 
                   return (
                     <div
-                      key={step.id}
+                      key={stepKey}
                       className="min-w-0 flex-[0_0_88%] pl-3 sm:flex-[0_0_62%]"
                       role="group"
                       aria-roledescription="slajd"
-                      aria-label={`${index + 1} z ${PROCESS_STEPS_COUNT}: ${step.title}`}
+                      aria-label={`${index + 1} z ${processStepsCount}: ${step.title}`}
                     >
                       <article className="h-full rounded-[24px] border border-[var(--wc-border)] bg-white p-6 shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
                         <div className="flex items-center justify-between gap-4">
@@ -149,7 +156,7 @@ export default function HomeProcess() {
                           </span>
                         </div>
                         <h3 className="wc-heading-card wc-text-dark mt-6">{step.title}</h3>
-                        <p className="wc-body-md mt-3">{step.copy}</p>
+                        <p className="wc-body-md mt-3">{copy}</p>
                       </article>
                     </div>
                   );
@@ -159,9 +166,11 @@ export default function HomeProcess() {
 
             <div className="mt-6 flex items-center justify-between gap-5">
               <div className="flex gap-2" aria-label="Wybierz krok procesu">
-                {processSteps.map((step, index) => (
+                {processSteps.map((step, index) => {
+                  const stepKey = step.id ?? ('key' in step ? step.key : undefined) ?? `process-${index}`;
+                  return (
                   <button
-                    key={step.id}
+                    key={stepKey}
                     type="button"
                     onClick={() => goToStep(index)}
                     className={`h-2.5 rounded-full transition-[width,background-color] duration-200 ${
@@ -170,7 +179,8 @@ export default function HomeProcess() {
                     aria-label={`Przejdź do kroku ${index + 1}: ${step.title}`}
                     aria-current={index === activeIndex ? 'step' : undefined}
                   />
-                ))}
+                  );
+                })}
               </div>
 
               <div className="flex gap-2">
@@ -186,7 +196,7 @@ export default function HomeProcess() {
                 <button
                   type="button"
                   onClick={() => goToStep(activeIndex + 1)}
-                  disabled={activeIndex === PROCESS_STEPS_COUNT - 1}
+                  disabled={activeIndex === processStepsCount - 1}
                   className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--wc-border)] bg-white text-[var(--wc-dark)] transition-opacity disabled:cursor-not-allowed disabled:opacity-35"
                   aria-label="Następny krok procesu"
                 >
@@ -199,11 +209,11 @@ export default function HomeProcess() {
           <div className="mx-auto mt-10 flex w-fit max-w-full items-center gap-3 rounded-full bg-[var(--wc-blue-soft)] px-5 py-3 text-left lg:mt-14 lg:px-7">
             <ShieldCheck className="shrink-0 text-[var(--wc-blue)]" size={21} aria-hidden="true" />
             <p className="wc-body-sm font-[600] text-[var(--wc-dark)]">
-              Po publikacji możliwe jest dalsze wsparcie i rozwój projektu.
+              {data?.footerNote ?? 'Po publikacji możliwe jest dalsze wsparcie i rozwój projektu.'}
             </p>
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

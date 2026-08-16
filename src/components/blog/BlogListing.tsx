@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, ArrowUpRight, Mail } from 'lucide-react';
 import ArticleCard from '@/src/components/blog/ArticleCard';
 import FeaturedArticle from '@/src/components/blog/FeaturedArticle';
+import Section from '@/src/components/common/Section';
 import { getArticleCategory } from '@/src/helpers/blog-listing-utils';
 import { useGsapReveal } from '@/src/hooks/useGsapReveal';
 import type { BlogListItem } from '@/src/interface/Article';
@@ -60,7 +61,7 @@ export default function BlogListing({ articles }: BlogListingProps) {
 
   return (
     <>
-      <section ref={heroRef} className="section relative overflow-hidden">
+      <Section ref={heroRef} className="relative overflow-hidden">
         <div className="section-shell relative">
           <div className="grid items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
             <div>
@@ -110,11 +111,11 @@ export default function BlogListing({ articles }: BlogListingProps) {
             </div>
           )}
         </div>
-      </section>
+      </Section>
 
-      <section
+      <Section
         ref={articlesRef}
-        className="pb-16 sm:pb-20 lg:pb-24"
+        className="py-0 pb-16 sm:pb-20 lg:pb-24"
         aria-labelledby="articles-title"
       >
         <div className="section-shell">
@@ -172,7 +173,7 @@ export default function BlogListing({ articles }: BlogListingProps) {
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
       <aside
         ref={ctaRef}

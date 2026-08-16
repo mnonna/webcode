@@ -5,6 +5,9 @@ import { gsap } from '@/src/lib/gsap';
 import { usePrefersReducedMotion } from '@/src/hooks/usePrefersReducedMotion';
 import Image from 'next/image';
 import Link from 'next/link';
+import Section from '@/src/components/common/Section';
+import type { CmsPartnersBlock } from '@/src/interface/CmsPage';
+import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 
 const brands: { name: string; logo: string; url: string }[] = [
   {
@@ -59,13 +62,13 @@ const brands: { name: string; logo: string; url: string }[] = [
   },
 ] as const;
 
-function BrandList({ hidden = false }: { hidden?: boolean }) {
+function BrandList({ items, hidden = false }: { items: typeof brands; hidden?: boolean }) {
   return (
     <ul
       aria-hidden={hidden || undefined}
       className="flex shrink-0 gap-3 pr-3 sm:gap-4 sm:pr-4"
     >
-      {brands.map((brand, idx) => (
+      {items.map((brand, idx) => (
         <li
           key={idx}
           className="h-20 max-w-[190px] shrink-0 rounded-[16px] border border-[rgba(230,236,245,0.95)] bg-white px-6 text-dark shadow-[0_8px_24px_rgba(15,23,42,0.035)] sm:h-24 sm:w-[230px]"
@@ -93,7 +96,10 @@ function BrandList({ hidden = false }: { hidden?: boolean }) {
   );
 }
 
-export default function LogoSlider() {
+export default function LogoSlider({ data }: { data?: CmsPartnersBlock }) {
+  const sliderBrands = data?.items?.length
+    ? data.items.map((item) => ({ name: item.name, logo: getStrapiMediaUrl(item.logo), url: item.url }))
+    : brands;
   const trackRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
@@ -125,19 +131,20 @@ export default function LogoSlider() {
   }, [reducedMotion]);
 
   return (
-    <section
+    <Section
+      id={data?.anchor ?? undefined}
       aria-labelledby="trusted-brands-heading"
-      className="section overflow-hidden border-y border-[rgba(230,236,245,0.72)]"
+      className="overflow-hidden border-y border-[rgba(230,236,245,0.72)]"
     >
       <div className="section-shell mb-8 flex flex-col items-center text-center sm:mb-10">
         <div className="wc-eyebrow mb-3">
-          Współpraca
+          {data?.eyebrow ?? 'Współpraca'}
         </div>
         <h2 id="trusted-brands-heading" className="wc-heading-section mb-6">
-          Współpraca <span className='wc-text-highlight'>to podstawa</span>
+          {data?.title ?? 'Współpraca'} <span className='wc-text-highlight'>{data?.titleHighlight ?? 'to podstawa'}</span>
         </h2>
         <p className="max-w-[75ch]">
-          Współpracuję z wieloma firmami, które dostarczają wysokiej jakości produkty i usługi. Przez lata nawiązałem wiele wartościowych relacji biznesowych, które pozwalają mi oferować klientom najlepsze rozwiązania. Współpraca z tymi markami jest dla mnie źródłem inspiracji i motywacji do dalszego rozwoju.
+          {data?.description ?? 'Współpracuję z wieloma firmami, które dostarczają wysokiej jakości produkty i usługi. Przez lata nawiązałem wiele wartościowych relacji biznesowych, które pozwalają mi oferować klientom najlepsze rozwiązania.'}
         </p>
       </div>
 
@@ -146,10 +153,10 @@ export default function LogoSlider() {
           ref={trackRef}
           className={`flex w-max ${reducedMotion ? 'mx-auto' : 'will-change-transform'}`}
         >
-          <BrandList />
-          {!reducedMotion && <BrandList hidden />}
+          <BrandList items={sliderBrands} />
+          {!reducedMotion && <BrandList items={sliderBrands} hidden />}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

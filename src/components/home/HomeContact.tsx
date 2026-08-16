@@ -6,6 +6,9 @@ import ContactForm from '../ContactForm';
 import { gsap } from '../../lib/gsap';
 import { useGsapReveal } from '@/src/hooks/useGsapReveal';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import Section from '@/src/components/common/Section';
+import type { CmsContactBlock } from '@/src/interface/CmsPage';
+import { getCmsIcon } from '@/src/components/cms/icons';
 
 type ContactDetail = {
   icon: LucideIcon;
@@ -19,7 +22,7 @@ const contactDetails: ContactDetail[] = [
   { icon: MapPin, label: 'Lokalizacja', value: '62-052 Komorniki, Polska' },
 ];
 
-export default function HomeContact() {
+export default function HomeContact({ data }: { data?: CmsContactBlock }) {
   const sectionRef = useGsapReveal<HTMLElement>({
     selector: '[data-contact-reveal]',
     start: 'top 76%',
@@ -44,17 +47,20 @@ export default function HomeContact() {
   }, [focusedField, reducedMotion]);
 
   return (
-    <section id="contact" ref={sectionRef} className="section section--contact">
-      <div className="section-shell wc-fluid-gap-main grid lg:grid-cols-[0.92fr_minmax(0,1.08fr)]">
+    <Section id={data?.anchor ?? 'contact'} ref={sectionRef} className="pb-section-bottom-contact">
+      <div className="section-shell grid gap-grid-main lg:grid-cols-[0.92fr_minmax(0,1.08fr)]">
         <div>
-          <div data-contact-reveal="" className="wc-eyebrow">Masz projekt? Napisz do mnie.</div>
+          <div data-contact-reveal="" className="wc-eyebrow">{data?.eyebrow ?? 'Masz projekt? Napisz do mnie.'}</div>
           <h2 data-contact-reveal="" className="wc-heading-section wc-text-dark max-w-[15ch]">
-            Zacznijmy od krótkiej rozmowy o <span className="wc-text-highlight">Twoim celu</span>.
+            {data?.title ?? 'Zacznijmy od krótkiej rozmowy o'} <span className="wc-text-highlight">{data?.titleHighlight ?? 'Twoim celu'}</span>.
           </h2>
-          <p data-contact-reveal="" className="wc-body-lg mt-5 max-w-[52ch]">Opisz potrzeby, a przygotuję wstępną propozycję działań i wycenę. Możesz też od razu dołączyć materiały do projektu.</p>
+          <p data-contact-reveal="" className="wc-body-lg mt-5 max-w-[52ch]">{data?.description ?? 'Opisz potrzeby, a przygotuję wstępną propozycję działań i wycenę. Możesz też od razu dołączyć materiały do projektu.'}</p>
 
           <div className="mt-8 grid gap-4">
-            {contactDetails.map(({ icon: Icon, label, value, href }) => (
+            {(data?.contactDetails ?? contactDetails).map((detail) => {
+              const Icon = 'icon' in detail ? detail.icon : getCmsIcon(detail.iconKey);
+              const { label, value, href } = detail;
+              return (
               <div key={label} data-contact-reveal="" className="wc-surface-card wc-card-row-compact">
                 <div className="wc-icon-badge shrink-0">
                   <Icon size={20} />
@@ -70,18 +76,19 @@ export default function HomeContact() {
                   )}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        <div data-contact-reveal="" className="wc-surface-panel wc-panel-fluid-contact">
+        <div data-contact-reveal="" className="wc-surface-panel p-panel-contact">
           <div className="mb-6">
-            <h3 className="wc-heading-card wc-text-dark">Napisz wiadomość</h3>
-            <p className="wc-body-md mt-3">Odpowiadam zwykle w ciągu 48 godzin roboczych. Im konkretniejszy brief, tym szybciej wrócę z propozycją.</p>
+            <h3 className="wc-heading-card wc-text-dark">{data?.formTitle ?? 'Napisz wiadomość'}</h3>
+            <p className="wc-body-md mt-3">{data?.formDescription ?? 'Odpowiadam zwykle w ciągu 48 godzin roboczych. Im konkretniejszy brief, tym szybciej wrócę z propozycją.'}</p>
           </div>
           <ContactForm onFocusFieldChange={setFocusedField} />
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

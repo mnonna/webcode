@@ -6,8 +6,11 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import Section from '@/src/components/common/Section';
+import type { CmsCaseStudiesBlock } from '@/src/interface/CmsPage';
+import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 
-const caseStudies = [
+const defaultCaseStudies = [
   {
     category: 'Strona produktowa',
     title: 'Opakowania, które budują markę',
@@ -141,7 +144,20 @@ function ProjectPreview({ image, imageHeight, mobileImage, mobileImageHeight, in
   );
 }
 
-export default function HomeCaseStudies() {
+export default function HomeCaseStudies({ data }: { data?: CmsCaseStudiesBlock }) {
+  const caseStudies = data?.items?.length
+    ? data.items.map((item) => ({
+        category: item.category,
+        title: item.title,
+        description: item.description,
+        image: getStrapiMediaUrl(item.desktopImage),
+        imageHeight: item.desktopImage.height ?? 1080,
+        mobileImage: getStrapiMediaUrl(item.mobileImage),
+        mobileImageHeight: item.mobileImage.height ?? 1920,
+        tags: item.tags.map((tag) => tag.label),
+        targetUrl: item.targetUrl ?? data.featuredButton.href,
+      }))
+    : defaultCaseStudies.map((item) => ({ ...item, targetUrl: '#contact' }));
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
@@ -218,15 +234,15 @@ export default function HomeCaseStudies() {
   const featured = caseStudies[0];
 
   return (
-    <section id="case-studies" ref={sectionRef} className="section overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f5f8ff_48%,#ffffff_100%)] py-section-y-big">
+    <Section id={data?.anchor ?? 'case-studies'} ref={sectionRef} className="overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f5f8ff_48%,#ffffff_100%)] py-section-y-big">
       <div className="section-shell">
         <div className="mx-auto flex max-w-[62ch] flex-col items-center text-center">
-          <div className="wc-eyebrow justify-center">Wybrane projekty</div>
+          <div className="wc-eyebrow justify-center">{data?.eyebrow ?? 'Wybrane projekty'}</div>
           <h2 className="wc-heading-section wc-text-dark">
-            Projekty, które pokazują <span className="wc-text-highlight">możliwości.</span>
+            {data?.title ?? 'Projekty, które pokazują'} <span className="wc-text-highlight">{data?.titleHighlight ?? 'możliwości.'}</span>
           </h2>
           <p className="wc-body-lg mt-5 max-w-[56ch]">
-            Autorskie koncepcje stron zaprojektowane w Figmie — od pierwszej decyzji po kompletny, gotowy do wdrożenia interfejs.
+            {data?.description ?? 'Autorskie koncepcje stron zaprojektowane w Figmie - od pierwszej decyzji po kompletny, gotowy do wdrożenia interfejs.'}
           </p>
         </div>
 
@@ -251,8 +267,8 @@ export default function HomeCaseStudies() {
                 </span>
               ))}
             </div>
-            <Link href="#contact" className="wc-btn-primary mt-7 w-full justify-center sm:w-auto">
-              Porozmawiajmy o projekcie
+            <Link href={featured.targetUrl} className="wc-btn-primary mt-7 w-full justify-center sm:w-auto">
+              {data?.featuredButton.label ?? 'Porozmawiajmy o projekcie'}
               <ArrowRight size={17} />
             </Link>
           </div>
@@ -283,8 +299,8 @@ export default function HomeCaseStudies() {
                         </span>
                       ))}
                     </div>
-                    <Link href="#contact" className="wc-text-blue group flex shrink-0 items-center gap-2 text-[0.875rem] font-[600]">
-                      Zobacz projekt
+                    <Link href={project.targetUrl} className="wc-text-blue group flex shrink-0 items-center gap-2 text-[0.875rem] font-[600]">
+                      {data?.itemLinkLabel ?? 'Zobacz projekt'}
                       <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
                   </div>
@@ -294,6 +310,6 @@ export default function HomeCaseStudies() {
           })}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

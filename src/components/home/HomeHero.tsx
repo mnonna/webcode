@@ -5,8 +5,12 @@ import Image from 'next/image';
 import { ArrowRight, Code2, Search, ShieldCheck, ShoppingCart, Sparkles, Wrench } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import Section from '@/src/components/common/Section';
+import { getCmsIcon } from '@/src/components/cms/icons';
+import type { CmsHeroBlock } from '@/src/interface/CmsPage';
+import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 
-const heroCards = [
+const defaultHeroCards = [
   {
     title: 'WordPress',
     subtitle: 'Szybki CMS dla firm',
@@ -57,7 +61,7 @@ const heroCards = [
   },
 ] as const;
 
-const heroChips = [
+const defaultHeroChips = [
   { label: 'WordPress', logoSrc: '/landing/brands/wordpress-logo.png', logoAlt: 'WordPress', logoClassName: 'h-5 w-5' },
   { label: 'WooCommerce', logoSrc: '/landing/brands/woo-logo.svg', logoAlt: 'WooCommerce', logoClassName: 'h-4 w-auto' },
   { label: 'UX/UI', icon: Sparkles },
@@ -66,14 +70,24 @@ const heroChips = [
   { label: 'Aplikacje webowe', icon: Code2 },
 ] as const;
 
-const heroHighlights = [
+const defaultHeroHighlights = [
   { icon: ShieldCheck, title: 'Bezpieczne wdrożenie', copy: 'Przemyślana architektura, czysty kod i dobry proces.' },
   { icon: Sparkles, title: 'Spójny UX', copy: 'Strona wygląda nowocześnie i prowadzi do konkretnej akcji.' },
   { icon: Wrench, title: 'Wsparcie po starcie', copy: 'Nie znikam po publikacji. Mogę rozwijać projekt dalej.' },
 ] as const;
 
-function HeroCard({ title, subtitle, positionCompact, positionWide, tone, depth }: (typeof heroCards)[number]) {
-  const Icon = tone === 'accent' ? ShoppingCart : tone === 'code' ? Code2 : Search;
+type HeroCardData = {
+  title: string;
+  subtitle: string;
+  positionCompact: string;
+  positionWide: string;
+  depth: number;
+  tone: 'icon' | 'accent' | 'code';
+  iconKey?: string | null;
+};
+
+function HeroCard({ title, subtitle, positionCompact, positionWide, tone, depth, iconKey }: HeroCardData) {
+  const Icon = iconKey ? getCmsIcon(iconKey) : tone === 'accent' ? ShoppingCart : tone === 'code' ? Code2 : Search;
 
   return (
     <div
@@ -94,7 +108,15 @@ function HeroCard({ title, subtitle, positionCompact, positionWide, tone, depth 
   );
 }
 
-export default function HomeHero() {
+export default function HomeHero({ data }: { data?: CmsHeroBlock }) {
+  const heroCards: HeroCardData[] = data?.floatingCards?.length
+    ? data.floatingCards.map((card, index) => ({
+        ...defaultHeroCards[index % defaultHeroCards.length],
+        ...card,
+      }))
+    : [...defaultHeroCards];
+  const heroChips = data?.chips ?? defaultHeroChips;
+  const heroHighlights = data?.highlights ?? defaultHeroHighlights;
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
@@ -195,39 +217,53 @@ export default function HomeHero() {
   }, [reducedMotion]);
 
   return (
-    <section id="hero" ref={sectionRef} className="section section--hero overflow-hidden">
+    <Section id={data?.anchor ?? 'hero'} ref={sectionRef} className="overflow-hidden">
       <div className="section-shell">
-        <div className="wc-fluid-gap-hero grid items-center lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
+        <div className="grid gap-grid-hero items-center lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] xl:grid-cols-[minmax(0,0.94fr)_minmax(0,1.06fr)]">
           <div className="relative z-10">
             <div data-hero-eyebrow="" className="wc-eyebrow">
-              Tworzę strony, które działają
+              {data?.eyebrow ?? 'Tworzę strony, które działają'}
             </div>
             <h1 data-hero-heading="" className="wc-heading-hero wc-text-dark">
-              Strony internetowe, sklepy i aplikacje webowe dla firm, które chcą <span className="wc-text-blue">działać skuteczniej online</span>
+              {data?.title ?? 'Strony internetowe, sklepy i aplikacje webowe dla firm, które chcą'} <span className="wc-text-blue">{data?.titleHighlight ?? 'działać skuteczniej online'}</span>
             </h1>
             <p data-hero-copy="" className="wc-body-lg mt-6 max-w-[60ch]">
-              Projektuję i wdrażam nowoczesne strony WordPress, sklepy WooCommerce oraz aplikacje webowe. Pomagam uporządkować ofertę, poprawić UX i stworzyć stronę gotową do pozyskiwania klientów.
+              {data?.description ?? 'Projektuję i wdrażam nowoczesne strony WordPress, sklepy WooCommerce oraz aplikacje webowe. Pomagam uporządkować ofertę, poprawić UX i stworzyć stronę gotową do pozyskiwania klientów.'}
             </p>
             <div data-hero-cta="" className="mt-8 flex flex-wrap gap-4">
-              <a href="#contact" className="wc-btn-primary">
-                Bezpłatna wycena
+              <a href={data?.primaryButton.href ?? '#contact'} className="wc-btn-primary">
+                {data?.primaryButton.label ?? 'Bezpłatna wycena'}
                 <ArrowRight size={18} />
               </a>
-              <a href="#process" className="wc-btn-secondary">
-                Zobacz, jak pracuję
-              </a>
+              {(data?.secondaryButton !== null) && (
+                <a href={data?.secondaryButton?.href ?? '#process'} className="wc-btn-secondary">
+                  {data?.secondaryButton?.label ?? 'Zobacz, jak pracuję'}
+                </a>
+              )}
             </div>
             <div className="mt-7 flex flex-wrap gap-3">
-              {heroChips.map((chip) => (
+              {heroChips.map((chip) => {
+                const cmsLogo = 'logo' in chip ? chip.logo : null;
+                const localLogoSrc = 'logoSrc' in chip ? chip.logoSrc : null;
+                const logoSrc = cmsLogo ? getStrapiMediaUrl(cmsLogo) : localLogoSrc;
+                const logoAlt = cmsLogo?.alternativeText ?? ('logoAlt' in chip ? chip.logoAlt : chip.label);
+                const Icon = 'icon' in chip ? chip.icon : getCmsIcon('iconKey' in chip ? chip.iconKey : undefined);
+
+                return (
                 <span key={chip.label} data-hero-chip="" className="wc-chip gap-2.5">
-                  {'logoSrc' in chip ? (
-                    <img src={chip.logoSrc} alt={chip.logoAlt} className={`${chip.logoClassName} shrink-0 object-contain`} />
+                  {logoSrc ? (
+                    <img
+                      src={logoSrc}
+                      alt={logoAlt}
+                      className={`${'logoClassName' in chip ? chip.logoClassName : 'h-5 w-auto'} shrink-0 object-contain`}
+                    />
                   ) : (
-                    <chip.icon size={15} className="shrink-0 text-[var(--wc-blue)]" aria-hidden="true" />
+                    <Icon size={15} className="shrink-0 text-[var(--wc-blue)]" aria-hidden="true" />
                   )}
                   {chip.label}
                 </span>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -235,10 +271,10 @@ export default function HomeHero() {
             <div className="absolute inset-x-[14%] top-[10%] h-[52%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.16)_0%,_rgba(21,87,255,0)_72%)] opacity-80 blur-2xl min-[1400px]:inset-x-[10%] min-[1400px]:top-[8%] min-[1400px]:h-[58%] min-[1400px]:opacity-100 min-[1400px]:blur-3xl"></div>
             <div data-hero-asset="" className="wc-contain-paint relative z-10">
               <Image
-                src="/landing/hero-main.avif"
-                alt="Mockup panelu projektu Webcode"
-                width={1448}
-                height={1086}
+                src={data?.image ? getStrapiMediaUrl(data.image) : '/landing/hero-main.avif'}
+                alt={data?.imageAlternativeText ?? 'Mockup panelu projektu Webcode'}
+                width={data?.image.width ?? 1448}
+                height={data?.image.height ?? 1086}
                 sizes="(max-width: 1023px) calc(100vw - 32px), 53vw"
                 preload
                 className="h-auto w-full rounded-[32px] object-contain drop-shadow-[0_34px_90px_rgba(15,23,42,0.18)]"
@@ -251,7 +287,11 @@ export default function HomeHero() {
         </div>
 
         <div className="mt-16 grid gap-4 md:grid-cols-3">
-          {heroHighlights.map(({ icon: Icon, title, copy }) => (
+          {heroHighlights.map((highlight) => {
+            const Icon = 'icon' in highlight ? highlight.icon : getCmsIcon(highlight.iconKey);
+            const copy = 'copy' in highlight ? highlight.copy : highlight.description;
+            const { title } = highlight;
+            return (
             <div key={title} data-hero-highlight="" className="wc-surface-card wc-card-row">
               <div className="wc-icon-badge shrink-0">
                 <Icon size={20} />
@@ -261,9 +301,10 @@ export default function HomeHero() {
                 <p className="wc-body-md mt-2">{copy}</p>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

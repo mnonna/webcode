@@ -6,4 +6,10 @@ export default interface I_Cta {
         text: string;
         href: string;
     },
+    image?: {
+        src: string;
+        alt: string;
+        width?: number | null;
+        height?: number | null;
+    },
 }

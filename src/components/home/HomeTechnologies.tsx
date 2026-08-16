@@ -5,8 +5,11 @@ import Image from 'next/image';
 import { Zap } from 'lucide-react';
 import { gsap } from '../../lib/gsap';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import Section from '@/src/components/common/Section';
+import type { CmsTechnologiesBlock } from '@/src/interface/CmsPage';
+import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 
-const technologies = [
+const defaultTechnologies = [
   {
     name: 'PHP',
     src: '/logos/php.svg',
@@ -80,7 +83,16 @@ function setHeaderHidden(hidden: boolean) {
   );
 }
 
-export default function HomeTechnologies() {
+export default function HomeTechnologies({ data }: { data?: CmsTechnologiesBlock }) {
+  const technologyPositions = defaultTechnologies.map((technology) => technology.position);
+  const technologies = data?.items?.filter((item) => !item.featured).map((item, index) => ({
+    name: item.name,
+    src: getStrapiMediaUrl(item.logo),
+    width: item.logo.width ?? 256,
+    height: item.logo.height ?? 256,
+    position: technologyPositions[index % technologyPositions.length],
+  })) ?? defaultTechnologies;
+  const featuredTechnology = data?.items?.find((item) => item.featured);
   const sectionRef = useRef<HTMLElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
@@ -177,8 +189,8 @@ export default function HomeTechnologies() {
   }, [reducedMotion]);
 
   return (
-    <section
-      id="technologies"
+    <Section
+      id={data?.anchor ?? 'technologies'}
       ref={sectionRef}
       className="relative flex min-h-[100svh] items-center overflow-hidden py-16 lg:py-8"
     >
@@ -187,17 +199,17 @@ export default function HomeTechnologies() {
 
       <div className="mx-auto grid w-full max-w-[1700px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-[0.82fr_1.18fr] lg:gap-8 lg:px-[clamp(48px,5.73vw,110px)]">
         <div className="relative z-10">
-          <div className="wc-eyebrow">Technologie</div>
+          <div className="wc-eyebrow">{data?.eyebrow ?? 'Technologie'}</div>
 
           <div className="">
             <h2 className="wc-heading-hero wc-text-dark">
-              Technologie, <span className="wc-text-highlight">które napędzają</span> nowoczesne strony.
+              {data?.title ?? 'Technologie,'} <span className="wc-text-highlight">{data?.titleHighlight ?? 'które napędzają'}</span> {data?.titleAfter ?? 'nowoczesne strony.'}
             </h2>
           </div>
 
           <div className="max-w-[46ch]">
             <p className="wc-body-lg mt-7">
-              Wybieram sprawdzone rozwiązania, które zapewniają szybkość, bezpieczeństwo i pełną elastyczność — teraz i w przyszłości.
+              {data?.description ?? 'Wybieram sprawdzone rozwiązania, które zapewniają szybkość, bezpieczeństwo i pełną elastyczność - teraz i w przyszłości.'}
             </p>
           </div>
 
@@ -207,7 +219,7 @@ export default function HomeTechnologies() {
             </div>
             <div className="h-14 w-px shrink-0 bg-blue/25"></div>
             <p className="wc-body-lg">
-              Stawiam na jakość kodu, wydajność i narzędzia, które dają realne możliwości.
+              {data?.note ?? 'Stawiam na jakość kodu, wydajność i narzędzia, które dają realne możliwości.'}
             </p>
           </div>
         </div>
@@ -227,6 +239,7 @@ export default function HomeTechnologies() {
                 alt=""
                 width={technology.width}
                 height={technology.height}
+                unoptimized={technology.src.endsWith('.svg')}
                 className="h-10 w-full object-contain"
               />
               <span className="wc-caption mt-2">{technology.name}</span>
@@ -235,21 +248,22 @@ export default function HomeTechnologies() {
 
           <div
             data-technology-card=""
-            aria-label="Next.js"
+            aria-label={featuredTechnology?.name ?? 'Next.js'}
             className="col-span-2 flex min-h-40 flex-col items-center justify-center rounded-[28px] border border-blue/15 bg-white p-7 shadow-[0_28px_70px_rgba(21,87,255,0.16)] sm:col-span-1 lg:absolute lg:bottom-[29%] lg:left-1/2 lg:h-56 lg:w-64 lg:-translate-x-1/2"
           >
             <Image
-              src="/logos/nextjs.svg"
+              src={featuredTechnology ? getStrapiMediaUrl(featuredTechnology.logo) : '/logos/nextjs.svg'}
               alt=""
-              width={800}
-              height={800}
+              width={featuredTechnology?.logo.width ?? 800}
+              height={featuredTechnology?.logo.height ?? 800}
               sizes="(max-width: 1023px) 33vw, 256px"
+              unoptimized={(featuredTechnology ? getStrapiMediaUrl(featuredTechnology.logo) : '/logos/nextjs.svg').endsWith('.svg')}
               className="h-24 w-24 object-contain lg:h-32 lg:w-32"
             />
-            <span className="wc-caption mt-3">Next.js</span>
+            <span className="wc-caption mt-3">{featuredTechnology?.name ?? 'Next.js'}</span>
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

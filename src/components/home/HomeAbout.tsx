@@ -1,9 +1,14 @@
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import Section from '@/src/components/common/Section';
+import type { CmsAboutBlock } from '@/src/interface/CmsPage';
+import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 
-export default function HomeAbout() {
+export default function HomeAbout({ data }: { data?: CmsAboutBlock }) {
+  const imageSrc = data?.image ? getStrapiMediaUrl(data.image) : '/landing/about-character-cutout.png';
+
   return (
-    <section id="story" className="section section--story overflow-hidden pb-0">
+    <Section id={data?.anchor ?? 'about'} className="overflow-hidden pb-0">
       <div className="section-shell">
         <div className="relative grid lg:min-h-[680px] lg:grid-cols-[minmax(0,0.8fr)_minmax(460px,0.98fr)]">
           <div
@@ -16,13 +21,19 @@ export default function HomeAbout() {
           />
           <div className="relative z-20 flex flex-col justify-center">
               <div className="wc-eyebrow">
-                O mnie
+                {data?.eyebrow ?? 'O mnie'}
               </div>
 
               <h2 className="wc-heading-section wc-text-dark">
-                Kto to <span className="wc-text-highlight">Webcode?</span>
+                {data?.title ?? 'Kto to'} <span className="wc-text-highlight">{data?.titleHighlight ?? 'Webcode?'}</span>
               </h2>
 
+              {data?.body ? (
+                <div
+                  className="wysiwyg wc-body-lg mt-8 max-w-[62ch]"
+                  dangerouslySetInnerHTML={{ __html: data.body }}
+                />
+              ) : (
               <div className="wysiwyg wc-body-lg mt-8 max-w-[62ch]">
                 <p>
                   Webcode to freelancer specjalizujący się w projektowaniu i wdrażaniu
@@ -37,13 +48,16 @@ export default function HomeAbout() {
                   które są szybkie, bezpieczne i skutecznie wspierają rozwój Twojej firmy.
                 </p>
               </div>
+              )}
 
               <div className="mt-8">
                 <a
-                  href="#contact"
+                  href={data?.button.href ?? '#contact'}
+                  target={data?.button.external ? '_blank' : undefined}
+                  rel={data?.button.external ? 'noreferrer' : undefined}
                   className="wc-btn-primary justify-between px-7 py-5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--wc-blue)]"
                 >
-                  Poznaj mnie
+                  {data?.button.label ?? 'Poznaj mnie'}
                   <ArrowRight size={20} aria-hidden="true" />
                 </a>
               </div>
@@ -61,16 +75,16 @@ export default function HomeAbout() {
                 />
 
               <Image
-                src="/landing/about-character-cutout.png"
-                alt="Ilustracja twórcy Webcode"
-                width={409}
-                height={885}
+                src={imageSrc}
+                alt={data?.imageAlternativeText ?? 'Ilustracja twórcy Webcode'}
+                width={data?.image.width ?? 409}
+                height={data?.image.height ?? 885}
                 sizes="(max-width: 639px) 78vw, (max-width: 1023px) 330px, 409px"
               />
               </div>
             </div>
           </div>
       </div>
-    </section>
+    </Section>
   );
 }

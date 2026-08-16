@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { locations, type LocationSlug, type ServiceSlug } from '@/src/data/offer/catalog';
+import Section from '@/src/components/common/Section';
 
 type OtherLocationsProps = {
     serviceSlug: ServiceSlug;
@@ -12,7 +13,7 @@ export default function OtherLocations({ serviceSlug, currentLocationSlug }: Oth
     >).filter(([locationSlug]) => locationSlug !== currentLocationSlug);
 
     return (
-        <section className="section" aria-labelledby="other-locations-heading">
+        <Section aria-labelledby="other-locations-heading">
             <div className="section-shell">
                 <div className="flex flex-col items-center text-center">
                     <div className="wc-eyebrow justify-center">Lokalizacje</div>
@@ -36,6 +37,6 @@ export default function OtherLocations({ serviceSlug, currentLocationSlug }: Oth
                     </nav>
                 </div>
             </div>
-        </section>
+        </Section>
     );
 }

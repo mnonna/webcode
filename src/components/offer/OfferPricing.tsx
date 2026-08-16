@@ -7,6 +7,7 @@ import Tabs, { type TabItem } from '@/src/components/common/Tabs';
 import { offerPricing } from '@/src/data/offer/offerPricing';
 import type { ServiceSlug } from '@/src/data/offer/catalog';
 import { useGsapReveal } from '@/src/hooks/useGsapReveal';
+import Section from '@/src/components/common/Section';
 
 const offerTabs: TabItem<ServiceSlug>[] = [
     { value: 'strony-internetowe', label: 'Strony internetowe', icon: LayoutTemplate },
@@ -38,7 +39,7 @@ export default function OfferPricing({ serviceSlug }: OfferPricingProps) {
     const packets = offerPricing[activeService];
 
     return (
-        <section ref={sectionRef} className="section section--offerPricing">
+        <Section ref={sectionRef}>
             <div className="section-shell">
                 <div data-offer-pricing-reveal="" className="flex flex-col items-center gap-8 mb-10 text-center mx-auto">
                     <h2 className="wc-heading-section max-w-[24ch] lg:max-w-[50ch]">Wybierz odpowiedni pakiet <span className="wc-text-highlight">dla siebie</span></h2>
@@ -69,6 +70,6 @@ export default function OfferPricing({ serviceSlug }: OfferPricingProps) {
                     </div>
                 </div>
             </div>
-        </section>
+        </Section>
     )
 }

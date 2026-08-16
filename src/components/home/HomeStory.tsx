@@ -1,11 +1,17 @@
-﻿import { useLayoutEffect, useRef, useState } from 'react';
+'use client';
+
+import { useLayoutEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 import { BadgeCheck, Eye, Rocket, ShieldCheck } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
+import Section from '@/src/components/common/Section';
+import { getCmsIcon } from '@/src/components/cms/icons';
+import type { CmsStoryBlock } from '@/src/interface/CmsPage';
+import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 
-const storySteps = [
+const defaultStorySteps = [
   {
     title: 'Przyciąga uwagę',
     copy: 'Pierwsze sekundy decydują. Przejrzysty układ i mocny przekaz zatrzymują właściwego odbiorcę.',
@@ -40,7 +46,9 @@ function setHeaderHidden(hidden: boolean) {
   );
 }
 
-export default function HomeStory() {
+export default function HomeStory({ data }: { data?: CmsStoryBlock }) {
+  const storySteps = data?.steps ?? defaultStorySteps;
+  const storyStepsCount = storySteps.length;
   const sectionRef = useRef<HTMLElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -61,7 +69,7 @@ export default function HomeStory() {
     const syncViewport = () => {
       const desktop = desktopQuery.matches;
       setIsDesktop(desktop);
-      setActiveStep(desktop ? 0 : storySteps.length - 1);
+      setActiveStep(desktop ? 0 : storyStepsCount - 1);
       section.style.setProperty('--story-progress-scale', desktop && !reducedMotion ? '0' : '1');
     };
 
@@ -96,7 +104,7 @@ export default function HomeStory() {
       }
 
       media.add('(min-width: 1024px)', () => {
-        const desktopDuration = window.innerHeight * (storySteps.length - 1);
+        const desktopDuration = window.innerHeight * (storyStepsCount - 1);
 
         setActiveStep(0);
         section.style.setProperty('--story-progress-scale', '0');
@@ -115,8 +123,8 @@ export default function HomeStory() {
             section.style.setProperty('--story-progress-scale', `${self.progress}`);
 
             const nextStep = Math.min(
-              storySteps.length - 1,
-              Math.floor(self.progress * (storySteps.length - 1) + 0.0001)
+              storyStepsCount - 1,
+              Math.floor(self.progress * (storyStepsCount - 1) + 0.0001)
             );
             setActiveStep((previous) => (previous === nextStep ? previous : nextStep));
           },
@@ -130,30 +138,30 @@ export default function HomeStory() {
       media.revert();
       ctx.revert();
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, storyStepsCount]);
 
   return (
-    <section
-      id="story"
+    <Section
+      id={data?.anchor ?? 'story'}
       ref={sectionRef}
-      className="section section--story pt-section-y-big"
+      className="pt-section-y-big pb-section-bottom-story"
       style={{ ['--story-progress-scale' as string]: reducedMotion || !isDesktop ? '1' : '0' }}
     >
       <div className="section-shell mb-10 flex flex-col items-center text-center">
         <div data-story-heading="" className="wc-eyebrow">
-          Strona ma prowadzić do działania
+          {data?.eyebrow ?? 'Strona ma prowadzić do działania'}
         </div>
         <h2 data-story-heading="" className="wc-heading-section wc-text-dark max-w-[20ch]">
-          Dobra strona nie tylko wygląda. <span className="wc-text-highlight">Ona prowadzi klienta dalej.</span>
+          {data?.title ?? 'Dobra strona nie tylko wygląda.'} <span className="wc-text-highlight">{data?.titleHighlight ?? 'Ona prowadzi klienta dalej.'}</span>
         </h2>
         <p data-story-heading="" className="wc-body-lg mt-5 max-w-[52ch]">
-          Projektuję układ, który zbiera uwagę, porządkuje ofertę i prowadzi użytkownika do konkretnej decyzji.
+          {data?.description ?? 'Projektuję układ, który zbiera uwagę, porządkuje ofertę i prowadzi użytkownika do konkretnej decyzji.'}
         </p>
       </div>
 
       <div
         ref={stageRef}
-        className="section-shell wc-contain-layout-paint wc-fluid-gap-main grid lg:min-h-[100svh] lg:grid-cols-[0.42fr_minmax(0,0.58fr)] lg:items-center"
+        className="section-shell wc-contain-layout-paint grid gap-grid-main lg:min-h-[100svh] lg:grid-cols-[0.42fr_minmax(0,0.58fr)] lg:items-center"
       >
         <div>
           <div className="relative mt-10 pl-[52px] md:pl-[56px]">
@@ -166,7 +174,8 @@ export default function HomeStory() {
             </div>
             <div className="space-y-4 lg:space-y-6">
               {storySteps.map((step, index) => {
-                const Icon = step.icon;
+                const Icon = 'icon' in step ? step.icon : getCmsIcon(step.iconKey);
+                const copy = 'copy' in step ? step.copy : step.description;
                 const isActive = index === activeStep;
                 const isRevealed = reducedMotion || !isDesktop || index <= activeStep;
 
@@ -192,7 +201,7 @@ export default function HomeStory() {
                     </div>
                     <div className="pt-1">
                       <h3 className="wc-heading-sm wc-text-dark">{step.title}</h3>
-                      <p className="wc-body-md mt-2 max-w-[34ch]">{step.copy}</p>
+                      <p className="wc-body-md mt-2 max-w-[34ch]">{copy}</p>
                     </div>
                   </article>
                 );
@@ -202,19 +211,19 @@ export default function HomeStory() {
         </div>
 
         <div className="relative">
-          <div ref={previewRef} data-story-preview="" className="wc-surface-panel wc-contain-paint wc-panel-fluid-preview w-full overflow-hidden">
+          <div ref={previewRef} data-story-preview="" className="wc-surface-panel wc-contain-paint p-panel-preview w-full overflow-hidden">
             <div className="absolute inset-x-[10%] top-[4%] h-[52%] rounded-full bg-[radial-gradient(circle,_rgba(21,87,255,0.14)_0%,_rgba(21,87,255,0)_72%)] blur-2xl"></div>
             <Image
-              src="/landing/story-preview.avif"
-              alt="Makieta sekcji pokazującej, jak strona prowadzi klienta do działania"
-              width={1448}
-              height={1086}
+              src={data?.previewImage ? getStrapiMediaUrl(data.previewImage) : '/landing/story-preview.avif'}
+              alt={data?.previewAlternativeText ?? 'Makieta sekcji pokazującej, jak strona prowadzi klienta do działania'}
+              width={data?.previewImage.width ?? 1448}
+              height={data?.previewImage.height ?? 1086}
               sizes="(max-width: 1023px) calc(100vw - 32px), 58vw"
               className="relative z-10 h-auto w-full rounded-[28px] object-contain"
             />
           </div>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

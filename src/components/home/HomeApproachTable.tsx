@@ -5,6 +5,8 @@ import {
   Target,
   type LucideIcon,
 } from 'lucide-react';
+import { getCmsIcon } from '@/src/components/cms/icons';
+import type { CmsApproachBlock } from '@/src/interface/CmsPage';
 
 type ApproachItem = {
   problemTitle: string;
@@ -14,7 +16,7 @@ type ApproachItem = {
   icon: LucideIcon;
 };
 
-const approachItems: readonly ApproachItem[] = [
+const defaultApproachItems: readonly ApproachItem[] = [
   {
     problemTitle: 'Oferta jest dobra, ale trudno ją zrozumieć',
     problemCopy:
@@ -61,7 +63,9 @@ const mobileLabelClassName =
 const cellClassName =
   'block w-full border-b border-white/25 bg-transparent p-[1.35rem] align-middle last:border-b-0 lg:table-cell lg:w-auto lg:border-b-0 lg:p-8';
 
-export default function HomeApproachTable() {
+export default function HomeApproachTable({ items }: { items?: CmsApproachBlock['items'] }) {
+  const approachItems = items ?? defaultApproachItems;
+
   return (
     <div className="mt-10 overflow-visible border-0 bg-transparent shadow-none lg:overflow-hidden lg:rounded-[24px] lg:border lg:border-white/50 lg:bg-[linear-gradient(135deg,rgba(8,47,153,0.42),rgba(21,87,255,0.2))] lg:shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_24px_70px_rgba(21,87,255,0.16)] lg:backdrop-blur-[10px] lg:backdrop-saturate-150">
       <table className="block w-full text-white [text-shadow:0_1px_2px_rgba(15,23,42,0.3)] lg:table lg:table-fixed lg:border-collapse">
@@ -93,7 +97,12 @@ export default function HomeApproachTable() {
           </tr>
         </thead>
         <tbody className="grid gap-4 lg:table-row-group lg:[&>tr:not(:last-child)>td]:border-b lg:[&>tr:not(:last-child)>td]:border-white/35 lg:[&>tr>td:not(:last-child)]:border-r lg:[&>tr>td:not(:last-child)]:border-white/35">
-          {approachItems.map(({ problemTitle, problemCopy, actions, result, icon: Icon }) => (
+          {approachItems.map((item) => {
+            const Icon = 'icon' in item ? item.icon : getCmsIcon(item.iconKey);
+            const problemCopy = 'problemCopy' in item ? item.problemCopy : item.problemDescription;
+            const actions = item.actions.map((action) => typeof action === 'string' ? action : action.text);
+            const { problemTitle, result } = item;
+            return (
             <tr
               key={problemTitle}
               className="grid overflow-hidden rounded-[20px] border border-white/50 bg-[linear-gradient(135deg,rgba(8,47,153,0.72),rgba(21,87,255,0.48))] shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_18px_48px_rgba(21,87,255,0.18)] backdrop-blur-[10px] backdrop-saturate-150 lg:table-row lg:overflow-visible lg:rounded-none lg:border-0 lg:bg-transparent lg:shadow-none lg:backdrop-blur-none lg:backdrop-saturate-100"
@@ -139,7 +148,8 @@ export default function HomeApproachTable() {
                 </div>
               </td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>

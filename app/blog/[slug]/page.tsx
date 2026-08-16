@@ -3,6 +3,7 @@ import Footer from "@/src/components/Footer";
 import ArticleTop from "@/src/components/blog/ArticleTop";
 import ArticleTableOfContents from "@/src/components/blog/ArticleTableOfContents";
 import ArticleAuthor from "@/src/components/blog/ArticleAuthor";
+import Section from "@/src/components/common/Section";
 import HomeContact from '@/src/components/home/HomeContact';
 import { SITE_URL } from "@/src/config/site";
 import { getArticleBySlug, getArticles } from "@/src/data/blog/articles";
@@ -70,13 +71,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         __html: JSON.stringify(articleJsonLd).replace(/</g, '\\u003c'),
                     }}
                 />
-                <article className="section section--article">
+                <article className="py-section-y">
                     <div className="section-shell mx-auto 2xl:max-w-[70%]">
                         <div className="grid gap-10 xl:grid-cols-[minmax(180px,0.35fr)_minmax(0,1fr)] xl:gap-16">
                             <ArticleTableOfContents items={tableOfContents} hint={article.hint} />
 
                             <div className="min-w-0 w-full">
-                                <section className="mb-8 xl:mb-12">
+                                <Section className="py-0 mb-8 xl:mb-12">
                                     <ArticleTop
                                         category={article.category}
                                         title={article.title}
@@ -87,13 +88,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                         image={article.image}
                                         imageAlt={article.imageAlt}
                                     />
-                                </section>
+                                </Section>
                                 <div className="wysiwyg">
                                     {article.contentSections.map((section) => (
-                                        <section
+                                        <Section
                                             key={section.id}
                                             id={section.id}
-                                            className="scroll-mt-28"
+                                            className="py-0 scroll-mt-28"
                                             dangerouslySetInnerHTML={{ __html: section.content }}
                                         />
                                     ))}

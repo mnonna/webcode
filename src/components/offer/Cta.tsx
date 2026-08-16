@@ -3,8 +3,9 @@ import I_Cta from "@/src/interface/Cta";
 import Link from 'next/link';
 import { MessagesSquare, SquarePen, ShieldCheck } from "lucide-react";
 import Image from "next/image";
+import Section from "@/src/components/common/Section";
 
-export default function Cta({ eyebrow, title, description, button }: I_Cta) {
+export default function Cta({ eyebrow, title, description, button, image }: I_Cta) {
     const icons = [
         {
             icon: MessagesSquare,
@@ -21,7 +22,7 @@ export default function Cta({ eyebrow, title, description, button }: I_Cta) {
     ];
 
     return (
-        <section className="section">
+        <Section>
             <div className="section-shell">
                 <div className="p-5 lg:px-16 lg:py-6 !pb-0 wc-bg-blue-soft rounded-lg">
                     <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 lg:gap-16">
@@ -49,10 +50,10 @@ export default function Cta({ eyebrow, title, description, button }: I_Cta) {
                         </div>
                         <div className="flex w-full lg:w-1/2 max-w-[640px] shrink-0 justify-center">
                             <Image
-                                src="/offer/common/cta-offer.avif"
-                                alt="Contact Character"
-                                width={640}
-                                height={640}
+                                src={image?.src ?? '/offer/common/cta-offer.avif'}
+                                alt={image?.alt ?? 'Contact Character'}
+                                width={image?.width ?? 640}
+                                height={image?.height ?? 640}
                                 sizes="(max-width: 1023px) calc(100vw - 40px), 50vw"
                                 className="h-auto w-full"
                             />
@@ -60,6 +61,6 @@ export default function Cta({ eyebrow, title, description, button }: I_Cta) {
                     </div>
                 </div>
             </div>
-        </section>
+        </Section>
     )
 }
