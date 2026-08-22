@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef } from 'react';
 import Image from 'next/image';
 import {Link} from '@/src/i18n/navigation';
+import {toLocalizedHref} from '@/src/i18n/href';
 import { ArrowRight } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';
@@ -267,7 +268,7 @@ export default function HomeCaseStudies({ data }: { data?: CmsCaseStudiesBlock }
                 </span>
               ))}
             </div>
-            <Link href={featured.targetUrl} className="wc-btn-primary mt-7 w-full justify-center sm:w-auto">
+            <Link href={toLocalizedHref(featured.targetUrl)} className="wc-btn-primary mt-7 w-full justify-center sm:w-auto">
               {data?.featuredButton.label ?? 'Porozmawiajmy o projekcie'}
               <ArrowRight size={17} />
             </Link>
@@ -299,7 +300,7 @@ export default function HomeCaseStudies({ data }: { data?: CmsCaseStudiesBlock }
                         </span>
                       ))}
                     </div>
-                    <Link href={project.targetUrl} className="wc-text-blue group flex shrink-0 items-center gap-2 text-[0.875rem] font-[600]">
+                    <Link href={toLocalizedHref(project.targetUrl)} className="wc-text-blue group flex shrink-0 items-center gap-2 text-[0.875rem] font-[600]">
                       {data?.itemLinkLabel ?? 'Zobacz projekt'}
                       <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>

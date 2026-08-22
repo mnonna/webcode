@@ -6,6 +6,7 @@ import type {AppLocale} from '@/src/i18n/routing';
 import type {CmsNavigationLink} from '@/src/interface/CmsGlobal';
 import {getCmsGlobal} from '@/src/lib/strapi';
 import {getStrapiMediaUrl} from '@/src/lib/strapi-media';
+import {toLocalizedHref} from '@/src/i18n/href';
 
 function FooterLink({link}: {link: CmsNavigationLink}) {
   const className = 'text-[0.95rem] font-[600] text-[var(--wc-text)] transition-colors hover:text-[var(--wc-blue)]';
@@ -20,7 +21,7 @@ function FooterLink({link}: {link: CmsNavigationLink}) {
       {link.label}
     </a>
   ) : (
-    <Link href={link.href as never} className={className}>{link.label}</Link>
+    <Link href={toLocalizedHref(link.href)} className={className}>{link.label}</Link>
   );
 }
 

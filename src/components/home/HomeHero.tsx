@@ -10,6 +10,7 @@ import { getCmsIcon } from '@/src/components/cms/icons';
 import type { CmsHeroBlock } from '@/src/interface/CmsPage';
 import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 import {Link} from '@/src/i18n/navigation';
+import {toLocalizedHref} from '@/src/i18n/href';
 
 const defaultHeroCards = [
   {
@@ -232,12 +233,12 @@ export default function HomeHero({ data }: { data?: CmsHeroBlock }) {
               {data?.description ?? 'Projektuję i wdrażam nowoczesne strony WordPress, sklepy WooCommerce oraz aplikacje webowe. Pomagam uporządkować ofertę, poprawić UX i stworzyć stronę gotową do pozyskiwania klientów.'}
             </p>
             <div data-hero-cta="" className="mt-8 flex flex-wrap gap-4">
-              <Link href={(data?.primaryButton.href ?? '#contact') as never} className="wc-btn-primary">
+              <Link href={toLocalizedHref(data?.primaryButton.href ?? '#contact')} className="wc-btn-primary">
                 {data?.primaryButton.label ?? 'Bezpłatna wycena'}
                 <ArrowRight size={18} />
               </Link>
               {(data?.secondaryButton !== null) && (
-                <Link href={(data?.secondaryButton?.href ?? '#process') as never} className="wc-btn-secondary">
+                <Link href={toLocalizedHref(data?.secondaryButton?.href ?? '#process')} className="wc-btn-secondary">
                   {data?.secondaryButton?.label ?? 'Zobacz, jak pracuję'}
                 </Link>
               )}

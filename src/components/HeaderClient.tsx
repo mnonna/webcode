@@ -9,6 +9,7 @@ import {Link, usePathname, useRouter} from '@/src/i18n/navigation';
 import type {AppLocale} from '@/src/i18n/routing';
 import type {CmsGlobalSettings, CmsNavigationLink} from '@/src/interface/CmsGlobal';
 import {getStrapiMediaUrl} from '@/src/lib/strapi-media';
+import {toLocalizedHref} from '@/src/i18n/href';
 
 type HeaderClientProps = {
   localeLinks?: Partial<Record<AppLocale, string>>;
@@ -33,7 +34,7 @@ function SmartLink({link, className, children, onClick}: {
       {children}
     </a>
   ) : (
-    <Link href={link.href as never} className={className} onClick={onClick}>
+    <Link href={toLocalizedHref(link.href)} className={className} onClick={onClick}>
       {children}
     </Link>
   );

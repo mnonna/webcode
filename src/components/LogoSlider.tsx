@@ -4,7 +4,6 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from '@/src/lib/gsap';
 import { usePrefersReducedMotion } from '@/src/hooks/usePrefersReducedMotion';
 import Image from 'next/image';
-import {Link} from '@/src/i18n/navigation';
 import Section from '@/src/components/common/Section';
 import type { CmsPartnersBlock } from '@/src/interface/CmsPage';
 import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
@@ -73,7 +72,7 @@ function BrandList({ items, hidden = false }: { items: typeof brands; hidden?: b
           key={idx}
           className="h-20 max-w-[190px] shrink-0 rounded-[16px] border border-[rgba(230,236,245,0.95)] bg-white px-6 text-dark shadow-[0_8px_24px_rgba(15,23,42,0.035)] sm:h-24 sm:w-[230px]"
         >
-          <Link href={brand.url} target="_blank" className='flex items-center justify-center gap-2.5 w-full h-full'>
+          <a href={brand.url} target="_blank" rel="noreferrer" className='flex items-center justify-center gap-2.5 w-full h-full'>
             {brand.logo ? (
               <Image 
                 width={100}
@@ -89,7 +88,7 @@ function BrandList({ items, hidden = false }: { items: typeof brands; hidden?: b
                 <span className="wc-body-sm">{brand.name}</span>
               )
             )}
-          </Link>
+          </a>
         </li>
       ))}
     </ul>

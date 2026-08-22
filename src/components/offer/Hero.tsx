@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Section from "@/src/components/common/Section";
 import {Link} from '@/src/i18n/navigation';
+import {toLocalizedHref} from '@/src/i18n/href';
 
 export default function OfferHero(props: I_HeroOffer) {
     const {
@@ -45,12 +46,12 @@ export default function OfferHero(props: I_HeroOffer) {
                             { description }
                         </p>
                         <div data-offer-hero-reveal="" className="mt-8 flex flex-wrap gap-4">
-                        <Link href={primaryButton.href as never} className="wc-btn-primary">
+                        <Link href={toLocalizedHref(primaryButton.href)} className="wc-btn-primary">
                             {primaryButton.label}
                             <ArrowRight size={18} />
                         </Link>
                         { hasSecondButton &&  (
-                            <Link href={(secondaryButton?.href ?? '#process') as never} className="wc-btn-secondary">
+                            <Link href={toLocalizedHref(secondaryButton?.href ?? '#process')} className="wc-btn-secondary">
                                 {secondaryButton?.label}
                             </Link>
                         )}

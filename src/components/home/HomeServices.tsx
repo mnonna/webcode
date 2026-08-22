@@ -2,6 +2,7 @@ import { ArrowRight, Code2, LayoutTemplate, PencilRuler, Search, Shield, Shoppin
 import {Link} from '@/src/i18n/navigation';
 import { getCmsIcon } from '@/src/components/cms/icons';
 import type { CmsServicesBlock } from '@/src/interface/CmsPage';
+import {toLocalizedHref} from '@/src/i18n/href';
 
 const defaultServices = [
   { title: 'Strony internetowe WordPress', copy: 'Profesjonalne strony firmowe z ofertą, formularzami i łatwą edycją treści.', icon: LayoutTemplate, href: '/oferta/strony-internetowe-poznan' },
@@ -29,7 +30,7 @@ export default function HomeServices({ data }: { data?: CmsServicesBlock }) {
             const copy = 'copy' in service ? service.copy : service.description;
             const { title, href } = service;
             return (
-            <Link key={title} href={href} className="wc-surface-card wc-card-block group transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--wc-blue)]">
+            <Link key={title} href={toLocalizedHref(href)} className="wc-surface-card wc-card-block group transition-transform duration-300 hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--wc-blue)]">
               <div className="wc-icon-badge h-14 w-14">
                 <Icon size={24} />
               </div>

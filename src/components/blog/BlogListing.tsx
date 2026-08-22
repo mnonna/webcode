@@ -11,6 +11,7 @@ import { getArticleCategory } from '@/src/helpers/blog-listing-utils';
 import { useGsapReveal } from '@/src/hooks/useGsapReveal';
 import type { BlogListItem } from '@/src/interface/Article';
 import type { CmsBlogListingBlock } from '@/src/interface/CmsPage';
+import {toLocalizedHref} from '@/src/i18n/href';
 
 interface BlogListingProps {
   articles: BlogListItem[];
@@ -207,7 +208,7 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
             </div>
           </div>
           <Link
-            href={data?.ctaButton.href ?? '/kontakt'}
+            href={toLocalizedHref(data?.ctaButton.href ?? '/kontakt')}
             className="inline-flex min-h-12 items-center justify-center gap-3 rounded-sm bg-blue px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
           >
             {data?.ctaButton.label ?? t('ctaButton')}

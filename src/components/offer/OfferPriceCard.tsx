@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import {Link} from '@/src/i18n/navigation';
 import Toggle from "@/src/components/common/Toggle";
 import {useLocale, useTranslations} from 'next-intl';
+import {toLocalizedHref} from '@/src/i18n/href';
 
 export default function OfferPriceCard (props: I_OfferPriceCard) {
     const locale = useLocale();
@@ -68,7 +69,7 @@ export default function OfferPriceCard (props: I_OfferPriceCard) {
                 )}
             </div>
             <div className="mt-auto">
-                <Link href={buttonLink} className="wc-btn-primary">{buttonText}</Link>
+                <Link href={toLocalizedHref(buttonLink)} className="wc-btn-primary">{buttonText}</Link>
             </div>
         </div>
     )

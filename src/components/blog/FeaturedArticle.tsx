@@ -19,7 +19,7 @@ export default function FeaturedArticle({
   return (
     <article className="grid overflow-hidden rounded-lg border border-border bg-card shadow-xl lg:grid-cols-2">
       <Link
-        href={`/blog/${article.slug}`}
+        href={{pathname: '/blog/[slug]', params: {slug: article.slug}}}
         className="relative block min-h-64 overflow-hidden bg-blue-soft sm:min-h-80 lg:min-h-[410px]"
         aria-label={t('readFeatured', {title: article.title})}
       >
@@ -53,7 +53,7 @@ export default function FeaturedArticle({
           {article.excerpt}
         </p>
         <Link
-          href={`/blog/${article.slug}`}
+          href={{pathname: '/blog/[slug]', params: {slug: article.slug}}}
           className="mt-7 inline-flex w-fit items-center gap-3 font-semibold text-blue transition-[gap] hover:gap-4"
         >
           {t('read')}

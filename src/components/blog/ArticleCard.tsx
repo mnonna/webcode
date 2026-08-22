@@ -21,7 +21,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
       className="group flex h-full flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition-[box-shadow] duration-300 hover:shadow-xl"
     >
       <Link
-        href={`/blog/${article.slug}`}
+        href={{pathname: '/blog/[slug]', params: {slug: article.slug}}}
         className="relative block aspect-[16/9] overflow-hidden bg-blue-soft"
         aria-label={t('readArticle', {title: article.title})}
       >
@@ -46,7 +46,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         </p>
         <p className="wc-heading-md">
           <Link
-            href={`/blog/${article.slug}`}
+            href={{pathname: '/blog/[slug]', params: {slug: article.slug}}}
             className="transition-colors hover:text-blue"
           >
             {article.title}

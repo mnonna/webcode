@@ -48,7 +48,10 @@ export default function OtherLocations({
                         {otherLocations.map((location) => (
                             <Link
                                 key={location.slug}
-                                href={`/oferta/${serviceSlug}-${location.slug}`}
+                                href={{
+                                    pathname: '/oferta/[slug]',
+                                    params: {slug: `${serviceSlug}-${location.slug}`},
+                                }}
                                 className="rounded-full border border-[var(--wc-border)] bg-white px-5 py-3 text-[0.95rem] font-[600] text-[var(--wc-dark)] transition-colors hover:border-[var(--wc-blue)] hover:bg-[var(--wc-blue-soft)] hover:text-[var(--wc-blue)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--wc-blue)]"
                             >
                                 {location.name}

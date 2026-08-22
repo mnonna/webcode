@@ -4,6 +4,7 @@ import {Link} from '@/src/i18n/navigation';
 import { MessagesSquare, SquarePen, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Section from "@/src/components/common/Section";
+import {toLocalizedHref} from '@/src/i18n/href';
 
 export default function Cta({ eyebrow, title, description, button, image, paddingTop, paddingBottom }: I_Cta) {
     const icons = [
@@ -43,7 +44,7 @@ export default function Cta({ eyebrow, title, description, button, image, paddin
                                 )}
                                 {button && (
                                     <div>
-                                        <Link href={button.href} className="wc-btn-primary">{button.text}</Link>
+                                        <Link href={toLocalizedHref(button.href)} className="wc-btn-primary">{button.text}</Link>
                                     </div>
                                 )}
                             </div>

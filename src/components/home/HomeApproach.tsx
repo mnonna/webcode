@@ -5,6 +5,7 @@ import HomeApproachTable from './HomeApproachTable';
 import Section from '@/src/components/common/Section';
 import type { CmsApproachBlock } from '@/src/interface/CmsPage';
 import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
+import {toLocalizedHref} from '@/src/i18n/href';
 
 export default function HomeApproach({ data }: { data?: CmsApproachBlock }) {
   return (
@@ -37,13 +38,13 @@ export default function HomeApproach({ data }: { data?: CmsApproachBlock }) {
 
         <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-5 mb-section-y-big">
           <div>
-            <Link href={data?.primaryButton.href ?? '#contact'} className="wc-btn-primary justify-center sm:justify-start">
+            <Link href={toLocalizedHref(data?.primaryButton.href ?? '#contact')} className="wc-btn-primary justify-center sm:justify-start">
               {data?.primaryButton.label ?? 'Porozmawiajmy o projekcie'}
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
           <div>
-            <Link href={data?.secondaryButton.href ?? '/oferta'} className="wc-btn-secondary">
+            <Link href={toLocalizedHref(data?.secondaryButton.href ?? '/oferta')} className="wc-btn-secondary">
               {data?.secondaryButton.label ?? 'Zobacz ofertę'}
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
