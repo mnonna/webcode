@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "homeTitle": "Webcode - Tworzę strony, które działają",
+    "homeDescription": "Projektuję nowoczesne strony internetowe, sklepy online i aplikacje webowe. Szybkie realizacje, SEO, responsywność i profesjonalne wsparcie.",
+    "offerTitle": "Oferta | Webcode",
+    "offerDescription": "Strony internetowe, sklepy WooCommerce, aplikacje webowe, SEO i projekty UI dopasowane do Twojego biznesu.",
+    "blogTitle": "Blog - Webcode - Tworzę strony, które działają",
+    "blogDescription": "Praktyczna wiedza o tworzeniu stron internetowych, SEO, UX i technologii. Konkretne porady, które pomagają rozwijać skuteczny biznes online.",
+    "contactTitle": "Kontakt | Webcode",
+    "contactDescription": "Porozmawiajmy o Twoim projekcie. Napisz wiadomość lub wypełnij formularz kontaktowy.",
+    "privacyTitle": "Polityka prywatności | Webcode",
+    "privacyDescription": "Polityka prywatności serwisu Webcode."
+  },
+  "Navigation": {
+    "offer": "Oferta",
+    "blog": "Blog",
+    "contact": "Kontakt",
+    "privacy": "Polityka prywatności",
+    "quote": "Bezpłatna wycena",
+    "openMenu": "Otwórz menu",
+    "closeMenu": "Zamknij menu",
+    "changeLanguage": "Zmień język",
+    "polish": "Polski",
+    "english": "English"
+  },
+  "Footer": {
+    "description": "Projektuję i wdrażam strony, które mają wyglądać nowocześnie, działać szybko i prowadzić do kontaktu.",
+    "copyright": "© 2026 Webcode. Wszystkie prawa zastrzeżone."
+  },
+  "ContactForm": {
+    "name": "Imię i nazwisko",
+    "namePlaceholder": "Jan Kowalski",
+    "email": "E-mail",
+    "file": "Załącz plik (opcjonalnie)",
+    "fileHelp": "Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG. Maksymalny rozmiar pliku: 10 MB.",
+    "selectedFile": "Wybrany plik: {name}",
+    "message": "Opisz projekt",
+    "messagePlaceholder": "Napisz, czego potrzebujesz, jaki jest cel strony i na kiedy planujesz wdrożenie.",
+    "sending": "Wysyłanie...",
+    "send": "Wyślij wiadomość",
+    "success": "Dziękuję za wiadomość. Odezwę się najszybciej, jak to możliwe.",
+    "error": "Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.",
+    "invalidFile": "Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG.",
+    "fileTooLarge": "Plik jest za duży. Maksymalny rozmiar to 10 MB."
+  },
+  "Blog": {
+    "all": "Wszystkie",
+    "defaultCategory": "Technologie",
+    "featured": "Polecany artykuł",
+    "read": "Czytaj artykuł",
+    "readArticle": "Przeczytaj: {title}",
+    "readFeatured": "Przeczytaj polecany artykuł: {title}",
+    "readingTime": "{time} czytania",
+    "author": "Autor artykułu",
+    "authorAvatar": "Avatar autora: {name}",
+    "toc": "Spis treści",
+    "tocNavigation": "Spis treści artykułu",
+    "openToc": "Otwórz spis treści",
+    "closeToc": "Zamknij spis treści",
+    "previousSection": "Przejdź do poprzedniej sekcji",
+    "nextSection": "Przejdź do następnej sekcji",
+    "sectionNavigation": "Nawigacja między sekcjami",
+    "eyebrow": "Blog",
+    "title": "Praktyczna wiedza.",
+    "titleHighlight": "Realne efekty.",
+    "description": "Dzielę się doświadczeniem z zakresu tworzenia stron internetowych, SEO i technologii. Bez lania wody — konkretnie i na temat.",
+    "listingTitle": "Najnowsze artykuły",
+    "knowledgeBase": "Baza wiedzy",
+    "filterLabel": "Filtruj artykuły według kategorii",
+    "ctaTitle": "Masz temat, który warto omówić?",
+    "ctaDescription": "Porozmawiajmy o Twojej stronie lub pomyśle na rozwój.",
+    "ctaButton": "Skontaktuj się"
+  },
+  "Common": {
+    "contact": "Kontakt",
+    "net": "netto",
+    "gross": "brutto",
+    "currency": "zł",
+    "togglePrice": "Przełącz cenę netto lub brutto",
+    "chooseCategory": "Wybierz kategorię"
+    ,"priceLabel": "Cena pakietu"
+    ,"customPrice": "Indywidualnie"
+    ,"from": "od"
+    ,"deliveryTime": "czas realizacji {time}"
+  }
+}

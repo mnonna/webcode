@@ -4,15 +4,18 @@ import { useState } from "react";
 import I_OfferPriceCard from "@/src/interface/OfferPriceCard";
 import resolveOfferPacketName from "@/src/data/offer/offerPricing";
 import { Check } from "lucide-react";
-import Link from "next/link";
+import {Link} from '@/src/i18n/navigation';
 import Toggle from "@/src/components/common/Toggle";
+import {useLocale, useTranslations} from 'next-intl';
 
 export default function OfferPriceCard (props: I_OfferPriceCard) {
+    const locale = useLocale();
+    const t = useTranslations('Common');
     const { packetName, displayName, priceNet, priceGross, description, realizationTime, features, buttonText, buttonLink } = props;
     const [priceType, setPriceType] = useState<'net' | 'gross'>('net');
     const title = displayName ?? resolveOfferPacketName(packetName);
     const price = priceType === 'net' ? priceNet : priceGross;
-    const formattedPrice = new Intl.NumberFormat('pl-PL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price);
+    const formattedPrice = new Intl.NumberFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(price);
 
     return (
         <div data-offer-pricing-card="" className="flex flex-col p-4 rounded-[16px] border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-800">
@@ -21,34 +24,34 @@ export default function OfferPriceCard (props: I_OfferPriceCard) {
                 <div className="wc-body-sm">{ description }</div>
             </div>
             <div className="flex flex-col gap-2 mb-4 last:mb-0">
-                <div className="flex items-baseline gap-1" aria-label="Cena pakietu">
+                <div className="flex items-baseline gap-1" aria-label={t('priceLabel')}>
                     {packetName === 'custom' ? 
                         (
                             <>
-                                <span className="wc-heading-lg wc-text-blue font-extrabold">Indywidualnie</span>
+                                <span className="wc-heading-lg wc-text-blue font-extrabold">{t('customPrice')}</span>
                             </>
                         )
                     : 
                         (
                             <>
-                                <span>od</span>
+                                <span>{t('from')}</span>
                                 <span className="wc-heading-lg wc-text-blue font-extrabold">{formattedPrice}</span>
                                 <span>
-                                    <strong>zł</strong>
+                                    <strong>{t('currency')}</strong>
                                 </span>
                             </>
                         )
                     }
                     
                 </div>
-                <div className="wc-caption">czas realizacji <strong>{ realizationTime }</strong></div>
+                <div className="wc-caption">{t('deliveryTime', {time: realizationTime})}</div>
                 {packetName !== 'custom' && (
                     <Toggle
                         checked={priceType === 'gross'}
                         onCheckedChange={(isGross) => setPriceType(isGross ? 'gross' : 'net')}
-                        leftLabel="Netto"
-                        rightLabel="Brutto"
-                        ariaLabel="Przełącz cenę netto lub brutto"
+                        leftLabel={t('net')}
+                        rightLabel={t('gross')}
+                        ariaLabel={t('togglePrice')}
                     />
                 )}
             </div>

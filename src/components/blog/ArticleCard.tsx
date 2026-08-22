@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import {Link} from '@/src/i18n/navigation';
 import { ArrowUpRight, CalendarDays, Clock3 } from 'lucide-react';
+import {useLocale, useTranslations} from 'next-intl';
 import type { BlogListItem } from '@/src/interface/Article';
 import {
   formatArticleDate,
@@ -12,6 +13,8 @@ interface ArticleCardProps {
 }
 
 export default function ArticleCard({ article }: ArticleCardProps) {
+  const locale = useLocale();
+  const t = useTranslations('Blog');
   return (
     <article
       data-blog-card
@@ -20,7 +23,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
       <Link
         href={`/blog/${article.slug}`}
         className="relative block aspect-[16/9] overflow-hidden bg-blue-soft"
-        aria-label={`Przeczytaj: ${article.title}`}
+        aria-label={t('readArticle', {title: article.title})}
       >
         {article.image ? (
           <Image
@@ -39,7 +42,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <p className="wc-eyebrow !mb-2">
-          {getArticleCategory(article)}
+          {getArticleCategory(article, t('defaultCategory'))}
         </p>
         <p className="wc-heading-md">
           <Link
@@ -61,11 +64,11 @@ export default function ArticleCard({ article }: ArticleCardProps) {
             dateTime={article.date}
           >
             <CalendarDays size={16} className="text-blue" aria-hidden="true" />
-            {formatArticleDate(article.date)}
+            {formatArticleDate(article.date, locale)}
           </time>
           <span className="wc-caption flex items-center gap-2">
             <Clock3 size={16} className="text-blue" aria-hidden="true" />
-            {article.readTime} czytania
+            {t('readingTime', {time: article.readTime})}
           </span>
         </div>
       </div>

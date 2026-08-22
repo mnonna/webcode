@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import {Link} from '@/src/i18n/navigation';
 import { locations, type LocationSlug, type ServiceSlug } from '@/src/data/offer/catalog';
 import Section from '@/src/components/common/Section';
 import type { SectionSpacing } from '@/src/components/common/Section';

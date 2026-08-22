@@ -333,6 +333,12 @@ export type CmsPage = {
   documentId: string;
   title: string;
   slug: string;
+  locale?: 'pl' | 'en';
+  localizations?: Array<{
+    locale: 'pl' | 'en';
+    slug: string;
+    template: 'standard' | 'offer-index' | 'offer-detail' | 'blog-index';
+  }>;
   template: 'standard' | 'offer-index' | 'offer-detail' | 'blog-index';
   parent?: CmsPageRelation | null;
   children?: CmsPageRelation[];

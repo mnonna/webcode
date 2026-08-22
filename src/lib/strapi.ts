@@ -4,20 +4,35 @@ import type { CmsPage } from '@/src/interface/CmsPage';
 import type { I_ArticleResponse } from '@/src/interface/Article';
 import type { CmsMedia } from '@/src/interface/CmsPage';
 import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
+import type {AppLocale} from '@/src/i18n/routing';
+import type {CmsGlobalSettings} from '@/src/interface/CmsGlobal';
+
+type StrapiMeta = Record<string, unknown> & {
+  localizations?: Array<{locale: AppLocale; slug: string; template?: CmsPage['template']}>;
+};
 
 type StrapiSingleResponse<T> = {
   data: T | null;
-  meta: Record<string, unknown>;
+  meta: StrapiMeta;
 };
 
 type StrapiCollectionResponse<T> = {
   data: T[];
-  meta: Record<string, unknown>;
+  meta: StrapiMeta;
+};
+
+export type CmsSitemapPage = {
+  documentId: string;
+  locale: AppLocale;
+  slug: string;
+  template: CmsPage['template'];
+  updatedAt: string;
 };
 
 type CmsArticlePayload = {
   id: number;
   documentId: string;
+  locale?: AppLocale;
   title: string;
   slug: string;
   articleTop?: {
@@ -78,11 +93,17 @@ function slugifyHeading(value: string) {
     .replace(/^-+|-+$/g, '');
 }
 
-function mapCmsArticle(article: CmsArticlePayload): I_ArticleResponse | null {
+function mapCmsArticle(
+  article: CmsArticlePayload,
+  localizations?: Array<{locale: AppLocale; slug: string}>,
+): I_ArticleResponse | null {
   if (!article.articleTop || !article.author?.name) return null;
 
   return {
     id: article.id,
+    documentId: article.documentId,
+    locale: article.locale,
+    localizations,
     slug: article.slug,
     title: article.title,
     excerpt: article.articleTop.excerpt,
@@ -115,11 +136,11 @@ function mapCmsArticle(article: CmsArticlePayload): I_ArticleResponse | null {
   };
 }
 
-export async function getCmsPageBySlug(slug: string): Promise<CmsPage | null> {
+export async function getCmsPageBySlug(slug: string, locale: AppLocale = 'pl'): Promise<CmsPage | null> {
   try {
     const response = await fetch(
-      `${STRAPI_URL}/api/pages/by-slug/${encodeURIComponent(slug)}`,
-      createFetchOptions(`strapi-page-${slug}`),
+      `${STRAPI_URL}/api/pages/by-slug/${encodeURIComponent(slug)}?locale=${locale}`,
+      createFetchOptions(`strapi-page-${locale}-${slug}`),
     );
 
     if (response.status === 404) return null;
@@ -128,18 +149,20 @@ export async function getCmsPageBySlug(slug: string): Promise<CmsPage | null> {
     }
 
     const payload = (await response.json()) as StrapiSingleResponse<CmsPage>;
-    return payload.data;
+    return payload.data
+      ? {...payload.data, locale, localizations: payload.meta.localizations}
+      : null;
   } catch (error) {
     console.error(`[Strapi] Could not load page "${slug}"`, error);
     return null;
   }
 }
 
-export async function getCmsArticles(): Promise<I_ArticleResponse[]> {
+export async function getCmsArticles(locale: AppLocale = 'pl'): Promise<I_ArticleResponse[]> {
   try {
     const response = await fetch(
-      `${STRAPI_URL}/api/articles/feed`,
-      createFetchOptions('strapi-articles'),
+      `${STRAPI_URL}/api/articles/feed?locale=${locale}`,
+      createFetchOptions(`strapi-articles-${locale}`),
     );
     if (!response.ok) throw new Error(`Strapi returned ${response.status} for article feed`);
 
@@ -153,19 +176,52 @@ export async function getCmsArticles(): Promise<I_ArticleResponse[]> {
   }
 }
 
-export async function getCmsArticleBySlug(slug: string): Promise<I_ArticleResponse | null> {
+export async function getCmsArticleBySlug(slug: string, locale: AppLocale = 'pl'): Promise<I_ArticleResponse | null> {
   try {
     const response = await fetch(
-      `${STRAPI_URL}/api/articles/by-slug/${encodeURIComponent(slug)}`,
-      createFetchOptions(`strapi-article-${slug}`),
+      `${STRAPI_URL}/api/articles/by-slug/${encodeURIComponent(slug)}?locale=${locale}`,
+      createFetchOptions(`strapi-article-${locale}-${slug}`),
     );
     if (response.status === 404) return null;
     if (!response.ok) throw new Error(`Strapi returned ${response.status} for article ${slug}`);
 
     const payload = (await response.json()) as StrapiSingleResponse<CmsArticlePayload>;
-    return payload.data ? mapCmsArticle(payload.data) : null;
+    return payload.data
+      ? mapCmsArticle(payload.data, payload.meta.localizations as Array<{locale: AppLocale; slug: string}> | undefined)
+      : null;
   } catch (error) {
     console.error(`[Strapi] Could not load article "${slug}"`, error);
+    return null;
+  }
+}
+
+export async function getCmsPagesForSitemap(locale: AppLocale): Promise<CmsSitemapPage[]> {
+  try {
+    const response = await fetch(
+      `${STRAPI_URL}/api/pages/sitemap?locale=${locale}`,
+      createFetchOptions(`strapi-pages-sitemap-${locale}`),
+    );
+    if (!response.ok) throw new Error(`Strapi returned ${response.status} for page sitemap`);
+    const payload = (await response.json()) as StrapiCollectionResponse<CmsSitemapPage>;
+    return payload.data;
+  } catch (error) {
+    console.error(`[Strapi] Could not load ${locale} page sitemap`, error);
+    return [];
+  }
+}
+
+export async function getCmsGlobal(locale: AppLocale = 'pl'): Promise<CmsGlobalSettings | null> {
+  try {
+    const response = await fetch(
+      `${STRAPI_URL}/api/global/site-settings?locale=${locale}`,
+      createFetchOptions(`strapi-global-${locale}`),
+    );
+    if (!response.ok) throw new Error(`Strapi returned ${response.status} for global settings`);
+
+    const payload = (await response.json()) as StrapiSingleResponse<CmsGlobalSettings>;
+    return payload.data;
+  } catch (error) {
+    console.error(`[Strapi] Could not load ${locale} global settings`, error);
     return null;
   }
 }

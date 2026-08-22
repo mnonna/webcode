@@ -8,54 +8,54 @@ import { getArticles } from '@/src/data/blog/articles';
 import type { BlogListItem } from '@/src/interface/Article';
 import CmsPageBlocks from '@/src/components/cms/CmsPageBlocks';
 import { getCmsArticles, getCmsPageBySlug } from '@/src/lib/strapi';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
+import type {AppLocale} from '@/src/i18n/routing';
+import {getAvailableAlternates, getLocalizedUrl, OPEN_GRAPH_LOCALE} from '@/src/i18n/seo';
 
-const fallbackMetadata: Metadata = {
-  title: 'Blog - Webcode - Tworzę strony, które działają',
-  description:
-    'Praktyczna wiedza o tworzeniu stron internetowych, SEO, UX i technologii. Konkretne porady, które pomagają rozwijać skuteczny biznes online.',
-  alternates: {
-    canonical: `${SITE_URL}/blog`,
-  },
-  openGraph: {
-    title: 'Blog Webcode - praktyczna wiedza, realne efekty',
-    description:
-      'Poradniki i analizy o stronach internetowych, SEO, UX i technologii.',
-    type: 'website',
-    url: `${SITE_URL}/blog`,
-    locale: 'pl_PL',
-    siteName: 'Webcode',
-  },
-};
+type BlogPageProps = {params: Promise<{locale: AppLocale}>};
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await getCmsPageBySlug('blog');
-  if (!page?.seo) return fallbackMetadata;
-
-  const canonical = page.seo.canonicalPath
-    ? `${SITE_URL}${page.seo.canonicalPath}`
-    : `${SITE_URL}/blog`;
+export async function generateMetadata({params}: BlogPageProps): Promise<Metadata> {
+  const {locale} = await params;
+  setRequestLocale(locale);
+  const [page, t] = await Promise.all([
+    getCmsPageBySlug('blog', locale),
+    getTranslations({locale, namespace: 'Metadata'}),
+  ]);
+  const title = page?.seo?.metaTitle ?? t('blogTitle');
+  const description = page?.seo?.metaDescription ?? t('blogDescription');
+  const canonical = getLocalizedUrl(locale, '/blog');
+  const localizedPaths = Object.fromEntries(
+    (page?.localizations ?? [{locale, slug: 'blog'}]).map((item) => [item.locale, '/blog']),
+  ) as Partial<Record<AppLocale, string>>;
   return {
-    title: page.seo.metaTitle,
-    description: page.seo.metaDescription,
-    alternates: { canonical },
-    robots: page.seo.noIndex ? { index: false, follow: false } : undefined,
+    title,
+    description,
+    alternates: getAvailableAlternates(locale, localizedPaths),
+    robots: page?.seo?.noIndex ? { index: false, follow: false } : undefined,
     openGraph: {
-      title: page.seo.metaTitle,
-      description: page.seo.metaDescription,
+      title,
+      description,
       type: 'website',
       url: canonical,
-      locale: 'pl_PL',
+      locale: OPEN_GRAPH_LOCALE[locale],
       siteName: 'Webcode',
     },
   };
 }
 
-export default async function BlogPage() {
+export default async function BlogPage({params}: BlogPageProps) {
+  const {locale} = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations({locale, namespace: 'Metadata'});
   const [page, cmsArticles] = await Promise.all([
-    getCmsPageBySlug('blog'),
-    getCmsArticles(),
+    getCmsPageBySlug('blog', locale),
+    getCmsArticles(locale),
   ]);
-  const articles = cmsArticles.length ? cmsArticles : getArticles();
+  const articles = cmsArticles.length ? cmsArticles : locale === 'pl' ? getArticles() : [];
+  const blogUrl = getLocalizedUrl(locale, '/blog');
+  const localeLinks = Object.fromEntries(
+    (page?.localizations ?? [{locale: 'pl'}]).map((item) => [item.locale, '/blog']),
+  );
   const listingArticles: BlogListItem[] = articles.map(
     ({ slug, title, excerpt, date, readTime, image, imageAlt, category }) => ({
       slug,
@@ -73,22 +73,21 @@ export default async function BlogPage() {
     '@graph': [
       {
         '@type': 'CollectionPage',
-        '@id': `${SITE_URL}/blog#webpage`,
-        url: `${SITE_URL}/blog`,
-        name: 'Blog Webcode',
-        description:
-          'Praktyczna wiedza o tworzeniu stron internetowych, SEO, UX i technologii.',
-        inLanguage: 'pl-PL',
+        '@id': `${blogUrl}#webpage`,
+        url: blogUrl,
+        name: t('blogTitle'),
+        description: t('blogDescription'),
+        inLanguage: locale === 'pl' ? 'pl-PL' : 'en-GB',
         mainEntity: {
-          '@id': `${SITE_URL}/blog#blog`,
+          '@id': `${blogUrl}#blog`,
         },
       },
       {
         '@type': 'Blog',
-        '@id': `${SITE_URL}/blog#blog`,
-        url: `${SITE_URL}/blog`,
-        name: 'Blog Webcode',
-        inLanguage: 'pl-PL',
+        '@id': `${blogUrl}#blog`,
+        url: blogUrl,
+        name: t('blogTitle'),
+        inLanguage: locale === 'pl' ? 'pl-PL' : 'en-GB',
         publisher: {
           '@type': 'Organization',
           name: 'Webcode',
@@ -98,7 +97,7 @@ export default async function BlogPage() {
           '@type': 'BlogPosting',
           headline: article.title,
           description: article.excerpt,
-          url: `${SITE_URL}/blog/${article.slug}`,
+          url: getLocalizedUrl(locale, `/blog/${article.slug}`),
           datePublished: article.date,
           dateModified: article.dateModified,
           ...(article.image && {
@@ -119,7 +118,7 @@ export default async function BlogPage() {
   return (
     <div className="relative isolate min-h-screen bg-background">
       <BlogBackgroundOrbs />
-      <Header />
+      <Header localeLinks={localeLinks} />
       <main className="relative z-10">
         <script
           type="application/ld+json"

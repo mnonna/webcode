@@ -1,39 +1,95 @@
-import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/src/config/site";
-import { getArticles } from "@/src/data/blog/articles";
-import { offerPageSlugs } from "@/src/data/offer/catalog";
+import type {MetadataRoute} from 'next';
+import {getArticles} from '@/src/data/blog/articles';
+import {offerPageSlugs} from '@/src/data/offer/catalog';
+import {getCmsArticles, getCmsPagesForSitemap} from '@/src/lib/strapi';
+import {getLocalizedUrl} from '@/src/i18n/seo';
+import type {AppLocale} from '@/src/i18n/routing';
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: SITE_URL,
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: `${SITE_URL}/oferta`,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/blog`,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-  ];
+type LocalizedEntry = {
+  documentId: string;
+  locale: AppLocale;
+  pathname: string;
+  lastModified?: string;
+  changeFrequency: 'weekly' | 'monthly';
+  priority: number;
+};
 
-  const offerPages: MetadataRoute.Sitemap = offerPageSlugs.map((slug) => ({
-    url: `${SITE_URL}/oferta/${slug}`,
-    changeFrequency: "monthly",
-    priority: 0.8,
-  }));
+function pagePath(template: string, slug: string) {
+  if (template === 'offer-index') return '/oferta';
+  if (template === 'offer-detail') return `/oferta/${slug}`;
+  if (template === 'blog-index') return '/blog';
+  if (['kontakt', 'contact'].includes(slug)) return '/kontakt';
+  if (['polityka-prywatnosci', 'privacy-policy'].includes(slug)) return '/polityka-prywatnosci';
+  if (slug === 'home') return '/';
+  return null;
+}
 
-  const blogPages: MetadataRoute.Sitemap = getArticles().map((article) => ({
-    url: `${SITE_URL}/blog/${article.slug}`,
-    lastModified: new Date(article.dateModified),
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [plPages, enPages, plArticles, enArticles] = await Promise.all([
+    getCmsPagesForSitemap('pl'),
+    getCmsPagesForSitemap('en'),
+    getCmsArticles('pl'),
+    getCmsArticles('en'),
+  ]);
 
-  return [...staticPages, ...offerPages, ...blogPages];
+  const entries: LocalizedEntry[] = [...plPages, ...enPages].flatMap((page) => {
+    const pathname = pagePath(page.template, page.slug);
+    return pathname ? [{
+      documentId: `page:${page.documentId}`,
+      locale: page.locale,
+      pathname,
+      lastModified: page.updatedAt,
+      changeFrequency: page.template === 'blog-index' ? 'weekly' as const : 'monthly' as const,
+      priority: page.template === 'offer-index' ? 0.9 : page.template === 'offer-detail' ? 0.8 : 0.7,
+    }] : [];
+  });
+
+  for (const article of [...plArticles, ...enArticles]) {
+    entries.push({
+      documentId: `article:${article.documentId ?? `${article.locale}:${article.slug}`}`,
+      locale: article.locale ?? 'pl',
+      pathname: `/blog/${article.slug}`,
+      lastModified: article.dateModified,
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    });
+  }
+
+  if (!plPages.length) {
+    entries.push(
+      {documentId: 'fallback:home', locale: 'pl', pathname: '/', changeFrequency: 'monthly', priority: 1},
+      {documentId: 'fallback:offer', locale: 'pl', pathname: '/oferta', changeFrequency: 'monthly', priority: 0.9},
+      {documentId: 'fallback:blog', locale: 'pl', pathname: '/blog', changeFrequency: 'weekly', priority: 0.8},
+      {documentId: 'fallback:contact', locale: 'pl', pathname: '/kontakt', changeFrequency: 'monthly', priority: 0.7},
+      ...offerPageSlugs.map((slug) => ({documentId: `fallback:offer:${slug}`, locale: 'pl' as const, pathname: `/oferta/${slug}`, changeFrequency: 'monthly' as const, priority: 0.8})),
+    );
+  }
+
+  if (!plArticles.length) {
+    entries.push(...getArticles().map((article) => ({
+      documentId: `fallback:article:${article.slug}`,
+      locale: 'pl' as const,
+      pathname: `/blog/${article.slug}`,
+      lastModified: article.dateModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })));
+  }
+
+  return entries.map((entry) => {
+    const siblings = entries.filter((candidate) => candidate.documentId === entry.documentId);
+    const languages: Record<string, string> = Object.fromEntries(
+      siblings.map((candidate) => [candidate.locale, getLocalizedUrl(candidate.locale, candidate.pathname)]),
+    );
+    const polish = siblings.find((candidate) => candidate.locale === 'pl');
+    if (polish) languages['x-default'] = getLocalizedUrl('pl', polish.pathname);
+
+    return {
+      url: getLocalizedUrl(entry.locale, entry.pathname),
+      lastModified: entry.lastModified,
+      changeFrequency: entry.changeFrequency,
+      priority: entry.priority,
+      alternates: {languages},
+    };
+  });
 }

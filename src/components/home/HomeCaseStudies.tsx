@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import {Link} from '@/src/i18n/navigation';
 import { ArrowRight } from 'lucide-react';
 import { gsap, ScrollTrigger } from '../../lib/gsap';
 import { usePrefersReducedMotion } from '../../hooks/usePrefersReducedMotion';

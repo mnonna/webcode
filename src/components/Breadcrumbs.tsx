@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import Link from 'next/link';
+import {Link} from '@/src/i18n/navigation';
 import { ChevronRight } from 'lucide-react';
 
 interface BreadcrumbItem {

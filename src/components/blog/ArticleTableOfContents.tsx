@@ -2,6 +2,7 @@
 
 import { ChevronDown, ChevronRight, ChevronUp, Lightbulb, List, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import {useTranslations} from 'next-intl';
 
 export interface ArticleTableOfContentsItem {
     id: string;
@@ -14,6 +15,7 @@ interface ArticleTableOfContentsProps {
 }
 
 export default function ArticleTableOfContents({ items, hint }: ArticleTableOfContentsProps) {
+    const t = useTranslations('Blog');
     const [activeId, setActiveId] = useState(items[0]?.id ?? '');
     const [isMobileOpen, setIsMobileOpen] = useState(false);
     const programmaticScrollTargetRef = useRef<string | null>(null);
@@ -143,7 +145,7 @@ export default function ArticleTableOfContents({ items, hint }: ArticleTableOfCo
                     left: 'var(--shell-inline-gutter)',
                 }}
             >
-                <nav aria-label="Spis treści artykułu">
+                <nav aria-label={t('tocNavigation')}>
                     <div
                         id="mobile-article-toc"
                         aria-hidden={!isMobileOpen}
@@ -188,7 +190,7 @@ export default function ArticleTableOfContents({ items, hint }: ArticleTableOfCo
                             type="button"
                             aria-expanded={isMobileOpen}
                             aria-controls="mobile-article-toc"
-                            aria-label={isMobileOpen ? 'Zamknij spis treści' : 'Otwórz spis treści'}
+                            aria-label={isMobileOpen ? t('closeToc') : t('openToc')}
                             onClick={() => setIsMobileOpen((isOpen) => !isOpen)}
                             className="grid size-11 place-items-center rounded-full bg-blue-50 text-blue transition-colors hover:bg-blue-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
                         >
@@ -206,11 +208,11 @@ export default function ArticleTableOfContents({ items, hint }: ArticleTableOfCo
                             <span className="truncate text-sm font-semibold text-slate-950">{activeItem.title}</span>
                         </div>
 
-                        <div className="flex items-center" aria-label="Nawigacja między sekcjami">
+                        <div className="flex items-center" aria-label={t('sectionNavigation')}>
                             <button
                                 type="button"
                                 disabled={!previousItem}
-                                aria-label="Przejdź do poprzedniej sekcji"
+                                aria-label={t('previousSection')}
                                 onClick={() => previousItem && scrollToSection(previousItem.id)}
                                 className="shrink-0 grid h-8 w-8 place-items-center rounded-md text-blue transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:text-slate-300"
                             >
@@ -219,7 +221,7 @@ export default function ArticleTableOfContents({ items, hint }: ArticleTableOfCo
                             <button
                                 type="button"
                                 disabled={!nextItem}
-                                aria-label="Przejdź do następnej sekcji"
+                                aria-label={t('nextSection')}
                                 onClick={() => nextItem && scrollToSection(nextItem.id)}
                                 className="shrink-0 grid h-8 w-8 place-items-center rounded-md text-blue transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:text-slate-300"
                             >
@@ -232,10 +234,10 @@ export default function ArticleTableOfContents({ items, hint }: ArticleTableOfCo
 
             <aside className="sticky top-28 hidden max-h-[calc(100dvh-8rem)] self-start flex-col xl:flex">
                 <p className="mb-5 shrink-0 text-xs font-bold uppercase tracking-[0.08em] text-slate-950">
-                    Spis treści
+                    {t('toc')}
                 </p>
 
-                <nav aria-label="Spis treści artykułu" className="relative grid min-h-0 overflow-hidden pl-5">
+                <nav aria-label={t('tocNavigation')} className="relative grid min-h-0 overflow-hidden pl-5">
                     <span aria-hidden="true" className="absolute inset-y-0 left-0 w-px bg-slate-200" />
                     <span
                         aria-hidden="true"

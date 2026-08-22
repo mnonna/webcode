@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Manrope } from "next/font/google";
-import ConsentAwareGoogleAnalytics from "../src/components/ConsentAwareGoogleAnalytics";
-import RecaptchaProvider from "../src/components/RecaptchaProvider";
-import { localBusinessLd, organizationLd } from "../src/data/jsonLd";
-import "./globals.scss";
-import "../src/scss/landing-utils.scss";
+import {hasLocale, NextIntlClientProvider} from 'next-intl';
+import {getTranslations, setRequestLocale} from 'next-intl/server';
+import {notFound} from 'next/navigation';
+import ConsentAwareGoogleAnalytics from "@/src/components/ConsentAwareGoogleAnalytics";
+import RecaptchaProvider from "@/src/components/RecaptchaProvider";
+import { getLocalBusinessLd, getOrganizationLd } from "@/src/data/jsonLd";
+import {routing} from '@/src/i18n/routing';
+import {SITE_URL} from '@/src/config/site';
+import {OPEN_GRAPH_LOCALE} from '@/src/i18n/seo';
+import "../globals.scss";
+import "../../src/scss/landing-utils.scss";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,9 +31,23 @@ const jetBrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "Webcode - Tworzę strony, które działają",
-  description: "Projektujemy nowoczesne strony internetowe, sklepy online i aplikacje webowe. Szybkie realizacje, SEO, responsywność i profesjonalne wsparcie.",
+export async function generateMetadata({params}: {params: Promise<{locale: string}>}): Promise<Metadata> {
+  const {locale} = await params;
+  if (!hasLocale(routing.locales, locale)) return {};
+  const t = await getTranslations({locale, namespace: 'Metadata'});
+
+  return {
+  metadataBase: new URL(SITE_URL),
+  title: t('homeTitle'),
+  description: t('homeDescription'),
+  openGraph: {
+    title: t('homeTitle'),
+    description: t('homeDescription'),
+    url: SITE_URL,
+    siteName: 'Webcode',
+    type: 'website',
+    locale: OPEN_GRAPH_LOCALE[locale],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -48,18 +68,30 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.webmanifest",
-};
+  };
+}
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({locale}));
+}
+
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{locale: string}>;
 }>) {
+  const {locale} = await params;
+  if (!hasLocale(routing.locales, locale)) notFound();
+  setRequestLocale(locale);
   const googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
+  const organizationLd = getOrganizationLd(locale);
+  const localBusinessLd = getLocalBusinessLd(locale);
 
   return (
     <html
-      lang="pl"
+      lang={locale}
       className={`${inter.variable} ${manrope.variable} ${jetBrainsMono.variable} h-full antialiased`}
     >
       <head>
@@ -88,9 +120,11 @@ export default function RootLayout({
           <ConsentAwareGoogleAnalytics measurementId={googleAnalyticsId} />
         )}
 
-        <RecaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY}>
-          {children}
-        </RecaptchaProvider>
+        <NextIntlClientProvider>
+          <RecaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY}>
+            {children}
+          </RecaptchaProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

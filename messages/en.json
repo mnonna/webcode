@@ -1,0 +1,86 @@
+{
+  "Metadata": {
+    "homeTitle": "Webcode - Websites that work",
+    "homeDescription": "I design modern websites, online stores and web applications. Fast delivery, SEO, responsive design and professional support.",
+    "offerTitle": "Services | Webcode",
+    "offerDescription": "Websites, WooCommerce stores, web applications, SEO and UI design tailored to your business.",
+    "blogTitle": "Blog | Webcode",
+    "blogDescription": "Practical insights about websites, SEO, UX and technology that help businesses grow online.",
+    "contactTitle": "Contact | Webcode",
+    "contactDescription": "Let's talk about your project. Send a message or use the contact form.",
+    "privacyTitle": "Privacy policy | Webcode",
+    "privacyDescription": "Webcode website privacy policy."
+  },
+  "Navigation": {
+    "offer": "Services",
+    "blog": "Blog",
+    "contact": "Contact",
+    "privacy": "Privacy policy",
+    "quote": "Free quote",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "changeLanguage": "Change language",
+    "polish": "Polski",
+    "english": "English"
+  },
+  "Footer": {
+    "description": "I design and build websites that look modern, load quickly and turn visits into enquiries.",
+    "copyright": "© 2026 Webcode. All rights reserved."
+  },
+  "ContactForm": {
+    "name": "Full name",
+    "namePlaceholder": "John Smith",
+    "email": "Email",
+    "file": "Attach a file (optional)",
+    "fileHelp": "Allowed formats: PDF, DOCX, JPG, JPEG, PNG. Maximum file size: 10 MB.",
+    "selectedFile": "Selected file: {name}",
+    "message": "Tell me about your project",
+    "messagePlaceholder": "Describe what you need, the goal of the website and your preferred launch date.",
+    "sending": "Sending...",
+    "send": "Send message",
+    "success": "Thank you for your message. I will get back to you as soon as possible.",
+    "error": "There was a problem sending your message. Please try again later.",
+    "invalidFile": "Allowed formats: PDF, DOCX, JPG, JPEG, PNG.",
+    "fileTooLarge": "The file is too large. The maximum size is 10 MB."
+  },
+  "Blog": {
+    "all": "All",
+    "defaultCategory": "Technology",
+    "featured": "Featured article",
+    "read": "Read article",
+    "readArticle": "Read: {title}",
+    "readFeatured": "Read featured article: {title}",
+    "readingTime": "{time} read",
+    "author": "Article author",
+    "authorAvatar": "Author avatar: {name}",
+    "toc": "Table of contents",
+    "tocNavigation": "Article table of contents",
+    "openToc": "Open table of contents",
+    "closeToc": "Close table of contents",
+    "previousSection": "Go to the previous section",
+    "nextSection": "Go to the next section",
+    "sectionNavigation": "Section navigation",
+    "eyebrow": "Blog",
+    "title": "Practical insights.",
+    "titleHighlight": "Real results.",
+    "description": "I share practical experience in website development, SEO and technology — clearly and without filler.",
+    "listingTitle": "Latest articles",
+    "knowledgeBase": "Knowledge base",
+    "filterLabel": "Filter articles by category",
+    "ctaTitle": "Have a topic worth discussing?",
+    "ctaDescription": "Let's talk about your website or growth idea.",
+    "ctaButton": "Get in touch"
+  },
+  "Common": {
+    "contact": "Contact",
+    "net": "net",
+    "gross": "gross",
+    "currency": "PLN",
+    "togglePrice": "Switch between net and gross price",
+    "chooseCategory": "Choose a category"
+    ,"priceLabel": "Package price"
+    ,"customPrice": "Custom quote"
+    ,"from": "from"
+    ,"deliveryTime": "delivery time {time}"
+  }
+}

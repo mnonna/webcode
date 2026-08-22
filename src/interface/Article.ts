@@ -33,6 +33,9 @@ export interface I_Article {
 
 export interface I_ArticleResponse extends I_Article {
     slug: string;
+    documentId?: string;
+    locale?: 'pl' | 'en';
+    localizations?: Array<{ locale: 'pl' | 'en'; slug: string }>;
 }
 
 export type BlogListItem = Pick<

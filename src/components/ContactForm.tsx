@@ -3,6 +3,7 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Send } from 'lucide-react';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
+import {useTranslations} from 'next-intl';
 import { useRecaptcha } from '../hooks/useRecaptcha';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -11,6 +12,7 @@ type ContactFormProps = {
 };
 
 export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
+  const t = useTranslations('ContactForm');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -44,7 +46,7 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
       });
 
       if (response.ok) {
-        toast.success('Dziękuję za wiadomość. Odezwę się najszybciej, jak to możliwe.');
+        toast.success(t('success'));
         setFormData({ name: '', email: '', message: '' });
         setSelectedFile(null);
 
@@ -52,11 +54,11 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
           fileInputRef.current.value = '';
         }
       } else {
-        toast.error('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
+        toast.error(t('error'));
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.');
+      toast.error(t('error'));
     } finally {
       setIsSubmitting(false);
     }
@@ -79,13 +81,13 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
     const maxSize = 10 * 1024 * 1024;
 
     if (!allowedTypes.includes(file.type)) {
-      toast.warning('Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG.');
+      toast.warning(t('invalidFile'));
       event.target.value = '';
       return;
     }
 
     if (file.size > maxSize) {
-      toast.warning('Plik jest za duży. Maksymalny rozmiar to 10 MB.');
+      toast.warning(t('fileTooLarge'));
       event.target.value = '';
       return;
     }
@@ -109,7 +111,7 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
       <form onSubmit={handleSubmit} className="space-y-5">
       <div className="grid gap-5 md:grid-cols-2">
         <div>
-          <label htmlFor="name" className="wc-label mb-2 block">Imię i nazwisko</label>
+          <label htmlFor="name" className="wc-label mb-2 block">{t('name')}</label>
           <input
             type="text"
             id="name"
@@ -119,12 +121,12 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
             onBlur={() => onFocusFieldChange?.(null)}
             onChange={(event) => setFormData({ ...formData, name: event.target.value })}
             className="wc-form-input"
-            placeholder="Jan Kowalski"
+            placeholder={t('namePlaceholder')}
           />
         </div>
 
         <div>
-          <label htmlFor="email" className="wc-label mb-2 block">E-mail</label>
+          <label htmlFor="email" className="wc-label mb-2 block">{t('email')}</label>
           <input
             type="email"
             id="email"
@@ -140,7 +142,7 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
       </div>
 
       <div>
-        <label htmlFor="file" className="wc-label mb-2 block">Załącz plik (opcjonalnie)</label>
+        <label htmlFor="file" className="wc-label mb-2 block">{t('file')}</label>
         <input
           ref={fileInputRef}
           type="file"
@@ -151,12 +153,12 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
           accept=".pdf,.docx,.doc,.jpg,.jpeg,.png"
           className="wc-form-input file:mr-4 file:rounded-[12px] file:border-0 file:bg-[var(--wc-blue-soft)] file:px-4 file:py-2 file:text-[0.875rem] file:font-[600] file:text-[var(--wc-blue)] hover:file:bg-[rgba(21,87,255,0.16)]"
         />
-        <p className="wc-body-sm mt-2">Dozwolone formaty: PDF, DOCX, JPG, JPEG, PNG. Maksymalny rozmiar pliku: 10 MB.</p>
-        {selectedFile && <div className="wc-body-sm wc-text-blue mt-2 font-[600]">Wybrany plik: {selectedFile.name}</div>}
+        <p className="wc-body-sm mt-2">{t('fileHelp')}</p>
+        {selectedFile && <div className="wc-body-sm wc-text-blue mt-2 font-[600]">{t('selectedFile', {name: selectedFile.name})}</div>}
       </div>
 
       <div>
-        <label htmlFor="message" className="wc-label mb-2 block">Opisz projekt</label>
+        <label htmlFor="message" className="wc-label mb-2 block">{t('message')}</label>
         <textarea
           id="message"
           required
@@ -166,12 +168,12 @@ export default function ContactForm({ onFocusFieldChange }: ContactFormProps) {
           onBlur={() => onFocusFieldChange?.(null)}
           onChange={(event) => setFormData({ ...formData, message: event.target.value })}
           className="wc-form-input min-h-[180px] resize-none"
-          placeholder="Napisz, czego potrzebujesz, jaki jest cel strony i na kiedy planujesz wdrożenie."
+          placeholder={t('messagePlaceholder')}
         />
       </div>
 
       <button type="submit" disabled={isSubmitting} className="wc-btn-primary group w-full justify-center disabled:pointer-events-none disabled:opacity-60">
-        <span>{isSubmitting ? 'Wysyłanie...' : 'Wyślij wiadomość'}</span>
+        <span>{isSubmitting ? t('sending') : t('send')}</span>
         <Send size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
       </button>
       </form>

@@ -1,5 +1,5 @@
 import { ArrowRight, Code2, LayoutTemplate, PencilRuler, Search, Shield, ShoppingCart } from 'lucide-react';
-import Link from 'next/link';
+import {Link} from '@/src/i18n/navigation';
 import { getCmsIcon } from '@/src/components/cms/icons';
 import type { CmsServicesBlock } from '@/src/interface/CmsPage';
 

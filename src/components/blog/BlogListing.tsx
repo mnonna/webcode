@@ -1,7 +1,8 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Link from 'next/link';
+import {useLocale, useTranslations} from 'next-intl';
+import {Link} from '@/src/i18n/navigation';
 import { ArrowRight, ArrowUpRight, Mail } from 'lucide-react';
 import ArticleCard from '@/src/components/blog/ArticleCard';
 import FeaturedArticle from '@/src/components/blog/FeaturedArticle';
@@ -11,15 +12,16 @@ import { useGsapReveal } from '@/src/hooks/useGsapReveal';
 import type { BlogListItem } from '@/src/interface/Article';
 import type { CmsBlogListingBlock } from '@/src/interface/CmsPage';
 
-const ALL_ARTICLES = 'Wszystkie';
-
 interface BlogListingProps {
   articles: BlogListItem[];
   data?: CmsBlogListingBlock;
 }
 
 export default function BlogListing({ articles, data }: BlogListingProps) {
-  const allArticlesLabel = data?.allArticlesLabel ?? ALL_ARTICLES;
+  const locale = useLocale();
+  const t = useTranslations('Blog');
+  const allArticlesLabel = data?.allArticlesLabel ?? t('all');
+  const defaultCategory = t('defaultCategory');
   const [activeCategory, setActiveCategory] = useState(allArticlesLabel);
   const heroRef = useGsapReveal<HTMLElement>({
     selector: '[data-blog-hero-reveal]',
@@ -44,20 +46,20 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
   const categories = useMemo(
     () => [
       allArticlesLabel,
-      ...Array.from(new Set(articles.map(getArticleCategory))).sort((a, b) =>
-        a.localeCompare(b, 'pl-PL'),
+      ...Array.from(new Set(articles.map((article) => getArticleCategory(article, defaultCategory)))).sort((a, b) =>
+        a.localeCompare(b, locale === 'pl' ? 'pl-PL' : 'en-GB'),
       ),
     ],
-    [allArticlesLabel, articles],
+    [allArticlesLabel, articles, defaultCategory, locale],
   );
   const filteredArticles = useMemo(
     () =>
       activeCategory === allArticlesLabel
         ? articles
         : articles.filter(
-            (article) => getArticleCategory(article) === activeCategory,
+            (article) => getArticleCategory(article, defaultCategory) === activeCategory,
           ),
-    [activeCategory, allArticlesLabel, articles],
+    [activeCategory, allArticlesLabel, articles, defaultCategory],
   );
 
   const featuredArticle = articles[0];
@@ -75,15 +77,15 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
           <div className="grid items-end gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
             <div>
               <p data-blog-hero-reveal="" className="wc-eyebrow mb-4">
-                {data?.eyebrow ?? 'Blog'}
+                {data?.eyebrow ?? t('eyebrow')}
               </p>
               <h1
                 data-blog-hero-reveal=""
                 className="max-w-[13ch] font-[family-name:var(--font-heading)] text-[clamp(2.5rem,6vw,4.75rem)] font-extrabold text-dark"
               >
-                {data?.title ?? 'Praktyczna wiedza.'}{' '}
+                {data?.title ?? t('title')}{' '}
                 <span className="relative inline-block">
-                  <span className="wc-text-highlight">{data?.titleHighlight ?? 'Realne efekty.'}</span>
+                  <span className="wc-text-highlight">{data?.titleHighlight ?? t('titleHighlight')}</span>
                   <span
                     className="absolute -bottom-2 left-[4%] h-1 w-[92%] -rotate-2 rounded-full bg-blue"
                     aria-hidden="true"
@@ -96,7 +98,7 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
               className="relative max-w-xl pb-2 lg:justify-self-end"
             >
               <p className="wc-body-lg text-muted-foreground">
-                {data?.description ?? 'Dzielę się doświadczeniem z zakresu tworzenia stron internetowych, SEO i technologii. Bez lania wody - konkretnie i na temat.'}
+                {data?.description ?? t('description')}
               </p>
               <ArrowUpRight
                 className="mt-6 ml-auto hidden text-blue sm:block"
@@ -132,13 +134,13 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
           >
             <div>
               <p className="wc-eyebrow">
-                {data?.listingEyebrow ?? 'Baza wiedzy'}
+                {data?.listingEyebrow ?? t('knowledgeBase')}
               </p>
               <h2
                 id="articles-title"
                 className="mt-2 font-[family-name:var(--font-heading)] text-2xl font-bold tracking-[-0.03em] text-dark sm:text-3xl"
               >
-                {data?.listingTitle ?? 'Najnowsze artykuły'}
+                {data?.listingTitle ?? t('listingTitle')}
               </h2>
             </div>
           </div>
@@ -147,7 +149,7 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
             data-blog-articles-reveal=""
             className="-mx-5 mb-9 flex gap-3 overflow-x-auto px-5 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
             role="group"
-            aria-label="Filtruj artykuły według kategorii"
+            aria-label={t('filterLabel')}
           >
             {categories.map((category) => {
               const isActive = activeCategory === category;
@@ -185,7 +187,7 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
       <aside
         ref={ctaRef}
         className="section-shell mb-16 sm:mb-20 lg:mb-24"
-        aria-label="Kontakt"
+        aria-label={t('ctaButton')}
       >
         <div
           data-blog-cta-reveal=""
@@ -197,10 +199,10 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
             </span>
             <div>
               <h2 className="font-[family-name:var(--font-heading)] text-xl font-bold sm:text-2xl">
-                {data?.ctaTitle ?? 'Masz temat, który warto omówić?'}
+                {data?.ctaTitle ?? t('ctaTitle')}
               </h2>
               <p className="mt-1 text-sm leading-6 text-white/70">
-                {data?.ctaDescription ?? 'Porozmawiajmy o Twojej stronie lub pomyśle na rozwój.'}
+                {data?.ctaDescription ?? t('ctaDescription')}
               </p>
             </div>
           </div>
@@ -208,7 +210,7 @@ export default function BlogListing({ articles, data }: BlogListingProps) {
             href={data?.ctaButton.href ?? '/kontakt'}
             className="inline-flex min-h-12 items-center justify-center gap-3 rounded-sm bg-blue px-6 py-3 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
           >
-            {data?.ctaButton.label ?? 'Skontaktuj się'}
+            {data?.ctaButton.label ?? t('ctaButton')}
             <ArrowRight size={18} aria-hidden="true" />
           </Link>
         </div>

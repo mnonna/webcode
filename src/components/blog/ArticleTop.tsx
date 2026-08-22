@@ -1,9 +1,14 @@
 import { I_ArticleTop } from "@/src/interface/Article";
 import { Calendar, CircleUserRound, Timer } from "lucide-react";
 import Image from "next/image";
+import {useLocale, useTranslations} from 'next-intl';
 
 export default function ArticleTop({ category, title, excerpt, date, author, readTime, image, imageAlt }: I_ArticleTop) {
-    const displayedDate = date.slice(0, 16).replace('T', ' ');
+    const locale = useLocale();
+    const t = useTranslations('Blog');
+    const displayedDate = new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', {
+        day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Warsaw'
+    }).format(new Date(date));
 
     return (
         <div className="flex flex-col gap-4">
@@ -23,7 +28,7 @@ export default function ArticleTop({ category, title, excerpt, date, author, rea
                 </div>
                 <div className="flex gap-2 items-center">
                     <Timer size={16} className="text-blue" />
-                    <span className="wc-body-sm">{readTime} czytania</span>
+                    <span className="wc-body-sm">{t('readingTime', {time: readTime})}</span>
                 </div>
             </div>
             {image && (

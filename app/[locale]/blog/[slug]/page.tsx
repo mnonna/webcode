@@ -6,12 +6,15 @@ import ArticleAuthor from "@/src/components/blog/ArticleAuthor";
 import HomeContact from '@/src/components/home/HomeContact';
 import { SITE_URL } from "@/src/config/site";
 import { getArticleBySlug, getArticles } from "@/src/data/blog/articles";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { getCmsArticleBySlug } from '@/src/lib/strapi';
 import type { Metadata } from 'next';
+import {setRequestLocale} from 'next-intl/server';
+import type {AppLocale} from '@/src/i18n/routing';
+import {getAvailableAlternates, getLocalizedPath, getLocalizedUrl, OPEN_GRAPH_LOCALE} from '@/src/i18n/seo';
 
 interface BlogPostPageProps {
-    params: Promise<{ slug: string }>;
+    params: Promise<{ locale: AppLocale; slug: string }>;
 }
 
 export function generateStaticParams() {
@@ -21,35 +24,40 @@ export function generateStaticParams() {
 export const dynamicParams = true;
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-    const { slug } = await params;
-    const article = await getCmsArticleBySlug(slug) ?? getArticleBySlug(slug);
+    const { locale, slug } = await params;
+    setRequestLocale(locale);
+    const article = await getCmsArticleBySlug(slug, locale) ?? (locale === 'pl' ? getArticleBySlug(slug) : null);
     if (!article) return {};
 
-    const canonical = article.seo?.canonicalPath
-        ? `${SITE_URL}${article.seo.canonicalPath}`
-        : `${SITE_URL}/blog/${slug}`;
+    const localizedPaths = Object.fromEntries(
+        (article.localizations ?? [{locale, slug}]).map((item) => [item.locale, `/blog/${item.slug}`]),
+    ) as Partial<Record<AppLocale, string>>;
+    const canonical = getLocalizedUrl(locale, localizedPaths[locale] ?? `/blog/${slug}`);
     return {
         title: article.seo?.metaTitle ?? `${article.title} | Webcode`,
         description: article.seo?.metaDescription ?? article.excerpt,
-        alternates: { canonical },
+        alternates: getAvailableAlternates(locale, localizedPaths),
         robots: article.seo?.noIndex ? { index: false, follow: false } : undefined,
         openGraph: {
             title: article.seo?.metaTitle ?? article.title,
             description: article.seo?.metaDescription ?? article.excerpt,
             url: canonical,
             type: 'article',
+            locale: OPEN_GRAPH_LOCALE[locale],
             images: article.seo?.shareImage ?? article.image,
         },
     };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-    const { slug } = await params;
-    const article = await getCmsArticleBySlug(slug) ?? getArticleBySlug(slug);
+    const { locale, slug } = await params;
+    setRequestLocale(locale);
+    const article = await getCmsArticleBySlug(slug, locale) ?? (locale === 'pl' ? getArticleBySlug(slug) : null);
 
     if (!article) {
         notFound();
     }
+    if (article.slug !== slug) redirect(getLocalizedPath(locale, `/blog/${article.slug}`));
 
     const articleJsonLd = {
         "@context": "https://schema.org",
@@ -58,6 +66,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         ...(article.image && { image: new URL(article.image, SITE_URL).toString() }),
         datePublished: article.date,
         dateModified: article.dateModified,
+        inLanguage: locale === 'pl' ? 'pl-PL' : 'en-GB',
+        mainEntityOfPage: getLocalizedUrl(locale, `/blog/${slug}`),
         author: {
             "@type": "Person",
             name: article.author.name,
@@ -89,7 +99,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div
             className="min-h-screen"
         >
-            <Header />
+            <Header localeLinks={Object.fromEntries(
+                (article.localizations ?? [{locale, slug}]).map((item) => [item.locale, `/blog/${item.slug}`]),
+            )} />
             <main>
                 <script
                     type="application/ld+json"

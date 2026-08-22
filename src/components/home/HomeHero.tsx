@@ -9,6 +9,7 @@ import Section from '@/src/components/common/Section';
 import { getCmsIcon } from '@/src/components/cms/icons';
 import type { CmsHeroBlock } from '@/src/interface/CmsPage';
 import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
+import {Link} from '@/src/i18n/navigation';
 
 const defaultHeroCards = [
   {
@@ -231,14 +232,14 @@ export default function HomeHero({ data }: { data?: CmsHeroBlock }) {
               {data?.description ?? 'Projektuję i wdrażam nowoczesne strony WordPress, sklepy WooCommerce oraz aplikacje webowe. Pomagam uporządkować ofertę, poprawić UX i stworzyć stronę gotową do pozyskiwania klientów.'}
             </p>
             <div data-hero-cta="" className="mt-8 flex flex-wrap gap-4">
-              <a href={data?.primaryButton.href ?? '#contact'} className="wc-btn-primary">
+              <Link href={(data?.primaryButton.href ?? '#contact') as never} className="wc-btn-primary">
                 {data?.primaryButton.label ?? 'Bezpłatna wycena'}
                 <ArrowRight size={18} />
-              </a>
+              </Link>
               {(data?.secondaryButton !== null) && (
-                <a href={data?.secondaryButton?.href ?? '#process'} className="wc-btn-secondary">
+                <Link href={(data?.secondaryButton?.href ?? '#process') as never} className="wc-btn-secondary">
                   {data?.secondaryButton?.label ?? 'Zobacz, jak pracuję'}
-                </a>
+                </Link>
               )}
             </div>
             <div className="mt-7 flex flex-wrap gap-3">

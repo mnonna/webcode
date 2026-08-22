@@ -1,13 +1,11 @@
 import type { BlogListItem } from '@/src/interface/Article';
 
-const DEFAULT_CATEGORY = 'Technologie';
-
-export function getArticleCategory(article: BlogListItem) {
-  return article.category ?? DEFAULT_CATEGORY;
+export function getArticleCategory(article: BlogListItem, defaultCategory = 'Technologie') {
+  return article.category ?? defaultCategory;
 }
 
-export function formatArticleDate(date: string) {
-  return new Intl.DateTimeFormat('pl-PL', {
+export function formatArticleDate(date: string, locale = 'pl') {
+  return new Intl.DateTimeFormat(locale === 'pl' ? 'pl-PL' : 'en-GB', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',

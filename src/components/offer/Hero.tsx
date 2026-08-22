@@ -5,6 +5,7 @@ import { useGsapReveal } from "@/src/hooks/useGsapReveal";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Section from "@/src/components/common/Section";
+import {Link} from '@/src/i18n/navigation';
 
 export default function OfferHero(props: I_HeroOffer) {
     const {
@@ -44,14 +45,14 @@ export default function OfferHero(props: I_HeroOffer) {
                             { description }
                         </p>
                         <div data-offer-hero-reveal="" className="mt-8 flex flex-wrap gap-4">
-                        <a href={primaryButton.href} className="wc-btn-primary">
+                        <Link href={primaryButton.href as never} className="wc-btn-primary">
                             {primaryButton.label}
                             <ArrowRight size={18} />
-                        </a>
+                        </Link>
                         { hasSecondButton &&  (
-                            <a href={secondaryButton?.href ?? '#process'} className="wc-btn-secondary">
+                            <Link href={(secondaryButton?.href ?? '#process') as never} className="wc-btn-secondary">
                                 {secondaryButton?.label}
-                            </a>
+                            </Link>
                         )}
                         </div>
                     </div>

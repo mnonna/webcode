@@ -1,6 +1,6 @@
 import React from "react";
 import I_Cta from "@/src/interface/Cta";
-import Link from 'next/link';
+import {Link} from '@/src/i18n/navigation';
 import { MessagesSquare, SquarePen, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 import Section from "@/src/components/common/Section";

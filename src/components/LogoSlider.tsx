@@ -4,7 +4,7 @@ import { useLayoutEffect, useRef } from 'react';
 import { gsap } from '@/src/lib/gsap';
 import { usePrefersReducedMotion } from '@/src/hooks/usePrefersReducedMotion';
 import Image from 'next/image';
-import Link from 'next/link';
+import {Link} from '@/src/i18n/navigation';
 import Section from '@/src/components/common/Section';
 import type { CmsPartnersBlock } from '@/src/interface/CmsPage';
 import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
