@@ -1,10 +1,12 @@
-import { Fragment } from 'react';
+import {Fragment, type ComponentProps} from 'react';
 import {Link} from '@/src/i18n/navigation';
-import { ChevronRight } from 'lucide-react';
+import {ChevronRight} from 'lucide-react';
+
+type LocalizedHref = ComponentProps<typeof Link>['href'];
 
 interface BreadcrumbItem {
   label: string;
-  path?: string;
+  path?: LocalizedHref;
 }
 
 interface BreadcrumbsProps {
