@@ -7,19 +7,22 @@ import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 import type {AppLocale} from '@/src/i18n/routing';
 import type {CmsGlobalSettings} from '@/src/interface/CmsGlobal';
 
-type StrapiMeta = Record<string, unknown> & {
-  localizations?: Array<{locale: AppLocale; slug: string; template?: CmsPage['template']}>;
+type StrapiMeta<TLocalization = never> = Record<string, unknown> & {
+  localizations?: TLocalization[];
 };
 
-type StrapiSingleResponse<T> = {
+type StrapiSingleResponse<T, TLocalization = never> = {
   data: T | null;
-  meta: StrapiMeta;
+  meta: StrapiMeta<TLocalization>;
 };
 
 type StrapiCollectionResponse<T> = {
   data: T[];
   meta: StrapiMeta;
 };
+
+type CmsPageLocalization = NonNullable<CmsPage['localizations']>[number];
+type CmsArticleLocalization = NonNullable<I_ArticleResponse['localizations']>[number];
 
 export type CmsSitemapPage = {
   documentId: string;
@@ -148,7 +151,7 @@ export async function getCmsPageBySlug(slug: string, locale: AppLocale = 'pl'): 
       throw new Error(`Strapi returned ${response.status} for page ${slug}`);
     }
 
-    const payload = (await response.json()) as StrapiSingleResponse<CmsPage>;
+    const payload = (await response.json()) as StrapiSingleResponse<CmsPage, CmsPageLocalization>;
     return payload.data
       ? {...payload.data, locale, localizations: payload.meta.localizations}
       : null;
@@ -168,7 +171,7 @@ export async function getCmsArticles(locale: AppLocale = 'pl'): Promise<I_Articl
 
     const payload = (await response.json()) as StrapiCollectionResponse<CmsArticlePayload>;
     return payload.data
-      .map(mapCmsArticle)
+      .map((article) => mapCmsArticle(article))
       .filter((article): article is I_ArticleResponse => article !== null);
   } catch (error) {
     console.error('[Strapi] Could not load article feed', error);
@@ -185,9 +188,9 @@ export async function getCmsArticleBySlug(slug: string, locale: AppLocale = 'pl'
     if (response.status === 404) return null;
     if (!response.ok) throw new Error(`Strapi returned ${response.status} for article ${slug}`);
 
-    const payload = (await response.json()) as StrapiSingleResponse<CmsArticlePayload>;
+    const payload = (await response.json()) as StrapiSingleResponse<CmsArticlePayload, CmsArticleLocalization>;
     return payload.data
-      ? mapCmsArticle(payload.data, payload.meta.localizations as Array<{locale: AppLocale; slug: string}> | undefined)
+      ? mapCmsArticle(payload.data, payload.meta.localizations)
       : null;
   } catch (error) {
     console.error(`[Strapi] Could not load article "${slug}"`, error);
