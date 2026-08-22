@@ -172,7 +172,9 @@ export async function getCmsArticles(locale: AppLocale = 'pl'): Promise<I_Articl
     const payload = (await response.json()) as StrapiCollectionResponse<CmsArticlePayload>;
     return payload.data
       .map((article) => mapCmsArticle(article))
-      .filter((article): article is I_ArticleResponse => article !== null);
+      .filter((article): article is I_ArticleResponse => (
+        article !== null && article.locale === locale
+      ));
   } catch (error) {
     console.error('[Strapi] Could not load article feed', error);
     return [];
@@ -206,7 +208,7 @@ export async function getCmsPagesForSitemap(locale: AppLocale): Promise<CmsSitem
     );
     if (!response.ok) throw new Error(`Strapi returned ${response.status} for page sitemap`);
     const payload = (await response.json()) as StrapiCollectionResponse<CmsSitemapPage>;
-    return payload.data;
+    return payload.data.filter((page) => page.locale === locale);
   } catch (error) {
     console.error(`[Strapi] Could not load ${locale} page sitemap`, error);
     return [];
