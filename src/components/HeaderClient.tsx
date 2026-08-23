@@ -23,13 +23,14 @@ function SmartLink({link, className, children, onClick}: {
   onClick?: () => void;
 }) {
   const external = link.external || /^(?:https?:|mailto:|tel:)/i.test(link.href);
+  const target = link.external ? '_blank' : undefined;
   return external ? (
     <a
       href={link.href}
       className={className}
       onClick={onClick}
-      target={/^https?:/i.test(link.href) ? '_blank' : undefined}
-      rel={/^https?:/i.test(link.href) ? 'noreferrer' : undefined}
+      target={target}
+      rel={target ? 'noreferrer' : undefined}
     >
       {children}
     </a>
