@@ -93,7 +93,7 @@ export default function HeaderClient({localeLinks, settings}: HeaderClientProps)
       <nav className="section-shell py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Image src={logoUrl} alt={logoAlt} width={208} height={40} className="h-10 w-auto object-contain" />
+            <Image src={logoUrl} alt={logoAlt} width={208} height={40} className="h-10 w-auto object-contain max-lg:max-w-[120px]" />
           </Link>
 
           <div className="hidden items-center gap-7 lg:flex">
@@ -106,9 +106,12 @@ export default function HeaderClient({localeLinks, settings}: HeaderClientProps)
             <SmartLink link={cta} className="wc-btn-primary px-5 py-3">{cta.label}</SmartLink>
           </div>
 
-          <button className="wc-text-dark lg:hidden" onClick={() => setIsMenuOpen((open) => !open)} aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}>
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          <div className="flex items-center gap-4 lg:hidden">
+            {languageSwitcher}
+            <button className="wc-text-dark" onClick={() => setIsMenuOpen((open) => !open)} aria-label={isMenuOpen ? t('closeMenu') : t('openMenu')}>
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
         {isMenuOpen && (
@@ -124,7 +127,6 @@ export default function HeaderClient({localeLinks, settings}: HeaderClientProps)
                   {item.label}
                 </SmartLink>
               ))}
-              <div className="mt-2">{languageSwitcher}</div>
               <SmartLink link={cta} className="wc-btn-primary mt-2 justify-center" onClick={() => setIsMenuOpen(false)}>{cta.label}</SmartLink>
             </div>
           </div>
