@@ -32,9 +32,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     getCmsArticles('en'),
   ]);
 
-  const entries: LocalizedEntry[] = [...plPages, ...enPages].flatMap((page) => {
+  const fallbackEntries: LocalizedEntry[] = [
+    {documentId: 'fallback:home', locale: 'pl', pathname: '/', changeFrequency: 'monthly', priority: 1},
+    {documentId: 'fallback:offer', locale: 'pl', pathname: '/oferta', changeFrequency: 'monthly', priority: 0.9},
+    {documentId: 'fallback:blog', locale: 'pl', pathname: '/blog', changeFrequency: 'weekly', priority: 0.8},
+    {documentId: 'fallback:contact', locale: 'pl', pathname: '/kontakt', changeFrequency: 'monthly', priority: 0.7},
+    {documentId: 'fallback:privacy', locale: 'pl', pathname: '/polityka-prywatnosci', changeFrequency: 'monthly', priority: 0.3},
+    ...offerPageSlugs.map((slug) => ({
+      documentId: `fallback:offer:${slug}`,
+      locale: 'pl' as const,
+      pathname: `/oferta/${slug}`,
+      changeFrequency: 'monthly' as const,
+      priority: 0.8,
+    })),
+    ...getArticles().map((article) => ({
+      documentId: `fallback:article:${article.slug}`,
+      locale: 'pl' as const,
+      pathname: `/blog/${article.slug}`,
+      lastModified: article.dateModified,
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
+  ];
+
+  const cmsPages = [...plPages, ...enPages];
+  const cmsArticles = [...plArticles, ...enArticles];
+  const cmsEntries: LocalizedEntry[] = cmsPages.flatMap((page) => {
     const pathname = pagePath(page.template, page.slug);
-    return pathname ? [{
+    return pathname && !page.noIndex ? [{
       documentId: `page:${page.documentId}`,
       locale: page.locale,
       pathname,
@@ -44,8 +69,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }] : [];
   });
 
-  for (const article of [...plArticles, ...enArticles]) {
-    entries.push({
+  for (const article of cmsArticles) {
+    if (article.seo?.noIndex) continue;
+    cmsEntries.push({
       documentId: `article:${article.documentId ?? `${article.locale}:${article.slug}`}`,
       locale: article.locale ?? 'pl',
       pathname: `/blog/${article.slug}`,
@@ -55,29 +81,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  if (!plPages.length) {
-    entries.push(
-      {documentId: 'fallback:home', locale: 'pl', pathname: '/', changeFrequency: 'monthly', priority: 1},
-      {documentId: 'fallback:offer', locale: 'pl', pathname: '/oferta', changeFrequency: 'monthly', priority: 0.9},
-      {documentId: 'fallback:blog', locale: 'pl', pathname: '/blog', changeFrequency: 'weekly', priority: 0.8},
-      {documentId: 'fallback:contact', locale: 'pl', pathname: '/kontakt', changeFrequency: 'monthly', priority: 0.7},
-      ...offerPageSlugs.map((slug) => ({documentId: `fallback:offer:${slug}`, locale: 'pl' as const, pathname: `/oferta/${slug}`, changeFrequency: 'monthly' as const, priority: 0.8})),
-    );
+  const excludedUrls = new Set<string>();
+  for (const page of cmsPages) {
+    const pathname = pagePath(page.template, page.slug);
+    if (pathname && page.noIndex) excludedUrls.add(getLocalizedUrl(page.locale, pathname));
+  }
+  for (const article of cmsArticles) {
+    if (article.seo?.noIndex) {
+      excludedUrls.add(getLocalizedUrl(article.locale ?? 'pl', `/blog/${article.slug}`));
+    }
   }
 
-  if (!plArticles.length) {
-    entries.push(...getArticles().map((article) => ({
-      documentId: `fallback:article:${article.slug}`,
-      locale: 'pl' as const,
-      pathname: `/blog/${article.slug}`,
-      lastModified: article.dateModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    })));
+  const entriesByUrl = new Map<string, LocalizedEntry>();
+  for (const entry of [...fallbackEntries, ...cmsEntries]) {
+    const url = getLocalizedUrl(entry.locale, entry.pathname);
+    if (!excludedUrls.has(url)) entriesByUrl.set(url, entry);
+  }
+  const entries = [...entriesByUrl.values()];
+
+  const siblingsByDocumentId = new Map<string, LocalizedEntry[]>();
+  for (const entry of entries) {
+    const siblings = siblingsByDocumentId.get(entry.documentId) ?? [];
+    siblings.push(entry);
+    siblingsByDocumentId.set(entry.documentId, siblings);
   }
 
   return entries.map((entry) => {
-    const siblings = entries.filter((candidate) => candidate.documentId === entry.documentId);
+    const siblings = siblingsByDocumentId.get(entry.documentId) ?? [entry];
     const languages: Record<string, string> = Object.fromEntries(
       siblings.map((candidate) => [candidate.locale, getLocalizedUrl(candidate.locale, candidate.pathname)]),
     );
