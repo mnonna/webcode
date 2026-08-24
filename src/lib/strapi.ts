@@ -30,6 +30,7 @@ export type CmsSitemapPage = {
   slug: string;
   template: CmsPage['template'];
   updatedAt: string;
+  noIndex?: boolean;
 };
 
 type CmsArticlePayload = {
