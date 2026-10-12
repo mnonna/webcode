@@ -1,7 +1,7 @@
 import 'server-only';
 
 import type { CmsPage } from '@/src/interface/CmsPage';
-import type { I_ArticleResponse } from '@/src/interface/Article';
+import type { I_ArticleContentSection, I_ArticleResponse } from '@/src/interface/Article';
 import type { CmsMedia } from '@/src/interface/CmsPage';
 import { getStrapiMediaUrl } from '@/src/lib/strapi-media';
 import type {AppLocale} from '@/src/i18n/routing';
@@ -54,12 +54,19 @@ type CmsArticlePayload = {
     avatar?: CmsMedia | null;
   } | null;
   category?: { name: string } | null;
-  content?: Array<{
-    id: number;
-    __component: 'article.rich-text-section';
-    anchor?: string | null;
-    body: string;
-  }> | null;
+  content?: Array<
+    | {
+        id: number;
+        __component: 'article.rich-text-section';
+        anchor?: string | null;
+        body: string;
+      }
+    | {
+        id: number;
+        __component: 'article.media';
+        file?: CmsMedia | null;
+      }
+  > | null;
   seo?: {
     metaTitle: string;
     metaDescription: string;
@@ -123,12 +130,28 @@ function mapCmsArticle(
       bio: article.author.bio ?? '',
       avatar: getStrapiMediaUrl(article.author.avatar),
     },
-    contentSections: (article.content ?? []).map((section, index) => {
-      const heading = section.body.match(/<h2(?:\s[^>]*)?>([\s\S]*?)<\/h2>/i);
-      return {
-        id: section.anchor || (heading ? slugifyHeading(heading[1]) : `section-${index + 1}`),
-        content: section.body,
-      };
+    contentSections: (article.content ?? []).flatMap((section, index): I_ArticleContentSection[] => {
+      if (section.__component === 'article.rich-text-section') {
+        const heading = section.body.match(/<h2(?:\s[^>]*)?>([\s\S]*?)<\/h2>/i);
+        return [{
+          id: section.anchor || (heading ? slugifyHeading(heading[1]) : `section-${index + 1}`),
+          content: section.body,
+        }];
+      }
+
+      const src = getStrapiMediaUrl(section.file);
+      if (!src) return [];
+
+      return [{
+        id: `media-${section.id}`,
+        media: {
+          src,
+          alt: section.file?.alternativeText ?? '',
+          caption: section.file?.caption ?? undefined,
+          width: section.file?.width ?? undefined,
+          height: section.file?.height ?? undefined,
+        },
+      }];
     }),
     seo: article.seo ? {
       metaTitle: article.seo.metaTitle,

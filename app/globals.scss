@@ -357,6 +357,14 @@
   }
 
   .wysiwyg {
+    .article-media {
+      @apply my-8 first:mt-0 last:mb-0;
+
+      figcaption {
+        @apply mt-2;
+      }
+    }
+
     p {
       @apply mb-4 last:mb-0;
     }

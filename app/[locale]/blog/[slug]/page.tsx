@@ -12,6 +12,7 @@ import type { Metadata } from 'next';
 import {setRequestLocale} from 'next-intl/server';
 import type {AppLocale} from '@/src/i18n/routing';
 import {getAvailableAlternates, getLocalizedPath, getLocalizedUrl, OPEN_GRAPH_LOCALE} from '@/src/i18n/seo';
+import Image from 'next/image';
 
 interface BlogPostPageProps {
     params: Promise<{ locale: AppLocale; slug: string }>;
@@ -83,6 +84,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     };
 
     const tableOfContents = article.contentSections.flatMap((section) => {
+        if (!('content' in section)) {
+            return [];
+        }
+
         const heading = section.content.match(/<h2(?:\s[^>]*)?>([\s\S]*?)<\/h2>/i);
 
         if (!heading) {
@@ -128,14 +133,38 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                                     />
                                 </section>
                                 <div className="wysiwyg">
-                                    {article.contentSections.map((section) => (
-                                        <section
-                                            key={section.id}
-                                            id={section.id}
-                                            className="scroll-mt-28"
-                                            dangerouslySetInnerHTML={{ __html: section.content }}
-                                        />
-                                    ))}
+                                    {article.contentSections.map((section) => {
+                                        if ('media' in section) {
+                                            const {media} = section;
+
+                                            return (
+                                                <figure key={section.id} className="article-media">
+                                                    <Image
+                                                        src={media.src}
+                                                        alt={media.alt}
+                                                        width={media.width ?? 1200}
+                                                        height={media.height ?? 675}
+                                                        sizes="(max-width: 1280px) calc(100vw - 2rem), 900px"
+                                                        className="h-auto w-full rounded-lg"
+                                                    />
+                                                    {media.caption && (
+                                                        <figcaption className="wc-body-sm">
+                                                            {media.caption}
+                                                        </figcaption>
+                                                    )}
+                                                </figure>
+                                            );
+                                        }
+
+                                        return (
+                                            <section
+                                                key={section.id}
+                                                id={section.id}
+                                                className="scroll-mt-28"
+                                                dangerouslySetInnerHTML={{ __html: section.content }}
+                                            />
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </div>

@@ -45,7 +45,9 @@ export async function GET(request: Request) {
       article.title,
       article.excerpt,
       article.author.name,
-      ...article.contentSections.map((section) => section.content),
+      ...article.contentSections.flatMap((section) => (
+        'content' in section ? [section.content] : []
+      )),
     ]
       .join(' ')
       .toLocaleLowerCase('pl-PL');

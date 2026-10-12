@@ -56,7 +56,20 @@ export interface I_ArticleAuthor {
     avatar: string;
 }
 
-export interface I_ArticleContentSection {
+export interface I_ArticleRichTextSection {
     id: string;
     content: string;
 }
+
+export interface I_ArticleMediaSection {
+    id: string;
+    media: {
+        src: string;
+        alt: string;
+        caption?: string;
+        width?: number;
+        height?: number;
+    };
+}
+
+export type I_ArticleContentSection = I_ArticleRichTextSection | I_ArticleMediaSection;
