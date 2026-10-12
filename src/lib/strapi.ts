@@ -63,7 +63,7 @@ type CmsArticlePayload = {
       }
     | {
         id: number;
-        __component: 'article.media';
+        __component: 'shared.media';
         file?: CmsMedia | null;
       }
   > | null;
